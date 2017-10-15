@@ -71,7 +71,7 @@ Object.assign(reflow, {
     }
     initialRun = false;
   },
-  analyzeTree,
+  analyzeMatrix,
   getSuite(name) {
     return {
       name,
