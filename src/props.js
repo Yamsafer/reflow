@@ -26,6 +26,9 @@ const flowUpdate = function(name, updater, defaultValue) {
   logger.debug(flowObjects[name])
 }
 
+const flowGetAll = function () {
+  return flowObjects;
+}
 const flowTeardown = function() {
   logger.silly('Clearing flow variables.')
   Object.keys(flowObjects).forEach(key => {
@@ -36,6 +39,7 @@ const flowTeardown = function() {
 
 module.exports = {
   get: flowGet,
+  getAll: flowGetAll,
   set: flowSet,
   update: flowUpdate,
   setMultiple: flowSetMuliple,
