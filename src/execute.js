@@ -15,6 +15,10 @@ const executeSuite = ({ name }) => {
   
   if (!suiteDescriptor)
     throw new Error(`no suites specified in flow "${name}".`);
+
+  if(name === "NOOP") {
+    return suiteDescriptor();
+  }
   
   describe(name, suiteDescriptor);
 };
