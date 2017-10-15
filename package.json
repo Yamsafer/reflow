@@ -1,7 +1,7 @@
 {
-  "name": "react-inline-styler-processor-rtl",
+  "name": "re-flow",
   "version": "1.0.0",
-  "description": "React Inline Styler RTL Processors.",
+  "description": "Mocha Reflow",
   "main": "./distribution/index.js",
   "author": "Ahmad Bamieh",
   "license": "MIT",
