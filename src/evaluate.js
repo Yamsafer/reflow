@@ -45,8 +45,7 @@ const evaluateType = function(suite) {
 }
 const types = ["suite", "subflow", "fork"];
 
-const evaluateFlow = function(name, getDetail) {
-  const {suites} = getDetail() || {};
+const evaluateFlow = function(name, suites) {
   if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
 
   // const arrayedSuites = suites.map(suite => _.isArray(suite)? suite : [suite]);

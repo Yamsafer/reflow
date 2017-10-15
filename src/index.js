@@ -1,31 +1,67 @@
 'use strict'
 import _ from 'lodash';
 import { evaluateFlow, evaluateSubflow } from './evaluate';
-import analyzeTree from './analyze';
+import analyzeMatrix from './analyze';
+import executeMatrix from './execute'
+import reflowProps from './props'
 
 let initialRun = true;
+let mochaDescribe;
+
 const defaultConfig = {
   watchMode: false,
   analyzeMode: false,
+  executeFlows: false,
 };
 
 const userConfig = {};
 const subflows = {};
+const registeredSuites = {};
 
-const reflow = function(name, configCb) {
+const registerSuiteDescription = function(name, descriptor) {
+  console.log(`Suite "${name}" registered.`);
+  registeredSuites[name] = descriptor;
+}
+
+
+const reflow = function(name, getDetail) {
   if(initialRun) return;
-  const result = evaluateFlow(name, configCb);
+  const {
+    suites,
+    ...rest,
+  } = getDetail() || {};
+
+  const executionMatrix = evaluateFlow(name, suites);
+  
   if(userConfig.analyzeMode) {
-    const analysisTree = analyzeTree(name, result);
+    const analysisTree = analyzeMatrix(name, executionMatrix);
     console.log(analysisTree.join('\n'))
   }
-  return result;
+
+  if(userConfig.executeFlows) {
+    const config = {
+      name,
+      suites: registeredSuites,
+      testRunner: userConfig.testRunner,
+      detail: rest,
+    }
+    executeMatrix(executionMatrix, config);
+  }
+
+  return executionMatrix;
 }
+
 
 Object.assign(reflow, {
   init(config) {
     if (config.watchMode) console.log('Running in watch mode.');
     if (config.analyzeMode) console.log('Running in Analyze mode.');
+
+
+    mochaDescribe = describe;
+
+    global.describe = registerSuiteDescription
+    global.describe.only = mochaDescribe.only
 
     return Object.assign(userConfig, defaultConfig, config);
   },
@@ -61,7 +97,8 @@ Object.assign(reflow, {
   },
   getSubflows() {
     return subflows;
-  }
+  },
+  ...reflowProps,
 })
 
 

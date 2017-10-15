@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const analyze = function(name, combinations) {
+const analyzeMatrix = function(name, combinations) {
   const analysisTree = [];
   const withArrows = ' -> ';
   const analyticsMap = combinations.map(combination =>
@@ -52,5 +52,5 @@ const analyze = function(name, combinations) {
   return analysisTree
 };
 
-export default analyze
+export default analyzeMatrix
 
