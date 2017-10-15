@@ -16,7 +16,7 @@ const executeSuite = ({ name }) => {
   if (!suiteDescriptor)
     throw new Error(`no suites specified in flow "${name}".`);
   
-  suiteDescriptor();
+  describe(name, suiteDescriptor);
 };
 
 const executeTree = function(tree) {
@@ -50,7 +50,7 @@ const executeMatrix = function(matrix, config) {
   allSuites = suites;
 
   const normalizedMatrix = matrix.map((tree, i) => ({
-    name: `"${name}" fork #${i+1}`,
+    name: `${name}: fork #${i+1}`,
     ...detail,
     suites: tree,
     type: "fork",
