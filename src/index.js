@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { evaluateFlow, evaluateSubflow } from './evaluate';
 import analyzeTree from './analyze';
 
-
+let initialRun = true;
 const defaultConfig = {
   watchMode: false,
   analyzeMode: false,
@@ -13,6 +13,7 @@ const userConfig = {};
 const subflows = {};
 
 const reflow = function(name, configCb) {
+  if(initialRun) return;
   const result = evaluateFlow(name, configCb);
   if(userConfig.analyzeMode) {
     const analysisTree = analyzeTree(name, result);
@@ -27,6 +28,12 @@ Object.assign(reflow, {
     if (config.analyzeMode) console.log('Running in Analyze mode.');
 
     return Object.assign(userConfig, defaultConfig, config);
+  },
+  completeInitialRun() {
+    if(userConfig.watchMode && initialRun) {
+      console.log("Edit or Save a flow to run it")
+    }
+    initialRun = false;
   },
   analyzeTree,
   getSuite(name) {
@@ -49,6 +56,7 @@ Object.assign(reflow, {
     return evaluateSubflow(name , subflowDetail)
   },
   subflow(name, configCb) {
+    console.log(`Registering "${name}" Subflow.`);
     subflows[name] = configCb
   },
   getSubflows() {
