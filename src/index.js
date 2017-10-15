@@ -43,10 +43,9 @@ const reflow = function(name, getDetail) {
       name,
       suites: registeredSuites,
       testRunner: userConfig.testRunner,
-      detail: {...rest, {
-          after() {
-            reflowProps.teardown();
-          }
+      detail: {...rest,
+        after() {
+          reflowProps.teardown();
         }
       },
       forkHooks: {},
