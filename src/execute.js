@@ -29,7 +29,7 @@ const executeTree = function(tree) {
   })
 }
 
-const executeSuites = function executeSuites(branch) {
+const executeSuites = function(branch) {
   if(branch.type === "suite") {
     return executeSuite(branch);
   }
@@ -47,10 +47,16 @@ const executeMatrix = function(matrix, config) {
 
   global.describe = testRunner;
   allSuites = suites;
+
+  const normalizedMatrix = matrix.map((tree, i) => ({
+    name: `"${name}" fork #${i+1}`,
+    suites: tree,
+    type: "fork",
+  }))
   
   describe(name, function() {
     executeMochaHooks(detail);
-    matrix.forEach(executeTree);
+    normalizedMatrix.forEach(executeTree);
   })
 }
 
