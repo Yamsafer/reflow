@@ -43,12 +43,13 @@ const reflow = function(name, getDetail) {
       name,
       suites: registeredSuites,
       testRunner: userConfig.testRunner,
-      detail: rest,
-      forkHooks: {
-        afterEach() {
-          reflowProps.teardown();
+      detail: {...rest, {
+          after() {
+            reflowProps.teardown();
+          }
         }
-      }
+      },
+      forkHooks: {},
     }
     executeMatrix(executionMatrix, config);
   }
