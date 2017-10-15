@@ -51,13 +51,13 @@ const executeMatrix = function(matrix, config) {
 
   const normalizedMatrix = matrix.map((tree, i) => ({
     name: `"${name}" fork #${i+1}`,
-    ...forkHooks,
+    ...detail,
     suites: tree,
     type: "fork",
   }))
   
   describe(name, function() {
-    executeMochaHooks(detail);
+    executeMochaHooks(forkHooks);
     normalizedMatrix.forEach(executeTree);
   })
 }

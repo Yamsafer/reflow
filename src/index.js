@@ -45,7 +45,7 @@ const reflow = function(name, getDetail) {
       testRunner: userConfig.testRunner,
       detail: rest,
       forkHooks: {
-        before() {
+        after() {
           reflowProps.teardown();
         }
       }
