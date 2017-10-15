@@ -42,6 +42,7 @@ const executeMatrix = function(matrix, config) {
     testRunner,
     suites,
     detail,
+    name,
   } = config;
 
   global.describe = testRunner;
