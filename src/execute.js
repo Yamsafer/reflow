@@ -41,6 +41,7 @@ const executeMatrix = function(matrix, config) {
   const {
     testRunner,
     suites,
+    forkHooks,
     detail,
     name,
   } = config;
@@ -50,6 +51,7 @@ const executeMatrix = function(matrix, config) {
 
   const normalizedMatrix = matrix.map((tree, i) => ({
     name: `"${name}" fork #${i+1}`,
+    ...forkHooks,
     suites: tree,
     type: "fork",
   }))
