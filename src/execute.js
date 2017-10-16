@@ -53,14 +53,15 @@ const executeMatrix = function(matrix, config) {
   global.describe = testRunner;
   allSuites = suites;
 
+  const totalForks = matrix.length;
   const normalizedMatrix = matrix.map((tree, i) => ({
-    name: `${name}: fork #${i+1}`,
+    name: `${name}: fork #${i+1}/${totalForks}`,
     ...detail,
     suites: tree,
     type: "fork",
   }))
   
-  describe(name, function() {
+  describe(`${name}: (${totalForks} total flows)`, function() {
     executeMochaHooks(forkHooks);
     normalizedMatrix.forEach(executeTree);
   })
