@@ -23,9 +23,16 @@
     "coveralls": "^2.13.1",
     "cross-env": "^4.0.0",
     "mkdirp": "^0.5.1",
-    "mocha": "^3.3.0",
+    "mocha": "^4.0.1",
     "nyc": "^10.2.0",
     "rimraf": "^2.6.1"
+  },
+  "peerDependencies": {
+    "mocha": "^3 || ^4"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "threads": "^0.8.1"
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha",

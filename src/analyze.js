@@ -16,11 +16,6 @@ const analyzeMatrix = function(name, combinations) {
           return `(${suite.name}: ${suite.suites.name})`;
         }
 
-        // if(suite.name === "Postpaid Suppliers") {
-        //   console.log('suite.name::', suite.name)
-        //   console.log('suite!!::', suite.suites)
-        // }
-
         return `(${suite.name}: ${suite.suites.map(suite=> {
           if(suite.type === "suite") return suite.name;
 
