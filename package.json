@@ -1,6 +1,6 @@
 {
   "name": "re-flow",
-  "version": "1.3.13",
+  "version": "2.0.0",
   "description": "Mocha Reflow",
   "main": "./distribution/index.js",
   "author": "Ahmad Bamieh",

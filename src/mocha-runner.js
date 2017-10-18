@@ -3,8 +3,6 @@
 import assert from 'assert';
 import Mocha from 'mocha';
 
-let runnerInstance;
-
 // RUNNER EVENTS
 // *   - `start`  execution started
 // *   - `end`  execution complete
@@ -22,21 +20,62 @@ let runnerInstance;
 // ui
 // reporter
 // timeout
-// bail
+// bail 
 // useColors
 // retries
 // slow
 // ignoreLeaks
 // fullTrace
 // 
-export const createInstance = (config) => {
-    assert(!runnerInstance, 'Runner instance has already been created. Use getInstance() instead');
-    const mocha = new Mocha(config);
-    return mocha
 
-};
+class MochaRefow extends Mocha {
+  constructor(fork, options) {
+    super(options)
+    this.fork = fork;
+    if(this.fork.before) {
+      this.suite.beforeAll("Before All", this.fork.before)
+    }
+  }
+  run(fn) {
+    if (this.files.length) {
+      this.loadFiles();
+    }
+    var suite = this.suite;
+    var options = this.options;
+    // console.log('options::', options)
+    options.files = this.files;
+    var runner = new Mocha.Runner(suite, options.delay);
+    var reporter = new this._reporter(runner, options);
+    runner.ignoreLeaks = options.ignoreLeaks !== false;
+    runner.fullStackTrace = options.fullStackTrace;
+    runner.asyncOnly = options.asyncOnly;
+    runner.allowUncaught = options.allowUncaught;
+    runner.forbidOnly = options.forbidOnly;
+    runner.forbidPending = options.forbidPending;
+    if (options.grep) {
+      runner.grep(options.grep, options.invert);
+    }
+    if (options.globals) {
+      runner.globals(options.globals);
+    }
+    if (options.growl) {
+      this._growl(runner, reporter);
+    }
+    if (options.useColors !== undefined) {
+      Mocha.reporters.Base.useColors = options.useColors;
+    }
+    Mocha.reporters.Base.inlineDiffs = options.useInlineDiffs;
 
-export const getInstance = () => {
-    assert(runnerInstance, 'No runner instance is available. Run createInstance() first');
-    return runnerInstance;
-};
+    function done (failures) {
+      if (reporter.done) {
+        reporter.done(failures, fn);
+      } else {
+        fn && fn(failures);
+      }
+    }
+
+    return runner.run(done);
+  }
+}
+
+export default MochaRefow

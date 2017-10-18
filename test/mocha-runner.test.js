@@ -1,32 +1,26 @@
-import {createInstance} from '../src/mocha-runner'
+import MochaRefow from '../src/mocha-runner'
+import mockFork from './fixture/reflow/mock-fork';
 
 const subscribedSuites = {
-  'Mock Suite': '/Users/Bamieh/Bamieh/reflow/test/fixture/mock-describe'
+  'Hooked Suite': '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/hooked-describe',
+  'Standard Suite': '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/standard-describe',
 };
 
 
 describe("Mocha Runner", function() {
 
-  it('Creates a mocha instance', function(done) {
-    const mochaRunner = createInstance({
+  it('Creates a mocha instance', function() {
+
+    const instance = new MochaRefow(mockFork, {
        reporter: 'list'
     })
-    const mockSuitePath = subscribedSuites['Mock Suite'];
-    console.log('mockSuitePath::', mockSuitePath)
-    mochaRunner.addFile(mockSuitePath);
 
-    const runnerInstance = mochaRunner.run(function(failures){
-        console.log('failures::', failures);
-        // done()
-    });
+    mockFork.suites.forEach(branch => {
+      const suitePath = subscribedSuites[branch.name]
+      instance.addFile(suitePath);
+    })
 
-    runnerInstance.on('test', function() {
-      console.log('on test start');
-    })
-    runnerInstance.on('end', function() {
-      // console.log('hi');
-      done()
-    })
+    instance.run();
 
   })
 })

@@ -10,8 +10,8 @@ const evaluateSubflow = function(name, getDetail) {
 
   return cartesianed.map(combination => {
     return {
-      type: 'subflow',
       name,
+      type: 'subflow',
       ...rest,
       suites: combination,
     }
