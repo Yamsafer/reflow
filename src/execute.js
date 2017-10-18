@@ -1,6 +1,15 @@
+import MochaRefow from './mocha-reflow';
+
 import _ from 'lodash'
 
 let allSuites;
+
+const getSuiteDefinition = function(name) {
+  return allSuites[name]
+}
+const setSuiteDefinitions = function(suites) {
+  allSuites = suites;
+}
 
 const executeMochaHooks = function(detail) {
   detail.before && before(detail.before);
@@ -9,32 +18,59 @@ const executeMochaHooks = function(detail) {
   detail.after && after(detail.after);
 }
 
+let mochaReflowInstance;
 
 const executeSuite = ({ name }) => {
-  const suiteDescriptor = allSuites[name];
-  
-  if (!suiteDescriptor)
+  // const suiteDescriptor = allSuites[name];
+  const suitePath = getSuiteDefinition(name)
+  // console.log('suitePath::', suitePath)
+  if (!suitePath)
     throw new Error(`no suites specified in flow "${name}".`);
 
-  if(name === "NOOP") {
-    return suiteDescriptor();
-  }
-  
-  describe(name, suiteDescriptor);
+  // if(name === "NOOP") {
+  //   return suiteDescriptor();
+  // }
+  return mochaReflowInstance.addFile(suitePath);
+  // describe(name, suiteDescriptor);
 };
 
+
+const mochaConfig = {
+  reporter: function() {
+
+  }
+}
+
 const executeTree = function(tree) {
+  if(tree.type === "fork") {
+    mochaReflowInstance = new MochaRefow(tree, mochaConfig)
+  }
+
   const treeName = tree.name;
+
   const suites = _.isArray(tree.suites)? tree.suites : [tree.suites];
 
-  describe(treeName, function() {
-    executeMochaHooks(tree)
-    suites.forEach(executeSuites);
+  // suites.forEach(branch => {
+  //   const suitePath = getSuiteDefinition(treeName)
+  //   mochaReflowInstance.addFile(suitePath);
+  // })
+  suites.forEach(executeSuites);
+  // console.log('mochaReflowInstance:', mochaReflowInstance)
+  return new Promise((resolve, reject) => {
+    mochaReflowInstance.run(function(failures) {
+      if(failures) return reject(failures);
+      return resolve();
+    })
   })
+  // describe(treeName, function() {
+  //   executeMochaHooks(tree)
+  //   suites.forEach(executeSuites);
+  // })
 }
 
 const executeSuites = function(branch) {
   if(branch.type === "suite") {
+    // console.log('branch::', branch)
     return executeSuite(branch);
   }
 
@@ -51,7 +87,7 @@ const executeMatrix = function(matrix, config) {
   } = config;
 
   global.describe = testRunner;
-  allSuites = suites;
+  setSuiteDefinitions(suites);
 
   const totalForks = matrix.length;
   const normalizedMatrix = matrix.map((tree, i) => ({
@@ -68,3 +104,8 @@ const executeMatrix = function(matrix, config) {
 }
 
 export default executeMatrix
+export {
+  setSuiteDefinitions,
+  getSuiteDefinition,
+  executeTree,
+}

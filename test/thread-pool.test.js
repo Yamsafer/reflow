@@ -1,7 +1,7 @@
 import threadPool from '../src/thread-pool';
 import path from 'path';
 
-describe.skip('thread pools', function() {
+describe('thread pools', function() {
   before(function() {
     this.workerPath = path.join(__dirname, './fixture/mock-worker.js');
   });
