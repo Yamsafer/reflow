@@ -1,4 +1,3 @@
-'use strict'
 import _ from 'lodash';
 import { evaluateFlow, evaluateSubflow } from './evaluate';
 import analyzeMatrix from './analyze';
@@ -41,14 +40,14 @@ const reflow = function(name, getDetail) {
   if(userConfig.executeFlows) {
     const config = {
       name,
-      suites: registeredSuites,
+      suiteDefinitions: registeredSuites,
       testRunner: userConfig.testRunner,
-      detail: {...rest,
+      detail: {
+        ...rest,
         after() {
           reflowProps.teardown();
         }
       },
-      forkHooks: {},
     }
     executeMatrix(executionMatrix, config);
   }

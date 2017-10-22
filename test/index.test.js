@@ -69,60 +69,6 @@
 
 // });
 
-// describe('evaluate subflow', function() {
-//   it('is a function', function() {
-//     expect(evaluateSubflow).to.be.a('function');
-//   })
-//   it('invokes subflow detail', function() {
-//     const spyDetail = chai.spy(function() {
-//       return {suites: []}
-//     });
-
-//     evaluateSubflow('subflowMock', spyDetail);
-//     expect(spyDetail).to.be.called.once;
-//   })
-//   describe('Suites', function() {
-//     it('returns an array', function() {
-//       const detail = function() {
-//         return {
-//           suites: [
-//             reflow.getSuite('Normal Suite'),
-//           ],
-//         }
-//       };
-
-//       const evaluatedSubflow = evaluateSubflow('subflowMock', detail);
-//       expect(evaluatedSubflow).to.be.an('array')
-//       // console.log('evaluatedSubflow::', evaluatedSubflow)
-//     });
-//   })
-//   describe('Subflows', function() {
-//     it('returns an array', function() {
-
-//       reflow.subflow('Nested Subflow', function() {
-//         return {
-//           suites: [
-//             reflow.getSuite('Normal Suite'),
-//           ]
-//         }
-//       })
-
-//       const detail = function() {
-//         return {
-//           suites: [
-//             reflow.getSubflow('Nested Subflow'),
-//             reflow.getSubflow('Nested Subflow'),
-//           ],
-//         }
-//       };
-
-//       const evaluatedSubflow = evaluateSubflow('subflowMock', detail);
-//       expect(evaluatedSubflow).to.be.an('array')
-//       // console.log('evaluatedSubflow::', evaluatedSubflow)
-//     });
-//   })
-// })
-
 
 // // a suite must be an array
 // // a fork must be an array of arrays

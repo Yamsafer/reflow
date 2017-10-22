@@ -1,5 +1,3 @@
-'use strict';
-
 import assert from 'assert';
 import Mocha from 'mocha';
 
@@ -42,8 +40,8 @@ class MochaRefow extends Mocha {
     }
     var suite = this.suite;
     var options = this.options;
-    // console.log('options::', options)
     options.files = this.files;
+
     var runner = new Mocha.Runner(suite, options.delay);
     var reporter = new this._reporter(runner, options);
     runner.ignoreLeaks = options.ignoreLeaks !== false;

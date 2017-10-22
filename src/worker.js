@@ -1,24 +1,3 @@
-import MochaRefow from './mocha-reflow';
-import _ from 'lodash'
-import decache from 'decache';
-import threadPool from './thread-pool'
-import path from 'path'
-const workerPath = path.join(__dirname, './worker.js');
-
-let allSuites;
-const decacheSuiteDefinitions = function() {
-  Object.values(allSuites).forEach(decache)
-}
-
-const getSuiteDefinition = function(name) {
-  return allSuites[name]
-}
-const setSuiteDefinitions = function(suites) {
-  allSuites = suites;
-}
-
-let mochaReflowInstance;
-
 const executeSuite = ({ name }) => {
   // const suiteDescriptor = allSuites[name];
   const suitePath = getSuiteDefinition(name)
@@ -48,7 +27,7 @@ const runReflowInstance = function () {
     })
   })
 }
-const executeTree = function(tree, done) {
+const executeTree = function(tree) {
   const treeName = tree.name;
   if(tree.type === "fork") {
     console.log('forking: ', treeName)
@@ -65,8 +44,7 @@ const executeTree = function(tree, done) {
   // })
   suites.forEach(executeSuites);
 
-  mochaReflowInstance.run(done)
-  
+
   return mochaReflowInstance
   // describe(treeName, function() {
   //   executeMochaHooks(tree)
@@ -83,45 +61,23 @@ const executeSuites = function(branch) {
   return executeTree(branch);
 }
 
-const executeMatrix = function(matrix, config) {
-  const {
-    testRunner,
-    suiteDefinitions,
-    forkHooks,
-    detail,
-    name,
-  } = config;
 
-  global.describe = testRunner;
-  setSuiteDefinitions(suiteDefinitions);
 
-  const totalForks = matrix.length;
-  const normalizedMatrix = matrix.map((tree, i) => ({
-    name: `${name}: fork #${i+1}/${totalForks}`,
-    ...detail,
-    suites: tree,
-    type: "tree",
-  }))
 
-  
-  const pool = threadPool({
-    // threadsToSpawn: 1,
-    workerPath,
+function minmax(int, done) {
+  // mochaReflowInstance.run(done)
+  console.log('hi!')
+  if (typeof this.min === 'undefined') {
+    this.min = int;
+    this.max = int;
+  } else {
+    this.min = Math.min(this.min, int);
+    this.max = Math.max(this.max, int);
+  }
+  done({
+    min : this.min,
+    max : this.max
   });
-  pool.send(2)
-  
-  console.log(`${name}: (${totalForks} total flows)`)
-
-  normalizedMatrix.forEach(executeTree);
-
-  
 }
 
-export default executeMatrix
-export {
-  runReflowInstance,
-  setSuiteDefinitions,
-  decacheSuiteDefinitions,
-  getSuiteDefinition,
-  executeTree,
-}
+module.exports = minmax

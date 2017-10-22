@@ -30,16 +30,17 @@ reflow("Example Flow", function() {
 
 ## Current Features:
 Create Mocha flows for true E2E Testing.
-- Test Flow
+- Test Flows
 - Subflows
 - Forking Subflows
 - Conditional subflows
-- Multi-Threaded runtime
 - Analyze mode
+- Multi-Threaded runtime
 - Tags
 
 
 ## Future:
+- Selenium and Appium
 Create an http server for reflow, this will enable multiple things:
 - A UI for the tests
 - A place to see the documentation for the APIs

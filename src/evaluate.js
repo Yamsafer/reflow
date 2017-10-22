@@ -1,12 +1,14 @@
-'use strict'
 import _ from 'lodash';
 import cartesian from './cartesian';
 
 const evaluateSubflow = function(name, getDetail) {
-  const {suites, ...rest} = getDetail() || {};
+  const {suites, ...rest} = getDetail();
   if(!_.isArray(suites)) throw new Error(`no suites provided in subflow "${name}".`);
   
-  const cartesianed = cartesian(...suites.map(suite => _.isArray(suite)? suite : [suite]));
+  
+  const cartesianed = cartesian(
+    ...suites.map(suite => [].concat(suite))
+  ) || [];
 
   return cartesianed.map(combination => {
     return {

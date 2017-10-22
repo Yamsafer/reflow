@@ -35,8 +35,5 @@ describe("Mocha Runner", function() {
     before(function() {
       this.instance = new MochaRefow(mockFork, mochaConfig)
     })
-    it('returns a promise', function(done) {
-      expect(this.instance.run(done)).to.be.a('Promise');
-    })
   })
 })

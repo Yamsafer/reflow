@@ -1,7 +1,7 @@
 import path from 'path';
 const Pool = require('threads').Pool;
 
-const createThreadPool = function(config={}) {
+const threadPool = function(config={}) {
   const {
     workerPath,
     threadsToSpawn,
@@ -14,4 +14,4 @@ const createThreadPool = function(config={}) {
   return pool;
 }
 
-export default createThreadPool
+export default threadPool
