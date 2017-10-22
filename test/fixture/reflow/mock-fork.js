@@ -8,10 +8,12 @@ const mockForkSuites = [
   {
     type: 'suite',
     name: 'Standard Suite',
+    path: '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/standard-describe',
   },
   {
     type: 'suite',
     name: 'Hooked Suite',
+    path: '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/hooked-describe',
   },
 ];
 

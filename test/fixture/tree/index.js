@@ -20,6 +20,7 @@ const complexTree = {
     {
       type: 'suite',
       name: 'Another Standard Suite',
+      path: '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/another-standard-describe',
     },
     {
       type: 'subflow',
@@ -37,6 +38,7 @@ const oneSuiteTree = {
   },
   suites: [{
     type: 'suite',
+    path: '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/standard-describe',
     name: 'Standard Suite',
   }],
 }

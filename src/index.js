@@ -5,7 +5,6 @@ import executeMatrix from './execute'
 import reflowProps from './props'
 
 let initialRun = true;
-let mochaDescribe;
 
 const defaultConfig = {
   watchMode: false,
@@ -14,13 +13,16 @@ const defaultConfig = {
 };
 
 const userConfig = {};
+const suitePaths = {};
 const subflows = {};
 const registeredSuites = {};
 
-const registerSuiteDescription = function(name, descriptor) {
+const registerSuitePath = function(name, path) {
   console.log(`Suite "${name}" registered.`);
-  registeredSuites[name] = descriptor;
+  registeredSuites[name] = path;
 }
+
+
 
 
 const reflow = function(name, getDetail) {
@@ -40,14 +42,6 @@ const reflow = function(name, getDetail) {
   if(userConfig.executeFlows) {
     const config = {
       name,
-      suiteDefinitions: registeredSuites,
-      testRunner: userConfig.testRunner,
-      detail: {
-        ...rest,
-        after() {
-          reflowProps.teardown();
-        }
-      },
     }
     executeMatrix(executionMatrix, config);
   }
@@ -61,12 +55,6 @@ Object.assign(reflow, {
     if (config.watchMode) console.log('Running in watch mode.');
     if (config.analyzeMode) console.log('Running in Analyze mode.');
 
-
-    mochaDescribe = describe;
-
-    global.describe = registerSuiteDescription
-    global.describe.only = mochaDescribe.only
-
     return Object.assign(userConfig, defaultConfig, config);
   },
   completeInitialRun() {
@@ -77,17 +65,16 @@ Object.assign(reflow, {
   },
   analyzeMatrix,
   getSuite(name) {
+    const suitePath = registeredSuites[name];
+    if(!suitePath) throw new Error(`Unable to find suite ${name}.`)
     return {
       name,
+      path: suitePath,
       type: 'suite',
     };
   },
   fork(suites) {
     return suites
-    return {
-      type: 'fork',
-      suites,
-    }
   },
   getSubflow(name) {
     const subflowDetail = subflows[name];
@@ -102,6 +89,7 @@ Object.assign(reflow, {
   getSubflows() {
     return subflows;
   },
+  registerSuitePath,
   ...reflowProps,
 })
 

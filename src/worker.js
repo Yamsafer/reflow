@@ -1,22 +1,20 @@
-const executeSuite = ({ name }) => {
-  // const suiteDescriptor = allSuites[name];
-  const suitePath = getSuiteDefinition(name)
+require('babel-register')();
+require('../test/setup')
+const MochaReflow = require('./mocha-reflow');
 
-  if (!suitePath)
-    throw new Error(`no suites specified in flow "${name}".`);
-
+const executeSuite = ({ name, path }) => {
   // if(name === "NOOP") {
   //   return suiteDescriptor();
   // }
-  return mochaReflowInstance.addFile(suitePath);
-  // describe(name, suiteDescriptor);
+  return mochaReflowInstance.addFile(path);
 };
 
 
 const mochaConfig = {
-  reporter: function() {
+  reporter: 'landing',
+  // reporter: function() {
 
-  }
+  // }
 }
 
 const runReflowInstance = function () {
@@ -27,34 +25,22 @@ const runReflowInstance = function () {
     })
   })
 }
-const executeTree = function(tree) {
+const executeTree = function(tree, done) {
   const treeName = tree.name;
+  console.log('name::', treeName)
   if(tree.type === "fork") {
     console.log('forking: ', treeName)
-    mochaReflowInstance = new MochaRefow(tree, mochaConfig)
+    mochaReflowInstance = new MochaReflow(tree, mochaConfig)
   }
 
-  // const suites = _.isArray(tree.suites)? tree.suites : [tree.suites];
   const suites = [].concat(tree.suites);
-  
-
-  // suites.forEach(branch => {
-  //   const suitePath = getSuiteDefinition(treeName)
-  //   mochaReflowInstance.addFile(suitePath);
-  // })
   suites.forEach(executeSuites);
 
-
-  return mochaReflowInstance
-  // describe(treeName, function() {
-  //   executeMochaHooks(tree)
-  //   suites.forEach(executeSuites);
-  // })
+  mochaReflowInstance.run(done)
 }
 
 const executeSuites = function(branch) {
   if(branch.type === "suite") {
-    // console.log('branch::', branch)
     return executeSuite(branch);
   }
 
@@ -62,22 +48,4 @@ const executeSuites = function(branch) {
 }
 
 
-
-
-function minmax(int, done) {
-  // mochaReflowInstance.run(done)
-  console.log('hi!')
-  if (typeof this.min === 'undefined') {
-    this.min = int;
-    this.max = int;
-  } else {
-    this.min = Math.min(this.min, int);
-    this.max = Math.max(this.max, int);
-  }
-  done({
-    min : this.min,
-    max : this.max
-  });
-}
-
-module.exports = minmax
+module.exports = executeTree

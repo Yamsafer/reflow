@@ -1,6 +1,5 @@
-import assert from 'assert';
-import Mocha from 'mocha';
-
+// import Mocha from 'mocha';
+const Mocha = require('mocha')
 // RUNNER EVENTS
 // *   - `start`  execution started
 // *   - `end`  execution complete
@@ -76,4 +75,4 @@ class MochaRefow extends Mocha {
   }
 }
 
-export default MochaRefow
+module.exports = MochaRefow

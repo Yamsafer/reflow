@@ -1,7 +1,5 @@
 import executeMatrix, {
   executeTree,
-  setSuiteDefinitions,
-  decacheSuiteDefinitions,
 } from '../src/execute'
 
 import {
@@ -15,23 +13,10 @@ import {
   basicMatrix,
 } from './fixture/matrix'
 
-const suiteDefinitions = {
-  'Hooked Suite': '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/hooked-describe',
-  'Standard Suite': '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/standard-describe',
-  'Another Standard Suite': '/Users/Bamieh/Bamieh/reflow/test/fixture/suite/another-standard-describe',
-}
 
 describe("execute", function() {
 
   describe("executeTree", function() {
-    before(function() {
-      setSuiteDefinitions(suiteDefinitions)
-    })
-    afterEach(function() {
-      console.log('decaching defs');
-      decacheSuiteDefinitions();
-    })
-
     it('is a funciton', function() {
       expect(executeTree).to.be.a('function')
     })
@@ -64,17 +49,27 @@ describe("execute", function() {
     })
   })
 
-  describe('execute Matrix', function() {
+  describe.only('execute Matrix', function() {
     it('is a function', function() {
       expect(executeMatrix).to.be.a('function')
+    })
+    it('lols', function() {
+      
     })
     it('executes basic matrices', function(done) {
       const execution = executeMatrix(basicMatrix, {
         name: "Basic Matrix",
-        suiteDefinitions,
       })
-      done()
-      // execution.run(done)
+      execution
+      .on('error', function(err) {
+        console.log('error!!', err)
+        done()
+      })
+      .on('finished', () => {
+        console.log('finished executing basic matrix')
+        done()
+      })
+
     })
 
     describe('configs', function() {
