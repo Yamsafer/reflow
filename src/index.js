@@ -9,20 +9,13 @@ let initialRun = true;
 const defaultConfig = {
   watchMode: false,
   analyzeMode: false,
-  executeFlows: false,
+  executeFlows: true,
 };
 
 const userConfig = {};
 const suitePaths = {};
 const subflows = {};
 const registeredSuites = {};
-
-const registerSuitePath = function(name, path) {
-  console.log(`Suite "${name}" registered.`);
-  registeredSuites[name] = path;
-}
-
-
 
 
 const reflow = function(name, getDetail) {
@@ -32,6 +25,7 @@ const reflow = function(name, getDetail) {
     ...rest,
   } = getDetail() || {};
 
+  console.log('evaluating flow')
   const executionMatrix = evaluateFlow(name, suites);
   
   if(userConfig.analyzeMode) {
@@ -42,7 +36,9 @@ const reflow = function(name, getDetail) {
   if(userConfig.executeFlows) {
     const config = {
       name,
+      ...rest,
     }
+    console.log('executing matrix: ', config)
     executeMatrix(executionMatrix, config);
   }
 
@@ -89,7 +85,10 @@ Object.assign(reflow, {
   getSubflows() {
     return subflows;
   },
-  registerSuitePath,
+  registerSuitePath(name, path) {
+    console.log(`Suite "${name}" registered.`);
+    registeredSuites[name] = path;
+  },
   ...reflowProps,
 })
 

@@ -1,5 +1,6 @@
 // import Mocha from 'mocha';
 const Mocha = require('mocha')
+const path = require('path');
 // RUNNER EVENTS
 // *   - `start`  execution started
 // *   - `end`  execution complete
@@ -26,18 +27,30 @@ const Mocha = require('mocha')
 // 
 
 class MochaRefow extends Mocha {
-  constructor(fork, options) {
+  constructor(tree, options) {
     super(options)
-    this.fork = fork;
-    if(this.fork.before) {
-      this.suite.beforeAll("Before All", this.fork.before)
+    this.tree = tree;
+
+    if(this.tree.before) {
+      // console.log('this.tree.before!')
+
+      const before = eval("(function(){ return {" + this.tree.before + "}})()").before
+      this.suite.beforeAll("Before All", before)
     }
   }
+  loadFile(file, fn) {
+    file = path.resolve(file);
+
+    this.suite.emit('pre-require', global, file, this);
+    this.suite.emit('require', require(file), file, this);
+    this.suite.emit('post-require', global, file, this);
+
+    const addedSuite = this.suite.suites.slice(-1).pop();
+    fn && fn(addedSuite);
+  };
   run(fn) {
-    if (this.files.length) {
-      this.loadFiles();
-    }
     var suite = this.suite;
+
     var options = this.options;
     options.files = this.files;
 

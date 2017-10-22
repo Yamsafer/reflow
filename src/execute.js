@@ -7,13 +7,18 @@ const workerPath = path.join(__dirname, './worker.js');
 const executeMatrix = function(matrix, config) {
   const {
     name,
+    before,
+    after,
+    beforeEach,
+    afterEach,
   } = config;
 
   const totalForks = matrix.length;
   const normalizedMatrix = matrix.map((tree, i) => ({
     name: `${name}: fork #${i+1}/${totalForks}`,
-    suites: tree,
     type: "tree",
+    suites: tree,
+    before: before && "" + before,
   }))
 
   const pool = threadPool({

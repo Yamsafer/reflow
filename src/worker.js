@@ -2,41 +2,33 @@ require('babel-register')();
 require('../test/setup')
 const MochaReflow = require('./mocha-reflow');
 
+let mochaReflowInstance;
+
+const mochaConfig = {
+  // reporter: 'landing',
+  // reporter: function() {}
+}
+
+
 const executeSuite = ({ name, path }) => {
   // if(name === "NOOP") {
   //   return suiteDescriptor();
   // }
-  return mochaReflowInstance.addFile(path);
+  mochaReflowInstance.loadFile(path, function(suite) {
+    // better create a new suite for subflow, and add the before for it.
+    // current implementation will suffer because it adds to the before of the suite not the whole suites.
+    // additionally we have to strinfigy the functions in order to pass them to the thread. ouch.
+    if(suite.title === "Suite D") {
+      suite.beforeAll('Before Subflow: Basic Subflow', function() {
+        console.log('Before Basic Subflow..')
+      })
+    }
+  });
 };
 
-
-const mochaConfig = {
-  reporter: 'landing',
-  // reporter: function() {
-
-  // }
-}
-
-const runReflowInstance = function () {
-  return new Promise((resolve, reject) => {
-    mochaReflowInstance.run(function(failures) {
-      if(failures) return reject(failures);
-      resolve();
-    })
-  })
-}
-const executeTree = function(tree, done) {
-  const treeName = tree.name;
-  console.log('name::', treeName)
-  if(tree.type === "fork") {
-    console.log('forking: ', treeName)
-    mochaReflowInstance = new MochaReflow(tree, mochaConfig)
-  }
-
+const executeSubTree = function(tree) {
   const suites = [].concat(tree.suites);
   suites.forEach(executeSuites);
-
-  mochaReflowInstance.run(done)
 }
 
 const executeSuites = function(branch) {
@@ -44,8 +36,22 @@ const executeSuites = function(branch) {
     return executeSuite(branch);
   }
 
-  return executeTree(branch);
+  return executeSubTree(branch);
 }
+
+
+const executeTree = function(tree, done) {
+  const treeName = tree.name;
+
+  mochaReflowInstance = new MochaReflow(tree, mochaConfig)
+
+  const suites = [].concat(tree.suites);
+  suites.forEach(executeSuites);
+
+  mochaReflowInstance.run(done) 
+}
+
+
 
 
 module.exports = executeTree

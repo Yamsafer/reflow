@@ -48,3 +48,11 @@ Create an http server for reflow, this will enable multiple things:
 - A place to see reporting of tests
 - A place to trigger testing
 - A place to see anomalies
+
+
+## 2.0.0 ToDo:
+- evaluate subflow later on
+- get subflow path
+- get flow path
+- check npool: https://www.npmjs.com/package/npool
+
