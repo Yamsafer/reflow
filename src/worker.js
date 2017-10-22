@@ -1,14 +1,6 @@
-require('babel-register')();
-require('../test/setup')
 const MochaReflow = require('./mocha-reflow');
 
 let mochaReflowInstance;
-
-const mochaConfig = {
-  // reporter: 'landing',
-  // reporter: function() {}
-}
-
 
 const executeSuite = ({ name, path }) => {
   // if(name === "NOOP") {
@@ -42,6 +34,22 @@ const executeSuites = function(branch) {
 
 const executeTree = function(tree, done) {
   const treeName = tree.name;
+
+  const mochaConfig = {
+    // reporter: 'landing',
+    // reporter: function() {}
+  }
+
+  const path = require('path');
+  const config = {
+    require: [
+      'babel-register',
+      path.join(process.cwd(), './example/setup.js'),
+    ]
+  }
+
+  config.require.forEach(require)
+
 
   mochaReflowInstance = new MochaReflow(tree, mochaConfig)
 

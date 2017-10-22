@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { evaluateFlow, evaluateSubflow } from './evaluate';
 import analyzeMatrix from './analyze';
 import executeMatrix from './execute'
@@ -81,9 +80,6 @@ Object.assign(reflow, {
   subflow(name, configCb) {
     console.log(`Registering "${name}" Subflow.`);
     subflows[name] = configCb
-  },
-  getSubflows() {
-    return subflows;
   },
   registerSuitePath(name, path) {
     console.log(`Suite "${name}" registered.`);

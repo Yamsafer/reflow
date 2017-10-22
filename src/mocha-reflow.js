@@ -45,6 +45,7 @@ class MochaRefow extends Mocha {
     this.suite.emit('require', require(file), file, this);
     this.suite.emit('post-require', global, file, this);
 
+    // remove in favor of adding an add suite method
     const addedSuite = this.suite.suites.slice(-1).pop();
     fn && fn(addedSuite);
   };
