@@ -3,12 +3,9 @@ import analyzeMatrix from './analyze';
 import executeMatrix from './execute'
 import reflowProps from './props'
 
-let initialRun = true;
-
 const defaultConfig = {
   watchMode: false,
   analyzeMode: false,
-  executeFlows: true,
 };
 
 const userConfig = {};
@@ -18,7 +15,7 @@ const registeredSuites = {};
 
 
 const reflow = function(name, getDetail) {
-  if(initialRun) return;
+
   const {
     suites,
     ...rest,
@@ -30,16 +27,17 @@ const reflow = function(name, getDetail) {
   if(userConfig.analyzeMode) {
     const analysisTree = analyzeMatrix(name, executionMatrix);
     console.log(analysisTree.join('\n'))
+    return analysisTree;
   }
 
-  if(userConfig.executeFlows) {
-    const config = {
-      name,
-      ...rest,
-    }
-    console.log('executing matrix: ', config)
-    executeMatrix(executionMatrix, config);
+  
+  const config = {
+    name,
+    ...rest,
   }
+  console.log('executing matrix')
+  executeMatrix(executionMatrix, config);
+
 
   return executionMatrix;
 }
@@ -51,12 +49,6 @@ Object.assign(reflow, {
     if (config.analyzeMode) console.log('Running in Analyze mode.');
 
     return Object.assign(userConfig, defaultConfig, config);
-  },
-  completeInitialRun() {
-    if(userConfig.watchMode && initialRun) {
-      console.log("Edit or Save a flow to run it")
-    }
-    initialRun = false;
   },
   analyzeMatrix,
   getSuite(name) {

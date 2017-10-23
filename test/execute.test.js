@@ -49,7 +49,7 @@ describe("execute", function() {
     })
   })
 
-  describe.only('execute Matrix', function() {
+  describe('execute Matrix', function() {
     it('is a function', function() {
       expect(executeMatrix).to.be.a('function')
     })

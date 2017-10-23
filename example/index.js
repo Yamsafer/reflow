@@ -3,8 +3,6 @@ const path = require('path');
 const suites = ['a', 'b', 'c', 'd', 'e'];
 
 
-reflow.init({});
-
 suites.forEach(suiteAlph => {
   const suitePath = path.join(__dirname, `./suites/suite-${suiteAlph}.js`);
   reflow.registerSuitePath(`Suite ${suiteAlph.toUpperCase()}`, suitePath);
@@ -34,7 +32,6 @@ reflow.subflow("Conditional Subflow", function() {
   }
 })
 
-reflow.completeInitialRun();
 
 reflow('Reflow Matrix', function() {
   return {
