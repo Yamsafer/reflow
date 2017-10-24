@@ -1,72 +1,47 @@
 #!/usr/bin/env node
+'use strict';
+const Reflow = require('../distribution/_index.js').default;
+const reflow = new Reflow();
+
+const { utils } = require('mocha');
+
 const path = require('path');
-const reflow = require('../distribution/index.js');
+const cwd = process.cwd();
+const subflowPath = path.join(cwd, './example/subflow/**/*.js');
+const flowPath = path.join(cwd, './example/flow/**/*.js');
+const suitesPath = path.join(cwd, './example/suites/**/*.js');
 
-const subflowPath = path.resolve(__dirname, '../example/subflow/basic.js');
-const flowPath = path.resolve(__dirname, '../example/flow/index.js');
-const suitesPath = path.resolve(__dirname, '../example/suites/suite-a.js');
+const globs = [
+  subflowPath,
+  flowPath,
+  suitesPath,
+]
 
+let files = [];
+const extensions = [];
+const recursive = false; //program.recursive
 
-const describe = function() {
-  console.log('ok!')
-}
-function createSandbox(context, CONTEXT_KEY) {
-  const sandbox = {
-    Buffer,
-    console,
-    process,
-    setTimeout,
-    setInterval,
-    setImmediate,
-    clearTimeout,
-    clearInterval,
-    clearImmediate,
-    describe,
+globs.forEach(function (glob) {
+  var newFiles;
+  try {
+    newFiles = utils.lookupFiles(glob, extensions, recursive);
+  } catch (err) {
+    if (err.message.indexOf('cannot resolve path') === 0) {
+      console.error('Warning: Could not find any test files matching pattern: ' + arg);
+      return;
+    }
+
+    throw err;
   }
-  if(CONTEXT_KEY) sandbox[CONTEXT_KEY] = context;
 
-  sandbox.global = sandbox
-  return sandbox
-}
+  files = files.concat(newFiles);
+});
 
+reflow.files = files;
 
-const code = `
-(function(require, suite) {
+reflow.runFiles()
 
-  console.log('describe::', describe)
-  require(suite)
-  console.log('hello')
-})`;
+console.log('reflow::', reflow)
+// const filesObj = globs.reduce((acc, glob) => acc.concat(utils.lookupFiles(glob, [])), [])
+//      .reduce((acc, filepath) => ({ ...acc, [filepath]: filepath}), {})
 
-const vm = require('vm');
-const NativeModule = module.constructor;
-// const wrapper = NativeModule.wrap(code);
-const wrapper = code;
-
-
-
-const sandbox = createSandbox();
-
-// const script = vm.runInNewContext(code, sandbox);
-const script = new vm.Script(wrapper, {
-  filename: suitesPath,
-  displayErrors: true,
-})
-
-const compiledWrapper = script.runInNewContext(sandbox);
-
-console.log('compiledWrapper:', compiledWrapper)
-compiledWrapper(require, suitesPath)
-
-// compiledWrapper.call(m.exports, m.exports, r, m)
-
-
-// const suites = [suitesPath]
-
-// require(suitesPath)
-
-// suites.forEach(suite => {
-
-//   const suitePath = path.join(__dirname, `./suites/suite-${suiteAlph}.js`);
-//   reflow.registerSuitePath(`Suite ${suiteAlph.toUpperCase()}`, suitePath);
-// })
