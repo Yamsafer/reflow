@@ -1,4 +1,4 @@
-import MochaRefow from '../src/mocha-reflow'
+import MochaRefow from '../lib/mocha-reflow'
 import Mocha from 'mocha'
 
 import mockFork from './fixture/reflow/mock-fork';

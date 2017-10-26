@@ -1,7 +1,7 @@
-// import reflow from '../src'
-// import {evaluateSubflow} from '../src/evaluate'
-// import cartesian from '../src/cartesian';
-// import analyzeTree from '../src/analyze';
+// import reflow from '../lib'
+// import {evaluateSubflow} from '../lib/evaluate'
+// import cartesian from '../lib/cartesian';
+// import analyzeTree from '../lib/analyze';
 
 // describe('Registering a Subflows', function() {
 //   it('is a function', function() {

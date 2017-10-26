@@ -1,6 +1,6 @@
 import executeMatrix, {
   executeTree,
-} from '../src/execute'
+} from '../lib/execute'
 
 import {
   basicTree,

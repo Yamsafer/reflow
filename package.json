@@ -32,6 +32,7 @@
     "mocha": "^3 || ^4"
   },
   "dependencies": {
+    "commander": "^2.11.0",
     "decache": "^4.1.0",
     "glob": "^7.1.2",
     "has": "^1.0.1",
@@ -44,7 +45,7 @@
     "test:watch": "yarn run test -- --reporter min --watch",
     "test:cover": "cross-env NODE_ENV=test nyc yarn run test",
     "clean": "babel-node tools/run clean",
-    "build:babel": "cross-env NODE_ENV=production babel src --out-dir distribution --compact=true --no-comments",
+    "build:babel": "cross-env NODE_ENV=production babel lib --out-dir distribution --compact=true --no-comments",
     "build": "cross-env NODE_ENV=production babel-node tools/run build",
     "prepublish": "yarn run build",
     "coverage:html": "yarn run test:cover && nyc report --reporter=html",

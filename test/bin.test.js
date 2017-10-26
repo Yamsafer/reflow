@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-import Reflow from '../src/';
+import Reflow from '../lib/reflow';
 import { utils } from 'mocha'
 import path from 'path';
 
@@ -45,7 +45,7 @@ describe.only('bin entrance', function() {
 
     reflow.files = files;
 
-    reflow.runFiles()
+    reflow.gatherMatrices()
     reflow.runFlows()
   })
 })

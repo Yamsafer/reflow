@@ -1,4 +1,4 @@
-import {evaluateSubflow} from '../src/evaluate'
+import {evaluateSubflow} from '../lib/evaluate'
 
 
 const createSuite = function(name) {

@@ -1,4 +1,4 @@
-import threadPool from '../src/thread-pool';
+import threadPool from '../lib/thread-pool';
 import path from 'path';
 
 describe('thread pools', function() {
