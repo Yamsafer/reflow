@@ -1,5 +1,12 @@
 describe('Suite A', function() {
-  it('does assertions', function() {
-    expect(1).to.equal(1);
+  before(function() {
+    console.log('hello world!!')
+  })
+  it('does assertions', function(done) {
+    setTimeout(_ => {
+      console.log('im called')
+      expect(1).to.equal(1);
+      done()
+    }, 800)
   })
 })

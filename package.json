@@ -2,7 +2,6 @@
   "name": "re-flow",
   "version": "2.0.0",
   "description": "Mocha Reflow",
-  "main": "./distribution/index.js",
   "author": "Ahmad Bamieh",
   "license": "MIT",
   "devDependencies": {
@@ -23,19 +22,18 @@
     "chai-spies": "^0.7.1",
     "coveralls": "^2.13.1",
     "cross-env": "^4.0.0",
+    "glob": "^7.1.2",
     "mkdirp": "^0.5.1",
     "mocha": "^4.0.1",
     "nyc": "^10.2.0",
     "rimraf": "^2.6.1"
   },
   "peerDependencies": {
-    "mocha": "^3 || ^4"
+    "mocha": "^4"
   },
   "dependencies": {
-    "commander": "^2.11.0",
-    "decache": "^4.1.0",
-    "glob": "^7.1.2",
-    "has": "^1.0.1",
+    "intercept-stdout": "^0.1.2",
+    "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
     "resolve": "^1.4.0",
     "threads": "^0.8.1"

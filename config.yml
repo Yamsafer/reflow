@@ -1,0 +1,9 @@
+files:
+  - ./example/flow/**/*.js
+  - ./example/hooks/**/*.js
+  - ./example/subflow/**/*.js
+  - ./example/suites/**/*.js
+mocha:
+  require:
+    # - babel-register
+    - ./example/setup.js
