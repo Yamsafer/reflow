@@ -51,8 +51,11 @@ Create an http server for reflow, this will enable multiple things:
 
 
 ## 2.0.0 ToDo:
-- evaluate subflow later on
-- get subflow path
-- get flow path
-- check npool: https://www.npmjs.com/package/npool
+- evaluate subflow later on [done]
+- get subflow path [done]
+- get flow path [done]
+= expose mocha-reflow as the main file
+= fix thread pool mem leak or switch to another alternative
+  - check npool: https://www.npmjs.com/package/npool
+  - create own thread pool
 
