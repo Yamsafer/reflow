@@ -1,84 +1,105 @@
-import { evaluateFlow, evaluateSubflow } from './evaluate';
-import analyzeMatrix from './analyze';
+import threadPool from './thread-pool';
+
+import createRunner from './runner/createRunner';
+import {createContext} from './runner/Module';
+
+
 import executeMatrix from './execute'
-import reflowProps from './props'
-
-const defaultConfig = {
-  watchMode: false,
-  analyzeMode: false,
-};
-
-const userConfig = {};
-const suitePaths = {};
-const subflows = {};
-const registeredSuites = {};
+import { evaluateFlow, evaluateSubflow } from './evaluate';
 
 
-const reflow = function(name, getDetail) {
-
-  const {
-    suites,
-    ...rest,
-  } = getDetail() || {};
-
-  console.log('evaluating flow')
-  const executionMatrix = evaluateFlow(name, suites);
-  
-  if(userConfig.analyzeMode) {
-    const analysisTree = analyzeMatrix(name, executionMatrix);
-    console.log(analysisTree.join('\n'))
-    return analysisTree;
+class Reflow {
+  constructor(options) {
+    // this.cwd = options.cwd || process.cwd();
+    this.files = [];
+    this.suites = {};
+    this.subflows = {};
+    this.flows = {};
+    this.hooks = {};
+    this.vm = null;
+    this.run = false;
   }
 
-  
-  const config = {
-    name,
-    ...rest,
+  runFiles() {
+    const self = this;
+
+    const filesObj = this.files.reduce((acc, filepath) => ({ ...acc, [filepath]: filepath}), {})
+
+    this.vm = createRunner(filesObj, {
+      environment(filepath) {
+        return {
+          context: createContext({
+            describe(name) {
+              self.suites[name] = filepath
+            },
+            subflow(name, configCb) {
+              console.log(`Registering "${name}" Subflow.`);
+              self.subflows[name] = configCb
+            },
+            flow(name, fn) {
+              self.flows[name] = filepath
+              if(self.run) {
+                self.runFlow(name, fn)
+              }
+            },
+            hook(name) {
+              console.log(`Registering "${name}" Hook.`);
+              self.hooks[name] = filepath;
+            },
+            getHook(name) {
+              const suitePath = self.hooks[name];
+              if(!suitePath) throw new Error(`Unable to find hook [ ${name} ].`);
+              return {
+                name,
+                path: suitePath,
+                type: 'hook',
+              }
+            },
+            getSubflow(name) {
+              const subflowDetail = self.subflows[name];
+              if(!subflowDetail) throw new Error(`Unable to get subflow [ ${name} ].`);
+
+              return evaluateSubflow(name , subflowDetail)
+            },
+            getSuite(name) {
+              const suitePath = self.suites[name];
+              if(!suitePath) throw new Error(`Unable to find suite [ ${name} ].`);
+              return {
+                name,
+                path: suitePath,
+                type: 'suite',
+              };
+            },
+            fork(suites) {
+              return suites
+            },
+          })
+        }
+      }
+    });
+
   }
-  console.log('executing matrix')
-  executeMatrix(executionMatrix, config);
+  runFlows() {
+    this.run = true;
+    Object.values(this.flows).forEach(this.vm);
+    this.run = false;
+  }
 
-
-  return executionMatrix;
+  runFlow(name, fn) {
+    const suites = fn();
+    const executionMatrix = evaluateFlow(name, suites);
+        
+    const config = {
+      name,
+    }
+    console.log('executing matrix')
+    executeMatrix(executionMatrix, config);
+  }
 }
 
 
-Object.assign(reflow, {
-  init(config) {
-    if (config.watchMode) console.log('Running in watch mode.');
-    if (config.analyzeMode) console.log('Running in Analyze mode.');
+export {
+  threadPool,
+}
 
-    return Object.assign(userConfig, defaultConfig, config);
-  },
-  analyzeMatrix,
-  getSuite(name) {
-    const suitePath = registeredSuites[name];
-    if(!suitePath) throw new Error(`Unable to find suite ${name}.`)
-    return {
-      name,
-      path: suitePath,
-      type: 'suite',
-    };
-  },
-  fork(suites) {
-    return suites
-  },
-  getSubflow(name) {
-    const subflowDetail = subflows[name];
-    if(!subflowDetail) throw new Error(`Unable to get subflow "${name}".`);
-
-    return evaluateSubflow(name , subflowDetail)
-  },
-  subflow(name, configCb) {
-    console.log(`Registering "${name}" Subflow.`);
-    subflows[name] = configCb
-  },
-  registerSuitePath(name, path) {
-    console.log(`Suite "${name}" registered.`);
-    registeredSuites[name] = path;
-  },
-  ...reflowProps,
-})
-
-
-export default reflow
+export default Reflow

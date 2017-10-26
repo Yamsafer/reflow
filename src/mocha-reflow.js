@@ -1,55 +1,39 @@
-// import Mocha from 'mocha';
-const Mocha = require('mocha')
-const path = require('path');
-// RUNNER EVENTS
-// *   - `start`  execution started
-// *   - `end`  execution complete
-// *   - `suite`  (suite) test suite execution started
-// *   - `suite end`  (suite) all tests (and sub-suites) have finished
-// *   - `test`  (test) test execution started
-// *   - `test end`  (test) test completed
-// *   - `hook`  (hook) hook execution started
-// *   - `hook end`  (hook) hook complete
-// *   - `pass`  (test) test passed
-// *   - `fail`  (test, err) test failed
-// *   - `pending`  (test) test pending
-// CONFIG::
-// grep
-// ui
-// reporter
-// timeout
-// bail 
-// useColors
-// retries
-// slow
-// ignoreLeaks
-// fullTrace
-// 
+import Mocha from 'mocha';
+import './interfaces/bdd';
+import path from 'path';
+
+import createDynamicRunner from './runner/dynamic-runner';
+import {createContext} from './runner/Module';
+
 
 class MochaRefow extends Mocha {
   constructor(tree, options) {
     super(options)
-    this.tree = tree;
 
-    if(this.tree.before) {
-      // console.log('this.tree.before!')
-
-      const before = eval("(function(){ return {" + this.tree.before + "}})()").before
-      this.suite.beforeAll("Before All", before)
-    }
+    this.dynamicRunner = createDynamicRunner();
+    this.environment = options.environment;
   }
-  loadFile(file, fn) {
-    file = path.resolve(file);
+  
+  loadFiles(fn) {
+    var self = this;
+    var suite = this.suite;
+    var mochaContext = this.environment;
+    var dynamicRunner = this.dynamicRunner;
 
-    this.suite.emit('pre-require', global, file, this);
-    this.suite.emit('require', require(file), file, this);
-    this.suite.emit('post-require', global, file, this);
+    this.files.forEach(function (file) {
+      const filePath = path.resolve(file);
 
-    // remove in favor of adding an add suite method
-    const addedSuite = this.suite.suites.slice(-1).pop();
-    fn && fn(addedSuite);
-  };
+      suite.emit('pre-require', mochaContext.context, filePath, self);
+      suite.emit('require', dynamicRunner(filePath, mochaContext), filePath, self);
+      suite.emit('post-require', mochaContext.context, filePath, self);
+    });
+    fn && fn();
+  }
+
   run(fn) {
+    if (this.files.length) {
+      this.loadFiles();
+    }
     var suite = this.suite;
 
     var options = this.options;
@@ -89,4 +73,35 @@ class MochaRefow extends Mocha {
   }
 }
 
-module.exports = MochaRefow
+export default MochaRefow
+
+
+
+
+
+
+
+// RUNNER EVENTS
+// *   - `start`  execution started
+// *   - `end`  execution complete
+// *   - `suite`  (suite) test suite execution started
+// *   - `suite end`  (suite) all tests (and sub-suites) have finished
+// *   - `test`  (test) test execution started
+// *   - `test end`  (test) test completed
+// *   - `hook`  (hook) hook execution started
+// *   - `hook end`  (hook) hook complete
+// *   - `pass`  (test) test passed
+// *   - `fail`  (test, err) test failed
+// *   - `pending`  (test) test pending
+// CONFIG::
+// grep
+// ui
+// reporter
+// timeout
+// bail 
+// useColors
+// retries
+// slow
+// ignoreLeaks
+// fullTrace
+// 

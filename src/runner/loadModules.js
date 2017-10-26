@@ -19,5 +19,5 @@ function resolve(require, name) {
 }
 
 export default function loadModules(require, files) {
-  return () => files.reduce((module, file) => load(resolve(require, file), module), null);
+  return files.reduce((module, file) => load(resolve(require, file), module), null);
 }

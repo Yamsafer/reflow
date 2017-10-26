@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-const Reflow = require('../distribution/_index.js').default;
+const Reflow = require('../distribution/index.js').default;
 const reflow = new Reflow();
 
 const { utils } = require('mocha');
@@ -40,8 +40,5 @@ globs.forEach(function (glob) {
 reflow.files = files;
 
 reflow.runFiles()
-
-console.log('reflow::', reflow)
-// const filesObj = globs.reduce((acc, glob) => acc.concat(utils.lookupFiles(glob, [])), [])
-//      .reduce((acc, filepath) => ({ ...acc, [filepath]: filepath}), {})
+reflow.runFlows()
 

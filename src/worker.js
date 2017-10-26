@@ -1,21 +1,17 @@
-const MochaReflow = require('./mocha-reflow');
+require('babel-register')();
+const MochaReflow = require('./mocha-reflow').default;
+const createRunner = require('./runner/createRunner').default;
+const {createContext} = require('./runner/Module');
+const loadModules = require('./runner/loadModules').default;
+const path = require('path');
 
+let vmRunner;
 let mochaReflowInstance;
 
-const executeSuite = ({ name, path }) => {
-  // if(name === "NOOP") {
-  //   return suiteDescriptor();
-  // }
-  mochaReflowInstance.loadFile(path, function(suite) {
-    // better create a new suite for subflow, and add the before for it.
-    // current implementation will suffer because it adds to the before of the suite not the whole suites.
-    // additionally we have to strinfigy the functions in order to pass them to the thread. ouch.
-    if(suite.title === "Suite D") {
-      suite.beforeAll('Before Subflow: Basic Subflow', function() {
-        console.log('Before Basic Subflow..')
-      })
-    }
-  });
+const typesToPush = ["suite", "hook"];
+
+const pushToMocha = ({ path }) => {
+  mochaReflowInstance.files.push(path);
 };
 
 const executeSubTree = function(tree) {
@@ -24,8 +20,8 @@ const executeSubTree = function(tree) {
 }
 
 const executeSuites = function(branch) {
-  if(branch.type === "suite") {
-    return executeSuite(branch);
+  if(typesToPush.includes(branch.type)) {
+    return pushToMocha(branch);
   }
 
   return executeSubTree(branch);
@@ -35,25 +31,20 @@ const executeSuites = function(branch) {
 const executeTree = function(tree, done) {
   const treeName = tree.name;
 
+  const requireList = [
+    'babel-register',
+    path.join(process.cwd(), './example/setup.js'),
+  ]
+
   const mochaConfig = {
-    // reporter: 'landing',
-    // reporter: function() {}
+    environment: loadModules(require, requireList),
+    ui: 'reflow-ui',
   }
-
-  const path = require('path');
-  const config = {
-    require: [
-      'babel-register',
-      path.join(process.cwd(), './example/setup.js'),
-    ]
-  }
-
-  config.require.forEach(require)
-
-
-  mochaReflowInstance = new MochaReflow(tree, mochaConfig)
+  
+  mochaReflowInstance = new MochaReflow(tree, mochaConfig);
 
   const suites = [].concat(tree.suites);
+  
   suites.forEach(executeSuites);
 
   mochaReflowInstance.run(done) 

@@ -19,7 +19,7 @@ function isNativeModule(id) {
 // Creates a sandbox so we don't share globals across different runs.
 
 function createContext(passContext = {}) {
-  const sandbox = {
+  const context = {
     Buffer,
     clearImmediate,
     clearInterval,
@@ -31,12 +31,13 @@ function createContext(passContext = {}) {
     process,
     ...passContext,
   };
-  sandbox.global = sandbox;
-  return sandbox;
+  context.global = context;
+  return context;
 }
 
 // This class should satisfy the Module interface that NodeJS defines in their native module.js
 // implementation.
+
 class Module {
   constructor(id, parent) {
     const cache = parent ? parent.cache : null;
@@ -56,7 +57,6 @@ class Module {
   }
 
   run(filename) {
-
     const ext = path.extname(filename);
     const extension = moduleExtensions[ext] ? ext : '.js';
     moduleExtensions[extension](this, filename);
@@ -74,6 +74,7 @@ class Module {
     function require(filePath) {
       return self.require(filePath);
     }
+
     require.resolve = request => NativeModule._resolveFilename(request, this);
     require.main = process.mainModule;
     require.extensions = moduleExtensions;

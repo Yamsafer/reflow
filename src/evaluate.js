@@ -1,6 +1,13 @@
 import _ from 'lodash';
 import cartesian from './cartesian';
+const types = ["suite", "subflow", "fork"];
 
+
+const putInArray = array => {
+  return array
+  // return array.length === 1? array.map(item => [item]) : array;
+}
+  
 const evaluateSubflow = function(name, getDetail) {
   const {suites, ...rest} = getDetail();
   if(!_.isArray(suites)) throw new Error(`no suites provided in subflow "${name}".`);
@@ -33,41 +40,39 @@ const evaluateType = function(suite) {
   }
   return suite
 }
-const types = ["suite", "subflow", "fork"];
+
 
 const evaluateFlow = function(name, suites) {
   if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
 
   const formattedSuites = suites
+
     .reduce((acc, branch) => {
-      if(branch.type === "suite") {
-        acc.push([branch])
-      }
 
       if(_.isArray(branch)) {
         acc.push(branch);
+      } else {
+        acc.push([branch])
       }
       
       return acc;
     }, []);
+
   const cartesianed = cartesian(...formattedSuites);
 
-  if(cartesianed) {
-    const conditionedCart = cartesianed.map(combination => combination.reduce((acc, branch) => {
-      if(branch.type === "subflow" && branch.condition) {
-        const pass = branch.condition(acc);
-        if(!pass) {
-          return acc;
-        }
+  const conditionedCart = putInArray(cartesianed).map(combination => combination.reduce((acc, branch) => {
+    if(branch.type === "subflow" && branch.condition) {
+      const pass = branch.condition(acc);
+      if(!pass) {
+        return acc;
       }
-      acc.push(branch);
-      return acc;
-    }, []));
+    }
+    acc.push(branch);
+    return acc;
+  }, []));
 
-    return _.uniqWith(conditionedCart, _.isEqual);
-  }
+  return _.uniqWith(conditionedCart, _.isEqual);
 
-  return cartesianed;
 }
 
 export {
