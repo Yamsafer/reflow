@@ -1,2 +1,2 @@
 'use strict';
-module.exports = require('./distribution/reflow');
+module.exports = require('./lib/reflow');

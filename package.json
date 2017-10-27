@@ -4,6 +4,9 @@
   "description": "Mocha Reflow",
   "author": "Ahmad Bamieh",
   "license": "MIT",
+  "bin": {
+    "reflow": "bin/_reflow.js"
+  },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",

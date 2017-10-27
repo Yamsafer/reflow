@@ -3,7 +3,13 @@ files:
   - ./example/hooks/**/*.js
   - ./example/subflow/**/*.js
   - ./example/suites/**/*.js
+
+tags:
+  - core
+
 mocha:
+  reporter: 'list'
+  bail: true
   require:
-    # - babel-register
+    - babel-register
     - ./example/setup.js
