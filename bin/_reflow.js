@@ -3,6 +3,7 @@
 
 const path = require('path');
 const _ = require('lodash');
+const server = require('./server')
 
 const getConfigs = require('./configs');
 const {

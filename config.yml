@@ -3,6 +3,10 @@ files:
   - ./example/hooks/**/*.js
   - ./example/subflow/**/*.js
   - ./example/suites/**/*.js
+
+server:
+  port: 3000
+  
 mocha:
   require:
     # - babel-register
