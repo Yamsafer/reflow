@@ -4,6 +4,9 @@ files:
   - ./example/subflow/**/*.js
   - ./example/suites/**/*.js
 
+server:
+  port: 3000
+  
 tags:
   - core
 

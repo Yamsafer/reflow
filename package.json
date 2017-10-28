@@ -29,12 +29,14 @@
     "mkdirp": "^0.5.1",
     "mocha": "^4.0.1",
     "nyc": "^10.2.0",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "supertest": "^3.0.0"
   },
   "peerDependencies": {
     "mocha": "^4"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "intercept-stdout": "^0.1.2",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
