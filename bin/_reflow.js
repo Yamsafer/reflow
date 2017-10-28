@@ -9,7 +9,7 @@ const getConfigs = require('./configs');
 const {
   default: Reflow,
   lookupFiles,
-} = require('../lib/reflow');
+} = require('../');
 
 const ROOTPATH = process.cwd();
 const configPath = path.join(ROOTPATH, 'config.yml');
@@ -17,6 +17,7 @@ const config = _.defaultsDeep(getConfigs(configPath), {
   mocha: {
     require: [],
   },
+  tags: [],
   extensions: [],
   recursive: false,
 });
@@ -27,7 +28,6 @@ reflow.files = _(config.files)
                 .flatMap(lookupFiles(ROOTPATH, config))
                 .compact()
                 .value()
-
 
 reflow.gatherMatrices()
 reflow.runFlows()
