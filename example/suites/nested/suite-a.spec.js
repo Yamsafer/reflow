@@ -1,4 +1,4 @@
-import randomModule from './random-module';
+import randomModule from '../random-module';
 
 describe('Suite A', function() {
   it('does assertions', function(done) {
