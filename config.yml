@@ -2,7 +2,7 @@ files:
   - ./example/flow/**/*.js
   - ./example/hooks/**/*.js
   - ./example/subflow/**/*.js
-  - ./example/suites/**/*.js
+  - ./example/suites/**/*.spec.js
 tags:
   - core
 mocha:

@@ -1,3 +1,5 @@
 'use strict';
-// module.exports = require('./lib/reflow');
-module.exports = require('./distribution/reflow');
+
+const targetFolder = process.env.REFLOW_ENV === "DEV"? "lib" : "distribution";
+
+module.exports = require(`./${targetFolder}/reflow`);
