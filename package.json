@@ -1,6 +1,6 @@
 {
   "name": "re-flow",
-  "version": "2.0.0-rc.3",
+  "version": "2.0.0-rc.5",
   "description": "Mocha Reflow",
   "author": "Ahmad Bamieh",
   "license": "MIT",
@@ -38,6 +38,7 @@
     "mocha": "^4"
   },
   "dependencies": {
+    "duration": "^0.2.0",
     "intercept-stdout": "^0.1.2",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
