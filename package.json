@@ -43,15 +43,15 @@
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha",
-    "test:watch": "yarn run test -- --reporter min --watch",
-    "test:cover": "cross-env NODE_ENV=test nyc yarn run test",
+    "test:watch": "npm run test -- --reporter min --watch",
+    "test:cover": "cross-env NODE_ENV=test nyc npm run test",
     "clean": "babel-node tools/run clean",
     "build:babel": "cross-env NODE_ENV=production babel lib --out-dir distribution --compact=true --no-comments",
     "build": "cross-env NODE_ENV=production babel-node tools/run build",
-    "prepublish": "yarn run build",
-    "coverage:html": "yarn run test:cover && nyc report --reporter=html",
-    "coverage:lcov": "yarn run test:cover && nyc report --reporter=lcov",
-    "coverage": "yarn run coverage:html && open coverage/index.html",
+    "prepublish": "npm run build",
+    "coverage:html": "npm run test:cover && nyc report --reporter=html",
+    "coverage:lcov": "npm run test:cover && nyc report --reporter=lcov",
+    "coverage": "npm run coverage:html && open coverage/index.html",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "codecov": "codecov"
   }

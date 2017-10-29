@@ -3,10 +3,8 @@ files:
   - ./example/hooks/**/*.js
   - ./example/subflow/**/*.js
   - ./example/suites/**/*.js
-
 tags:
   - core
-
 mocha:
   reporter: 'list'
   bail: true
