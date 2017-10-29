@@ -4,6 +4,8 @@
 const path = require('path');
 const _ = require('lodash');
 const fs = require('fs');
+const os = require('os');
+const MODES = ['analyze', 'analyse', 'execute'];
 
 const getConfigs = require('./configs');
 const {
@@ -21,11 +23,16 @@ const config = _.defaultsDeep(getConfigs(configPath), {
   mocha: {
     require: [],
   },
+  numberOfThreads: os.cpus().length,
   tags: [],
+  mode: 'execute',
   extensions: [],
   recursive: false,
 });
 
+if(!MODES.includes(config.mode)) {
+  throw new Error(`Mode not found: ${config.mode}`);
+}
 var resolve = path.resolve;
 var exists = fs.existsSync || path.existsSync;
 
@@ -49,4 +56,12 @@ reflow.files = _(config.files)
                 .value()
 
 reflow.gatherMatrices()
-reflow.runFlows()
+
+if(/analy(z|s)e/.test(config.mode)) {
+  reflow.analyzeFlows();
+}
+
+if(/execute/.test(config.mode)) {
+  reflow.runFlows()
+}
+

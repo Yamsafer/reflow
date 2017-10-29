@@ -5,6 +5,8 @@ files:
   - ./example/suites/**/*.spec.js
 # tags:
 #   - core
+# numberOfThreads: 16
+mode: analyze
 mocha:
   reporter: 'list'
   bail: true
