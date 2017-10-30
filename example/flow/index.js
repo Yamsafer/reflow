@@ -13,8 +13,9 @@ flow('Reflow Matrix', function() {
     getSuite('Suite A', ['core']),
     getHook('Hook A1', ['core']),
     getHook('Hook B1', ['core']),
-    getSuite('Suite B', ['core']),
+    // getSuite('Suite B', ['core']),
 
+    getSubflow('Hooked Subflow'),
 
     // fork([
     //   getHook('Hook A', ['core']),
@@ -28,7 +29,6 @@ flow('Reflow Matrix', function() {
     // ]),
     // getSubflow('Basic Subflow'),
     // getSubflow('Conditional Subflow'),
-    // getSubflow('Hooked Subflow'),
     getHook('After All', ['core']),
     // fork([
     //   getSuite('Suite B'),
