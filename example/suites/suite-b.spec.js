@@ -3,9 +3,15 @@ describe('Suite B', function() {
     console.log('Suite B before');
   })
   after(function() {
-    console.log('Suite B After');
+    return new Promise((resolve, reject) => {
+      console.log('Suite B After');
+      setTimeout(resolve, 600)
+    })
   })
   it('does B assertions', function() {
-    expect(1).to.equal(1);
+    return new Promise((resolve, reject) => {
+      expect(1).to.equal(1);
+      setTimeout(resolve, 600)
+    })
   })
 })

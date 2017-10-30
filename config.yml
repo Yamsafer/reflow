@@ -6,7 +6,7 @@ files:
 # tags:
 #   - core
 # numberOfThreads: 16
-mode: analyze
+# mode: analyze
 mocha:
   reporter: 'list'
   bail: true
