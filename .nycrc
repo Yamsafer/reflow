@@ -3,10 +3,10 @@
     "babel-register"
   ],
   "include": [
-    "src"
+    "lib"
   ],
   "exclude": [
-    "src/utils"
+    "lib/utils"
   ],
   "reporter": [
     "lcov",
