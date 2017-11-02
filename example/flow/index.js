@@ -7,12 +7,12 @@ flow('Reflow Matrix', function() {
 
     fork([
       getHook('Hook C', ['core']),
+      getHook('Hook B1', ['core']),
       // getHook('1 week from now'),
       // getHook('3 nights'),
     ]),
     getSuite('Suite A', ['core']),
     getHook('Hook A1', ['core']),
-    getHook('Hook B1', ['core']),
     // getSuite('Suite B', ['core']),
 
     getSubflow('Hooked Subflow'),

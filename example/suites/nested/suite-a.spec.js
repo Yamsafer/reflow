@@ -10,4 +10,7 @@ describe('Suite A', function() {
   it('imports files', function() {
     expect(randomModule).to.be.a('function');
   })
+  // it('fails', function() {
+  //   expect(1).to.equal(2)
+  // })
 })
