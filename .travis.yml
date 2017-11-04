@@ -1,9 +1,18 @@
+sudo: false
 language: node_js
 node_js:
   - '6'
+addons:
+  code_climate:
+    repo_token: 21d81180cc25da6e0bde0284a5d60ccf650d1978ab7fa47b428d48c8ca73455d
+before_script:
+  - 'npm install -g codeclimate-test-reporter'
 script:
   - npm run lerna:bootstrap
   - npm run lerna:test
+# after_script:
+#   - 'codeclimate-test-reporter < coverage/lcov.info'
 after_success:
   - npm run lerna:report-coverage
+  - npm run lerna:publish
 cache: npm
