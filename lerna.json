@@ -3,7 +3,7 @@
   "commands": {
     "publish": {
       "ignore": [
-        "example",
+        "example-core",
         "example-analytics"
       ]
     }
