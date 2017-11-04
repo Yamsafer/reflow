@@ -1,8 +1,5 @@
 # Re|flow
 
-Re|flow Allows you to create super powerful *flows* for mocha.
-
-This library is in active development and is being used in production.
 
 ## Getting Started
 Install `re-flow` in your project to get started!
