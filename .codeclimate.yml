@@ -5,7 +5,11 @@ engines:
       languages:
       - javascript
     exclude_paths:
-      - packages/*/test/
+      - "packages/**/distribution/"
+      - "features/"
+      - "**/node_modules/"
+      - script/
+      - "**/test/"
   eslint:
     enabled: true
 ratings:
