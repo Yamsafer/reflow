@@ -48,6 +48,6 @@
     "build": "cross-env NODE_ENV=production babel lib --out-dir distribution --compact=true --no-comments",
     "prepublish": "npm run build",
     "coverage": "nyc npm run test && nyc report --reporter=html && open coverage/index.html",
-    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov"
+    "report-coverage": "nyc npm run test && nyc report --reporter=lcov > coverage.lcov && codecov"
   }
 }
