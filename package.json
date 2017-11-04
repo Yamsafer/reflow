@@ -6,6 +6,7 @@
   "scripts": {
     "lerna:init": "lerna init",
     "lerna:bootstrap": "lerna bootstrap",
+    "lerna:publish-man": "lerna publish",
     "lerna:publish": "lerna publish --canary --yes",
     "lerna:test": "lerna run test",
     "lerna:report-coverage": "lerna run report-coverage"
