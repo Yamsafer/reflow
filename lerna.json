@@ -1,15 +1,16 @@
 {
   "lerna": "2.4.0",
-  "version": "2.0.4",
   "commands": {
     "publish": {
       "ignore": [
-        "example"
+        "example",
+        "example-analytics"
       ]
     }
   },
   "packages": [
     "packages/*"
   ],
-  "npmClient": "npm"
+  "npmClient": "npm",
+  "version": "2.0.4"
 }

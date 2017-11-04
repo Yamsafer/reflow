@@ -30,12 +30,10 @@
   },
   "dependencies": {
     "express": "^4.16.2",
-    "itp-express-redis-cache": "^1.1.0",
-    "lodash": "^4.17.4",
-    "redis": "^2.8.0"
+    "lodash": "^4.17.4"
   },
   "scripts": {
-    "test": "cross-env REFLOW_ENV=DEV mocha",
+    "test": "cross-env NODE_ENV=test mocha",
     "test:watch": "npm run test -- --reporter min --watch",
     "build": "cross-env NODE_ENV=production babel lib --out-dir distribution --compact=true --no-comments",
     "prepublish": "npm run build",

@@ -1,17 +1,19 @@
-import server from '../lib';
+import reflowServer from '../lib';
 
-describe('Analytics Server', function() {
-  before(function() {
-    this.app = server();
-    this.request = supertest(this.app);
-  })
+describe('Server', function() {
   it('returns an express server', function() {
-    console.log(this.request)
-  })
+    const app = reflowServer();
+    expect(app).to.be.a('function');
+  });
+
+
   it('lifts a server', function(done) {
-    this.request
+    const app = reflowServer();
+    const agent = request.agent(reflowServer());
+
+    agent
       .get('/')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-  })
+      .expect(200)
+      .end(done);
+  });
 })
