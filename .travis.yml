@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - '6'
+script:
+  - npm run lerna:bootstrap
+  - npm run lerna:test
+after_success:
+  - npm run lerna:report-coverage
+cache: npm
