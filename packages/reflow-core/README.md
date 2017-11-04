@@ -1,11 +1,7 @@
-# Re|flow
-
-
-## Getting Started
-Install `re-flow` in your project to get started!
+# reflow|core
 
 ```sh
-$ npm install --save re-flow
+$ npm install --save reflow-core
 ```
 
 ### Current Features:
