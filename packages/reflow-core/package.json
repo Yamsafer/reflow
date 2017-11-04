@@ -1,0 +1,52 @@
+{
+  "name": "reflow-core",
+  "version": "2.0.3",
+  "description": "Reflow Core",
+  "author": "Ahmad Bamieh",
+  "license": "MIT",
+  "bin": {
+    "reflow": "bin/_reflow.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bamieh/re-flow"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.24.1",
+    "babel-plugin-inject": "^0.0.4",
+    "babel-plugin-istanbul": "^4.1.1",
+    "babel-plugin-rewire": "^1.1.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.24.1",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-spies": "^0.7.1",
+    "codecov": "^3.0.0",
+    "cross-env": "^4.0.0",
+    "glob": "^7.1.2",
+    "mocha": "^4.0.1",
+    "nyc": "^10.2.0"
+  },
+  "peerDependencies": {
+    "mocha": "^4"
+  },
+  "dependencies": {
+    "decache": "^4.2.0",
+    "duration": "^0.2.0",
+    "intercept-stdout": "^0.1.2",
+    "js-yaml": "^3.10.0",
+    "lodash": "^4.17.4",
+    "threads": "^0.8.1"
+  },
+  "scripts": {
+    "test": "cross-env REFLOW_ENV=DEV mocha",
+    "test:watch": "npm run test -- --reporter min --watch",
+    "build": "cross-env NODE_ENV=production babel lib --out-dir distribution --compact=true --no-comments",
+    "prepublish": "npm run build",
+    "coverage": "nyc npm run test && nyc report --reporter=html && open coverage/index.html",
+    "report-coverage": "nyc npm run test && nyc report --reporter=lcov > coverage.lcov && codecov"
+  }
+}
