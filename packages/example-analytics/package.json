@@ -2,6 +2,6 @@
   "name": "example-analytics",
   "version": "2.0.4",
   "dependencies": {
-    "reflow-analytics": "x"
+    "reflow-analytics": "2.x"
   }
 }

@@ -5,7 +5,7 @@ subflow("Basic Subflow", function() {
       // reflow.set('name', 'bamieh')
     },
     suites: [
-      reflow.getSuite('Suite D'),
+      getSuite('Standard Suite'),
     ]
   }
 })

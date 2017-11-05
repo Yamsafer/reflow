@@ -5,8 +5,7 @@
   },
   "scripts": {
     "lerna:bootstrap": "lerna bootstrap",
-    "lerna:publish": "lerna publish --yes",
-    "lerna:test": "lerna run test",
+    "lerna:test": "lerna run --scope reflow-core --scope reflow-analytics test",
     "lerna:report-coverage": "lerna run report-coverage"
   }
 }

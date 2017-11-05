@@ -20,7 +20,7 @@ const createReflowContext = function(filepath) {
     },
     flow(name, fn) {
       self.flows[name] = {
-        name, 
+        name,
         path: filepath,
         fn,
       };
@@ -96,15 +96,21 @@ class Reflow {
     Object.values(this.flows).forEach(this.runFlow.bind(this))
   }
   analyzeFlows() {
-    Object.values(this.flows).forEach(this.analyze.bind(this))
+    const analyzedMatrices = Object.values(this.flows).map(this.analyze.bind(this));
+    analyzedMatrices.forEach(({name, analysis}) => {
+      console.log(`${name}: (${analysis.length} combinations)`,)
+      console.log(analysis.join('\n'));
+    })
   }
+
   analyze({name, fn}) {
     const suites = fn();
     const matrix = evaluateFlow(suites, this.options.tags);
-    const analyzedMatrix = analyzeMatrix(name, matrix);
-    console.log(analyzedMatrix.join('\n'));
 
-    return analyzedMatrix;
+    return {
+      name,
+      analysis: analyzeMatrix(matrix),
+    };
   }
 
   runFlow({name, fn}) {
@@ -119,7 +125,7 @@ class Reflow {
       index: i,
       suites: tree,
     }))
-    
+
     const startTime = new Date();
     console.log(`Spinning of ${this.options.numberOfThreads} threads.`);
     console.log(`${name}: (${totalForks} total flows)`)

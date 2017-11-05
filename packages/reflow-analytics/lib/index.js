@@ -1,22 +1,25 @@
 import express from 'express'
 import _ from 'lodash';
+import bodyParser from 'body-parser';
 
 const defaultConfig = {
-  server: {
-    port: 3000,
-  },
+  port: 3000,
 };
-
 function lift(userConfig) {
   const config = _.defaults(userConfig, defaultConfig);
 
   const app = express();
-  const expressPort = config.server.port;
 
-  app.get('/', function(req, res, next) {
+  app.use(bodyParser.json());
+
+  app.get('/', function(req, res) {
     res.send('hello')
   });
-  // const server = app.listen(config.server.port, function() {
+  app.post('/tree', function(req, res) {
+    // console.log(req.body)
+    res.send('Success')
+  })
+  // const server = app.listen(config.port, function() {
   //   // console.log('reflow|analytics Online.');
   // });
 

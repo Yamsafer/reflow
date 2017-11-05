@@ -20,20 +20,17 @@ const resolveTypes = function(branch) {
 }
 
 
-const analyzeMatrix = function(matrixName, combinations) {
-  const analysisTree = [];
-
+const analyzeMatrix = function(combinations) {
   const analyticsMap = combinations.map(combination => {
-    return combination.map(resolveTypes).join(ARROW)
-  });
+    return combination.map(resolveTypes);
+  }).map(combination => {
+    return combination.map((name, index, array) => {
+      if(index === 0) return null;
+      return `${array[index-1]} -> ${name}`
+    }).filter(Boolean)
+  })
 
-  analysisTree.push(`${matrixName}: (${analyticsMap.length} combinations)`);
-  
-  analyticsMap.forEach(combination => {
-    analysisTree.push(` | ${combination}`);
-  });
-
-  return analysisTree
+  return _.union(...analyticsMap)
 };
 
 export default analyzeMatrix
