@@ -72,12 +72,12 @@ subflow('Mocha suite 5', function() {
 });
 // flow.js
 getSubflow('Mocha suite 1'),
-  getSubflow('Mocha suite 2'),
-  fork([
-    getSubflow('Mocha suite 3'),
-    getSubflow('Mocha suite 4'),
-  ]),
-  getSubflow('Mocha suite 5'),
+getSubflow('Mocha suite 2'),
+fork([
+  getSubflow('Mocha suite 3'),
+  getSubflow('Mocha suite 4'),
+]),
+getSubflow('Mocha suite 5'),
 ```
 ### Hooks
 These are mainly used to set global variables and help in the transition between the sub-flows, they can also be used to initialize any variable before the whole test starts.
