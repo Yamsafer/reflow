@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import cartesian from './cartesian';
-const types = ["suite", "subflow", "fork"];
+const types = ["suite", "subflow", "fork", "hook"];
+const conditionalTypes = ["subflow", "hook"];
 
 
 const evaluateSubflow = function(name, getDetail) {
@@ -53,7 +54,7 @@ const evaluateFlow = function(suites, activeTags) {
   const conditionedCart = cartesianed
     .map(_.castArray)
     .map(combination => combination.reduce((acc, branch) => {
-      if(branch.type === "subflow" && branch.condition) {
+      if(branch.condition && conditionalTypes.includes(branch.type)) {
         const pass = branch.condition(acc);
         if(!pass) {
           return acc;
