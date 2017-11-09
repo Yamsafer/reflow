@@ -10,7 +10,7 @@ const executeMatrix = function(matrix, config) {
 
   const pool = threadPool({
     workerPath: path.join(__dirname, './worker.js'),
-    threadsToSpawn: numberOfThreads,
+    threadsToSpawn: Math.min(numberOfThreads, matrix.length),
   });
 
   const sendToPool = tree => pool.send({tree, mochaConfig})
