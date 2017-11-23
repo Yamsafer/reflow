@@ -127,9 +127,15 @@ class Reflow {
     }))
 
     const startTime = new Date();
-    console.log(`Spinning of ${this.options.numberOfThreads} threads.`);
+
+    const threadCount = Math.min(this.options.numberOfThreads, totalForks);
+
+    console.log(`Spinning of ${threadCount} threads.`);
     console.log(`${name}: (${totalForks} total flows)`)
-    const threadPool = executeMatrix(normalizedMatrix, this.options);
+    const threadPool = executeMatrix(normalizedMatrix, {
+      ...this.options,
+      numberOfThreads: threadCount,
+    });
 
     threadPool.on('finished', function() {
       const duration = new Duration(startTime, new Date())
