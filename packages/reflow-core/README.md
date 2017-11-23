@@ -5,6 +5,7 @@ $ npm install --save reflow-core
 ```
 
 ### Current Features:
+
 Create Mocha flows for true Integration Testing.
 - Test Flows
 - Subflows
@@ -15,6 +16,7 @@ Create Mocha flows for true Integration Testing.
 - Tags
 
 ### Example
+
 #### Basic Flow
 ```
 reflow("Example Flow", function() {
@@ -25,7 +27,9 @@ reflow("Example Flow", function() {
 })
 ```
 ### Subflows
+
 By dividing the large flows into sub-flows, which increases the modularity of the flows by decreasing the granularity, it becomes easier to understand large flows and makes it possible to reuse the sub-flows to build custom flows, this also helps in getting rid of the duplicate code which can be found in large flows, in the following examples the suites [1,2,3] can be inserted in any flow by just adding the flow "sub-flow".
+
 ### Example
 #### Basic Sub-Flow
 ```
@@ -39,10 +43,14 @@ By dividing the large flows into sub-flows, which increases the modularity of th
   };
 });
 ```
+
 ### Forking
+
 This is used to run a flow in two alternative versions, the flow would run in two sequences which are similar with a difference in where the flow was forked, in the given examples the flow would run twice, first it will go through the suites [1,2,3,5] the second time would run [1,2,4,5]
 ### Example
+
 #### Basic Fork
+
 ```
   getSubflow('Mocha suite 1'),
   getSubflow('Mocha suite 2'),
@@ -53,9 +61,12 @@ This is used to run a flow in two alternative versions, the flow would run in tw
   getSubflow('Mocha suite 5'),
 ```
 ### Conditional
+
 In huge sized flows there could be a sequence that is exclusive to a certain flow which won't be ran if others, so conditionals are used to run these sub-flows, in this example the sub-flows in the flow.js file would run twice in the following sequences [1,2,3,5] and [1,2,4] this is because the suite number 5 is conditional to suite 3, if suit 3 doesn't run then neither will suite 5.
 ### Example
+
 #### Basic Hook
+
 ```
 // Mocha_suite_5.js
 subflow('Mocha suite 5', function() {
@@ -70,6 +81,7 @@ subflow('Mocha suite 5', function() {
     ],
   };
 });
+
 // flow.js
 getSubflow('Mocha suite 1'),
 getSubflow('Mocha suite 2'),
@@ -79,10 +91,14 @@ fork([
 ]),
 getSubflow('Mocha suite 5'),
 ```
+
 ### Hooks
+
 These are mainly used to set global variables and help in the transition between the sub-flows, they can also be used to initialize any variable before the whole test starts.
+
 ### Example
 #### Basic Hook
+
 ```
 hook('variable', function() {
   return {
