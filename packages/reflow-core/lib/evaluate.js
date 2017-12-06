@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import cartesian from './cartesian';
 const types = ["suite", "subflow", "fork", "hook"];
-const conditionalTypes = ["subflow", "hook"];
+const conditionalTypes = ["subflow", "hook","suite"];
 
 
 const evaluateSubflow = function(name, getDetail) {
