@@ -18,7 +18,6 @@ describe('evaluate flow', function() {
       createSuite('s2'),
       ],
       ]
-      console.log("testing ")
       expect(evaluateFlow(suites).length).to.equal(1);
   })
 })
