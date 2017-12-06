@@ -1,0 +1,26 @@
+{
+  "name": "reflow-reporter",
+  "version": "2.3.1",
+  "description": "Reflow Reporter",
+  "author": "Ahmad Bamieh",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bamieh/reflow"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "test:watch": "npm run test -- --watch"
+  },
+  "peerDependencies": {
+    "mocha": "^4"
+  },
+  "dependencies": {
+    "lodash.defaults": "^4.2.0"
+  }
+}

@@ -1,7 +1,17 @@
 {
   "name": "example-analytics",
   "version": "2.0.4",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
   "dependencies": {
-    "reflow-analytics": "2.x"
+    "elasticsearch": "^14.0.0",
+    "express": "^4.16.2",
+    "mongodb": "^2.2.33",
+    "reflow-circuit": "^2.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
