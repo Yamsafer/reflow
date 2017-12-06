@@ -38,7 +38,6 @@ const evaluateType = function(suite) {
 }
 
 const evaluateFlow = function(suites, activeTags) {
-
   const formattedSuites = suites
     .filter(Boolean)
     .map(branch => _.isArray(branch)? branch : [branch])
@@ -47,26 +46,23 @@ const evaluateFlow = function(suites, activeTags) {
       acc.push(branch);
       return acc;
     }, []);
-
-
   const cartesianed = cartesian(...formattedSuites);
-
   const conditionedCart = cartesianed
     .map(_.castArray)
     .map(combination => combination.reduce((acc, branch) => {
       if(branch.condition && conditionalTypes.includes(branch.type)) {
         const pass = branch.condition(acc);
         if(!pass) {
-          return acc;
+          return "[]";
         }
       }
       acc.push(branch);
       return acc;
-    }, []));
-
+    },[]));
+    _.pull(conditionedCart, "[]")
   return _.uniqWith(conditionedCart, _.isEqual);
-
 }
+
 
 export {
   evaluateFlow,

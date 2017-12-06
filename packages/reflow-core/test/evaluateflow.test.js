@@ -11,20 +11,13 @@ const createSuite = function(name, condition) {
 
 describe.only('evaluate flow', function() {
 
-  it('evaluates Flow', function() {
+  it('test evaluateFlow length', function() {
     const suites = [
        [
-      createSuite('s1a', () => false),
-      createSuite('s1b'),
+      createSuite('s1', () => false),     
+      createSuite('s2'),
       ],
-      [
-    createSuite('s2a'),
-      createSuite('s2b'),
-      ],
-      createSuite('s3'),
-      createSuite('s4'),
-    ]
-
-    evaluateFlow(suites);
+      ]
+      expect(evaluateFlow(suites).length).to.equal(1);
   })
 })
