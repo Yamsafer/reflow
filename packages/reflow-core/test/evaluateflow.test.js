@@ -9,7 +9,7 @@ const createSuite = function(name, condition) {
   }
 }
 
-describe.only('evaluate flow', function() {
+describe('evaluate flow', function() {
 
   it('test evaluateFlow length', function() {
     const suites = [
@@ -18,6 +18,7 @@ describe.only('evaluate flow', function() {
       createSuite('s2'),
       ],
       ]
+      console.log("testing ")
       expect(evaluateFlow(suites).length).to.equal(1);
   })
 })
