@@ -18,7 +18,7 @@
 
 > This Framework is still in its early stages of active development.
 
-Reflow is a framework to writing e2e tests for enterprise projects. Large amount of effort is being made on this project to bring it to maturity. Currently, the only way to use this project is to dig into the code and the `README` files of each package.
+Reflow is a framework to writing e2e tests for enterprise projects. Huge efforts and time are being committed on this project to bring it to maturity. Currently, the only way to use this project is to dig into the code and the `README` files of each package.
 
 ## License
 
