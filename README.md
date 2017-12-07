@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/reflow-3/reflow.svg" width="230" height="80" />
+  <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/reflow-3/reflow.png" width="230" height="80" />
   <hr />
 </p>
 
