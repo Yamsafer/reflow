@@ -1,13 +1,48 @@
 const _ = require('lodash');
-const graphqlRoute = require('./routes/graphql');
+const express = require('express');
+const bodyParser = require('body-parser');
+const DataLoader = require('dataloader');
+const {
+  graphqlExpress,
+  graphiqlExpress,
+} = require('graphql-server-express');
 
-const defaultConfig = {
-};
+const elasticModel = require('./model/elastic');
+const schema = require('./schema');
 
 
-const lift = function(userConfig) {
-  const config = _.defaults(userConfig, defaultConfig);
-  config.app.use(graphqlRoute(config.elastic));
+// const resolvers = require('../resolvers');
+const createLoaders = (elastic) => {
+  return {
+    flowsByIds: new DataLoader(elastic.getFlowsByIds),
+    flowsByJobsIds: new DataLoader(elastic.getFlowsByJobsIds),
+  }
 }
 
-module.exports = lift
+const defaultConfig = {};
+
+const circuitMiddleware = function(userConfig) {
+  const config = _.defaults(userConfig, defaultConfig);
+
+  const router = express.Router();
+  const elastic = elasticModel(config.elastic);
+
+  router.use('/graphql', bodyParser.json(), (req, res) => {
+    graphqlExpress({
+      schema,
+      context: {
+        elastic,
+        loaders: createLoaders(elastic),
+      },
+    })(req, res);
+  });
+
+  router.use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql'
+  }));
+
+  return router;
+}
+
+
+module.exports = circuitMiddleware;

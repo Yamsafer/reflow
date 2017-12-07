@@ -1,4 +1,7 @@
+const path = require('path');
+
 const reCircuit = require('reflow-circuit');
+const reBoard = require('reflow-board');
 const elasticsearch = require('elasticsearch');
 const cors = require('cors')
 
@@ -26,11 +29,11 @@ async function init() {
     }
   });
 
-
-  reCircuit({
-    app,
+  app.use('/', reCircuit({
     elastic: elasticClient,
-  });
+  }))
+
+  app.use('/', reBoard());
 
   app.listen(3000);
 }
