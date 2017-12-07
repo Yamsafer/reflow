@@ -1,6 +1,7 @@
 <p align="center">
-  <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/reflow-3/reflow.png" width="230" height="80" />
-  <hr />
+  <a href="#">
+    <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/reflow-3/reflow.png" width="230" height="80" />
+  </a>
 </p>
 
 <p align="center">
