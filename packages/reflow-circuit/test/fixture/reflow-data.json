@@ -1,0 +1,13 @@
+{
+  "rootName": "Mobile",
+  "delimiter": " -> ",
+  "paths": [
+    "Before All -> Visa Mock Card -> Minimum Booking Amount: 0 -> City Attraction -> 3 nights -> Prepaid ->  Prepaid Suppliers -> Firebase User -> 2 adults -> 2 rooms -> 1 child ->  Search Hotels List ->  Reserve Booking -> Use Wallet: False -> Store booking API ->  Orders -> After All",
+    "Before All -> Visa Mock Card -> Minimum Booking Amount: 0 -> City Attraction -> 3 nights -> Prepaid ->  Prepaid Suppliers -> Firebase User -> 2 adults -> 2 rooms -> 1 child ->  Search Hotels List ->  Reserve Booking -> Use Wallet: False -> Store booking API ->  Orders -> After All",
+    "Before All -> Visa Mock Card -> Minimum Booking Amount: 0 -> City Attraction -> 3 nights -> Prepaid ->  Prepaid Suppliers -> Firebase User -> 2 adults -> 2 rooms -> 1 child ->  Search Hotels List ->  Reserve Booking -> Use Wallet: False -> Store booking API ->  Orders -> After All",
+    "Before All -> Visa Mock Card -> Minimum Booking Amount: 0 -> City Attraction -> 3 nights -> Prepaid ->  Prepaid Suppliers -> Firebase User -> 2 adults -> 2 rooms -> 1 child ->  Search Hotels List ->  Reserve Booking -> Use Wallet: False -> Store booking API ->  Orders -> After All",
+    "Before All -> Visa Mock Card -> Minimum Booking Amount: 0 -> City Attraction -> 3 nights -> Postpaid ->  Postpaid Suppliers -> Firebase User -> 2 adults -> 2 rooms -> 1 child ->  Search Hotels List ->  Reserve Booking -> Use Wallet: False -> Store booking API ->  Orders -> After All",
+    "Before All -> Visa Mock Card -> Minimum Booking Amount: 0 -> City Attraction -> 3 nights -> Postpaid ->  Postpaid Suppliers -> Firebase User -> 2 adults -> 2 rooms -> 1 child ->  Search Hotels List ->  Reserve Booking -> Use Wallet: False -> Store booking API ->  Orders -> After All",
+    "Before All -> Visa Mock Card -> Minimum Booking Amount: 0 -> City Attraction -> 3 nights -> Cardless ->  Cardless Suppliers -> Firebase User -> 2 adults -> 2 rooms -> 1 child ->  Search Hotels List ->  Reserve Booking -> Use Wallet: False -> Store booking API ->  Orders -> After All"
+  ]
+}

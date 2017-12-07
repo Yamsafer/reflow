@@ -1,4 +1,3 @@
-import MochaReflow from './mocha-reflow';
 import threadPool from './thread-pool'
 import path from 'path'
 

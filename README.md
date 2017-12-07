@@ -1,10 +1,25 @@
-# re|flow
+<p align="center">
+  <a href="#">
+    <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/master/reflow.png" width="230" height="80" />
+  </a>
+</p>
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Bamieh/re-flow.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/Bamieh/re-flow.svg?branch=master)](https://travis-ci.org/Bamieh/re-flow)
-[![codecov](https://codecov.io/gh/Bamieh/re-flow/branch/master/graph/badge.svg)](https://codecov.io/gh/Bamieh/re-flow)
-[![Maintainability](https://api.codeclimate.com/v1/badges/54471eb544c5e9b5ad4c/maintainability)](https://codeclimate.com/github/Bamieh/re-flow/maintainability)
+<p align="center">
+  The Framework for Complete Automated E2E Testing.
+</p>
 
-Automated Quality Assurance Testing Adhoc.
+<p align="center">
+    <a href="https://codecov.io/gh/Bamieh/reflow"><img alt="Coverage Status" src="https://codecov.io/gh/Bamieh/reflow/branch/master/graph/badge.svg?maxAge=43200"></a>
+    <a href="https://codeclimate.com/github/Bamieh/reflow/maintainability"><img src="https://api.codeclimate.com/v1/badges/28111714f1d4d3e08279/maintainability" /></a>
+    <a href="https://codeclimate.com/github/Bamieh/reflow/test_coverage"><img src="https://api.codeclimate.com/v1/badges/28111714f1d4d3e08279/test_coverage" /></a>
+</p>
 
->  This library is in its early stages of active development
+## Intro
+
+> This Framework is still in its early stages of active development.
+
+Reflow is a framework to writing e2e tests for enterprise projects. Huge efforts and time are being committed on this project to bring it to maturity. Currently, the only way to use this project is to dig into the code and the `README` files of each package.
+
+## License
+
+[MIT](LICENSE)

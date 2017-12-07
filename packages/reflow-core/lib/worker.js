@@ -53,13 +53,20 @@ const executeTree = function({tree, mochaConfig}, done) {
   global.reflow = reflowProps;
   const mochaReflowConfig = Object.assign({}, mochaRestConfigs, {
     ui: 'reflow-bdd',
+    reporter: 'reflow-reporter',
+    reporterOptions: {
+      batch: true,
+      meta: {
+        jobId: '13',
+      }
+    },
   });
-  
+
 
   mochaReflowInstance = new MochaReflow(mochaReflowConfig);
-  
+
   const suites = [].concat(tree.suites);
-  
+
   suites.forEach(executeSuites);
 
   mochaReflowInstance.run(failures => {
@@ -70,7 +77,7 @@ const executeTree = function({tree, mochaConfig}, done) {
     const stdoutText = stdoutCapture.stdout.join("");
     console.log(stdoutText)
     done(failures)
-  }) 
+  })
 }
 
 

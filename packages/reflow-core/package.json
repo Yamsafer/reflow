@@ -1,6 +1,6 @@
 {
   "name": "reflow-core",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Reflow Core",
   "author": "Ahmad Bamieh",
   "license": "MIT",
@@ -34,6 +34,7 @@
     "mocha": "^4"
   },
   "dependencies": {
+    "reflow-reporter": "^2.3.1",
     "decache": "^4.2.0",
     "duration": "^0.2.0",
     "intercept-stdout": "^0.1.2",
