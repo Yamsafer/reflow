@@ -1,5 +1,7 @@
 const reCircuit = require('reflow-circuit');
 const elasticsearch = require('elasticsearch');
+const cors = require('cors')
+
 const express = require('express');
 
 const config = {
@@ -9,6 +11,7 @@ const config = {
 
 async function init() {
   const app = express();
+  app.use(cors());
 
   const elasticClient = new elasticsearch.Client({
     host: config.elasticHost,

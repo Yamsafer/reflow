@@ -12,6 +12,23 @@ module.exports = client => ({
       },
     })
   },
+  getFlowsByJobsIds(jobsIds) {
+    console.log('jobsIds::', jobsIds)
+    return client.msearch({
+      // index: 'reflow',
+      // type: 'flow',
+      body: jobsIds.reduce((acc, jobId) => {
+        return acc.concat([
+          { index: 'reflow', type: 'flow' },
+          { query: { query_string: { query: `jobDetails.id:${jobId}` } } }
+        ])
+      }, []),
+    }).then(result => {
+      return result.responses
+              .map(response => response.hits)
+              .map(hit => hit.hits)
+    })
+  },
   getFlows(cursorInfo) {
     return client.search({
       index: 'reflow',
@@ -24,12 +41,12 @@ module.exports = client => ({
       return result.hits.hits;
     })
   },
-  getFlowsByIds(flowIds) {
+  getFlowsByIds(flowsIds) {
     return client.mget({
       index: 'reflow',
       type: 'flow',
       body: {
-        ids: flowIds,
+        ids: flowsIds,
       }
     }).then(result => result.docs)
   },
@@ -50,24 +67,36 @@ module.exports = client => ({
       type: 'flow',
       size: 0,
       body: {
-        aggs: {
-          jobs: {
-            "top_hits": {
-              "sort": [{
-                "jobDetails.creationDate": {
-                  "order": "desc"
+        "aggs": {
+            "top_tags": {
+                "terms": {
+                    "field": "jobDetails.id",
+                    "size": cursorInfo.first,
+                },
+                "aggs": {
+                    "top_sales_hits": {
+                        "top_hits": {
+                            "sort": [
+                                {
+                                    "jobDetails.creationDate": {
+                                        "order": "asc"
+                                    }
+                                }
+                            ],
+                            "_source": {
+                                "includes": [ "jobDetails" ]
+                            },
+                            "size" : 1
+                        }
+                    }
                 }
-              }],
-              size: cursorInfo.first,
-              "_source": {
-                "includes": [ "jobDetails" ]
-              },
-            },
-          }
+            }
         }
       }
     }).then(result => {
-      return result.aggregations.jobs.hits.hits.map(hit => hit._source.jobDetails);
+      return result.aggregations.top_tags.buckets.map(bucket => {
+        return bucket.top_sales_hits.hits.hits[0]._source.jobDetails
+      });
     })
   }
 })

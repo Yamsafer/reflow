@@ -26,7 +26,12 @@ module.exports = new GraphQLObjectType({
       }
     },
     numberOfCases: { type: new GraphQLNonNull(GraphQLInt) },
-    startTime: { type: new GraphQLNonNull(GraphQLString) },
+    startTime: {
+      type: new GraphQLNonNull(GraphQLString),
+      resolve(parent) {
+        return parent._source.startTime;
+      }
+    },
     endTime: { type: GraphQLString },
   }
 });

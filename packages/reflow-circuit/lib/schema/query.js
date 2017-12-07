@@ -27,7 +27,17 @@ const RootQueryType = new GraphQLObjectType({
         return elastic.getJobs(args);
       }
     },
-    flow: {
+    jobDetails: {
+      type: new GraphQLList(FlowType),
+      description: "Job Details",
+      args: {
+        id: { type: GraphQLString },
+      },
+      resolve(parent, args, { loaders }) {
+        return loaders.flowsByJobsIds.load(args.id);
+      },
+    },
+    flowDetails: {
       type: FlowType,
       description: 'A Test Flow',
       args: {

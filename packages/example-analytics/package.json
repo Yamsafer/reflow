@@ -6,6 +6,7 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "cors": "^2.8.4",
     "elasticsearch": "^14.0.0",
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
