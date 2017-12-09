@@ -20,6 +20,8 @@
 
 Reflow is a framework to writing e2e tests for enterprise projects. Huge efforts and time are being committed on this project to bring it to maturity. Currently, the only way to use this project is to dig into the code and the `README` files of each package.
 
+The Main testing tool `reflow|core` is built on top of [Mocha](https://github.com/mochajs/mocha) ❤️.
+
 ## License
 
 [MIT](LICENSE)
