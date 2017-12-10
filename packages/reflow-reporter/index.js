@@ -1,6 +1,9 @@
 const mocha = require('mocha');
-const defaults = require('lodash.defaults');
+const utils = mocha.utils;
 
+const defaults = require('lodash.defaults');
+const getStacktrace = require('./util/get-stacktrace');
+const getErrorMessage = require('./util/get-error-message');
 
 const defaultConfig = {
   batch: true,
@@ -10,94 +13,96 @@ const defaultConfig = {
 const ReflowReporter = function(runner, options) {
   const {
     batch,
-    flowNodes,
-    meta,
+    flowDetails, // TODO: move inside after finalinzing the interface
+    // title
+    jobDetails,
+    // startTime
+    // targetBranch
+    // sourceBranch
+    // trigger
   } = defaults(options && options.reporterOptions, defaultConfig);
 
   mocha.reporters.Base.call(this, runner);
-  let passes = 0;
-  let failures = 0;
   const stats = this.stats;
 
-  let indents = 0;
-  let result = [];
+  let results = [];
+  let CURRENT_CURSOR;
+  let startTime;
+  let totalSuites;
 
-  function report (data) {
-    result.push({
-      ...data,
-      meta,
-    })
+  function report (type, data) {
+    if(type === 'case') {
+      results[CURRENT_CURSOR].cases.push(data)
+    } else if(type === 'suite') {
+      results.push(data)
+      CURRENT_CURSOR = results.length - 1;
+    }
     if(!batch) {
       submitReport();
     }
   }
 
   function submitReport() {
-    if(result.length) {
-      process.stdout.write(JSON.stringify(result));
-      results = [];
+    const report = {
+      suites: results,
+      pending: stats.pending,
+      passes: stats.passes,
+      failures: stats.failures,
+      errors: stats.failures,
+      skipped: stats.tests - stats.failures - stats.passes,
+      endTime: Date.parse(new Date()),
+      duration: (stats.duration / 1000) || 0,
+      status: 'SUCCESS',
     }
+    process.stdout.write(JSON.stringify(report));
+    results = [];
   }
-
-  function indent () {
-    return indents;
-  }
-
 
   runner.on('start', function() {
-    report({
-      startTime: (new Date()).toUTCString(),
-      totalSuites: runner.grepTotal(runner.suite),
-      flowNodes,
-    })
+    startTime = Date.parse(new Date());
+    totalSuites = runner.grepTotal(runner.suite);
   });
 
   runner.on('suite', function (suite) {
-    ++indents;
-    // console.log(color('suite', '%s%s'), indent(), suite.title);
+    report('suite', {
+      title: utils.escape(suite.title),
+      cases: []
+    });
   });
-
-  runner.on('suite end', function () {
-    --indents;
-  });
-
 
   runner.on('pass', function (test) {
-    report({
-      status: 'pass',
+    report('case', {
+      title: utils.escape(test.title),
+      code: utils.escape(utils.clean(test.body)),
       speed: test.speed,
-      title: test.title,
-      indent: indent(),
+      duration: test.duration,
+      result: "SUCCESS"
     })
   });
 
 
   runner.on('pending', function (test) {
-    report({
-      status: 'pending',
-      title: test.title,
-      indent: indent(),
+    report('case', {
+      status: 'PENDING',
+      title: utils.escape(test.title),
     })
   });
 
   runner.on('fail', function (test) {
-    report({
-      status: 'fail',
-      title: test.title,
-      indent: indent(),
+    const err = test.err;
+    report('case', {
+      status: 'FAILURE',
+      title: utils.escape(test.title),
+      code: utils.escape(utils.clean(test.body)),
+      err: {
+        stacktrace: utils.escape(getStacktrace(err)),
+        message: utils.escape(getErrorMessage(err)),
+        htmlMessage: err.htmlMessage,
+      }
     })
   });
 
   runner.on('end', function() {
-    report({
-      status: 'done',
-      tests: stats.tests,
-      failures: stats.failures,
-      errors: stats.failures,
-      skipped: stats.tests - stats.failures - stats.passes,
-      endTime: (new Date()).toUTCString(),
-      time: (stats.duration / 1000) || 0,
-    })
     submitReport();
   })
 }

@@ -1,0 +1,25 @@
+.job-card {
+  font-size: 1.2rem !important;
+  width: 100%;
+  color: white !important;
+  background-color: #301b28 !important;
+  border-radius: 5px !important;
+  margin-bottom: 10px !important;
+  text-align: start !important;
+}
+.job-card a {
+  text-decoration: none;
+  color: white;
+}
+.job-id {
+  font-size: 1em;
+  padding: 5px 0;
+}
+.job-details {
+  font-size: 0.8em;
+  padding-bottom: 10px;
+}
+.job-date {
+  text-align: end;
+  font-size: 0.65em;
+}

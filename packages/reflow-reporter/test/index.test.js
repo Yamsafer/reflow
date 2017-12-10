@@ -90,24 +90,25 @@ describe('Reflow Reporter', function () {
     })
   })
 
-  describe('End', function () {
+  describe.only('Report', function () {
     let endReport;
     const reportIncludes = [
-      'status',
-      'tests',
+      'suites',
+      'pending',
+      'passes',
       'failures',
       'errors',
       'skipped',
       'endTime',
-      'time',
-      'meta',
+      'duration',
+      'status',
     ];
 
     it('reports an object', function () {
       runner.on = callOn('end');
       reflowReporter.call({}, runner);
 
-      endReport = JSON.parse(stdout[0])[0];
+      endReport = JSON.parse(stdout[0]);
       expect(endReport).to.be.an('object');
     });
 
@@ -115,6 +116,37 @@ describe('Reflow Reporter', function () {
     it(`reports ${reportIncludes.join(', ')}`, function() {
       expect(endReport).to.have.all.keys(reportIncludes);
     });
+
+    describe('Reported Suites', function () {
+      let suites;
+      const config =  {
+        reporterOptions: {
+          batch: false
+        }
+      };
+      const reportIncludes = ['title', 'cases'];
+
+      it('returns an array of empty suites if no suites reported', function () {
+        runner.on = callOn('end');
+        reflowReporter.call({}, runner);
+        suites = JSON.parse(stdout[0]).suites;
+        expect(suites).to.be.an('array').and.to.be.empty;
+      });
+      it('returns an array of reported suites', function() {
+        runner.on = callOn('suite', {title: 'Suite!'});
+        reflowReporter.call({}, runner, config);
+        suites = JSON.parse(stdout[0]).suites;
+
+        expect(suites).to.be.an('array')
+          .and.to.have.length(1);
+      });
+      it('reports the suite details', function() {
+        const suite = suites[0];
+        expect(suite).to.have.all.keys(reportIncludes)
+          .and.to.have.property('title')
+          .and.to.equal('Suite!');
+      })
+    })
   });
 
   describe.skip('Fail', function() {
