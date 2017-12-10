@@ -1,0 +1,157 @@
+# Graphs
+type PageInfo {
+  total: Int!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+}
+# Types
+
+# A reflow|e2e CI Job
+type Job {
+  # ID of the CI Job
+  id: ID!
+  result: Result!
+  flows: [Flow]
+  startTime: Float!
+  endTime: Float!
+  sourceBranch: String
+  targetBranch: String
+  trigger: String
+  pageInfo: PageInfo!
+}
+
+type Flow {
+  id: ID!
+  title: String!
+  passes: Int!
+  pending: Int!
+  failures: Int!
+  combinations: [Combination]!
+  result: Result!
+}
+
+type Combination {
+  id: ID!
+  startTime: Float!
+  combinationNumber: Int!
+  endTime: Float!
+  passes: Int!
+  pending: Int!
+  failures: Int!
+  result: Result!
+  suites(first: Int!): [Suite]!
+  diagram: Diagram
+}
+
+type Suite {
+  id: ID!
+  title: String!
+  tests: [Test]!
+}
+
+type Test {
+  id: ID!
+  title: String!
+  result: Result!
+  speed: Speed!
+  duration: Float!
+  body: String
+  err: TestErr
+}
+
+type Diagram {
+  id: ID
+  viz: String!
+}
+
+type TestErr {
+  message: String
+  htmlMessage: String
+  stack: String
+  sourceURL: String
+  line: String
+}
+
+# Scalars
+# scalar Date
+
+# Inputs
+
+input FlowInput {
+  id: ID
+  title: String!
+  combinations: [CombinationInput]!
+  result: Result!
+}
+
+input JobInput {
+  id: ID
+  startTime: Float!
+  endTime: Float!
+  flow: FlowInput!
+  sourceBranch: String
+  targetBranch: String
+  trigger: String
+}
+
+input CombinationInput {
+  id: ID
+  combinationNumber: Int!
+  numberOfSuites: Int!
+  startTime: Float!
+  endTime: Float!
+  job: JobInput!
+  suites: [SuiteInput]!
+  diagram: DiagramInput
+}
+
+input SuiteInput {
+  id: ID
+  title: String!
+  tests: [TestInput]!
+}
+
+input TestInput {
+  id: ID
+  title: String!
+  result: Result!
+  speed: Speed!
+  duration: Float!
+}
+
+input DiagramInput {
+  viz: String!
+}
+
+# Enums
+enum Speed {
+  FAST
+  SLOW
+}
+
+enum Result {
+  SUCCESS
+  FAILURE
+  PENDING
+}
+
+
+# Root Schema
+
+type Query {
+  suite(id: ID!): Suite
+  job(id: ID!): Job
+  flow(id: ID!): Flow
+  flows(jobID: ID!): [Flow]
+  combination(id: ID!): Combination
+  jobs(first: Int!, after: String): [Job]
+}
+
+type Mutation {
+  newCombination(input: CombinationInput!): Combination
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

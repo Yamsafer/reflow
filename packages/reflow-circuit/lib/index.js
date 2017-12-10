@@ -2,6 +2,8 @@ const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const DataLoader = require('dataloader');
+const loadSchema = require('./util/load-graphql');
+
 const {
   graphqlExpress,
   graphiqlExpress,
@@ -9,6 +11,11 @@ const {
 
 const elasticModel = require('./model/elastic');
 const schema = require('./schema');
+
+const {
+  makeExecutableSchema,
+  addMockFunctionsToSchema,
+} = require('graphql-tools');
 
 
 // const resolvers = require('../resolvers');
@@ -26,6 +33,20 @@ const circuitMiddleware = function(userConfig) {
 
   const router = express.Router();
   const elastic = elasticModel(config.elastic);
+
+  const schema = makeExecutableSchema({
+    typeDefs: [
+      loadSchema('schema/schema.graphql'),
+    ],
+    resolvers: _.merge(
+      require('./schema/resolvers')
+    ),
+  });
+
+  addMockFunctionsToSchema({
+    schema,
+    preserveResolvers: true,
+  });
 
   router.use('/graphql', bodyParser.json(), (req, res) => {
     graphqlExpress({

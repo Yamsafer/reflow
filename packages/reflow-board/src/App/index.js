@@ -7,10 +7,10 @@ import './style.css';
 import ApolloClient from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 
-import JobsList from '../JobsList';
-import JobDetails from '../JobDetails'
-import FlowDetails from '../FlowDetails'
-import NotFound from '../NotFound'
+import JobsList from '../pages/JobsList';
+import CombinationsList from '../pages/CombinationsList'
+import CombinationReport from '../pages/CombinationReport'
+import NotFound from '../pages/NotFound'
 
 import {
   BrowserRouter,
@@ -20,7 +20,10 @@ import {
 } from 'react-router-dom';
 
 const client = new ApolloClient({
-  link: createHttpLink({ uri: '/graphql' }),
+  link: createHttpLink({
+    // uri: '/graphql',
+    uri: 'http://localhost:3000/graphql',
+  }),
   cache: new InMemoryCache(),
 });
 
@@ -29,18 +32,20 @@ class App extends Component {
     return (
       <ApolloProvider client={client}>
         <BrowserRouter>
-          <div className="App">
-            <div className="App-header">
-              <Link to="/" className="navbar">
+          <div>
+            <nav className="navbar navbar-expand-md fixed-top">
+              <Link to="/" className="navbar-brand">
                 <img src={logo} className="App-logo" alt="logo" />
               </Link>
+            </nav>
+            <div className="App container-fluid">
+              <Switch>
+                <Route exact path="/" component={JobsList}/>
+                <Route path="/flow/:flowID" component={CombinationsList}/>
+                <Route path="/combination/:combinationID" component={CombinationReport}/>
+                <Route component={ NotFound }/>
+              </Switch>
             </div>
-            <Switch>
-              <Route exact path="/" component={JobsList}/>
-              <Route path="/job/:jobID" component={JobDetails}/>
-              <Route path="/flow/:flowID" component={FlowDetails}/>
-              <Route component={ NotFound }/>
-            </Switch>
           </div>
         </BrowserRouter>
       </ApolloProvider>
