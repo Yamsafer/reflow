@@ -56,9 +56,9 @@ class SuitesList extends Component {
                 </button>
               </div>
             }
-            <h4>Details</h4>
+            <h4>Report Details</h4>
               Result: {overallResult}
-            <h4>Status</h4>
+            <h5>Status</h5>
             <ul>
               <li className="passes">passes: <em>{passes}</em></li>
               <li className="pending">pending: <em>{pending}</em></li>

@@ -1,11 +1,11 @@
 import _ from 'lodash'
 
 import threadPool from './thread-pool';
-import Duration from 'duration';
 import lookupFiles from './utils/lookup-files';
 import executeMatrix from './execute'
 import { evaluateFlow, evaluateSubflow } from './evaluate';
 import analyzeMatrix from './analyze'
+import FlakeId from 'flakeid'
 
 
 const createReflowContext = function(filepath) {
@@ -81,6 +81,7 @@ class Reflow {
     this.subflows = {};
     this.flows = {};
     this.hooks = {};
+    this.flake = new FlakeId();
 
     this.run = false;
 
@@ -126,21 +127,30 @@ class Reflow {
       suites: tree,
     }))
 
-    const startTime = new Date();
 
     const threadCount = Math.min(this.options.numberOfThreads, totalForks);
 
+    const jobDetails = {
+      id: this.flake.gen(),
+      numberOfThreads: threadCount,
+      numberOfFlows: Object.keys(this.flows).length,
+      tags: this.options.tags,
+      startTime: new Date(),
+    }
+
+    const flowDetails = {
+      id: this.flake.gen(),
+      title: name,
+    }
+
     console.log(`Spinning of ${threadCount} threads.`);
     console.log(`${name}: (${totalForks} total flows)`)
-    const threadPool = executeMatrix(normalizedMatrix, {
-      ...this.options,
-      numberOfThreads: threadCount,
-    });
 
-    threadPool.on('finished', function() {
-      const duration = new Duration(startTime, new Date())
-      console.log(`Finished All ${totalForks} Flows in ${duration.toString(1, 1)}`);
-    })
+    executeMatrix(normalizedMatrix, {
+      ...this.options,
+      flowDetails,
+      jobDetails,
+    });
   }
 }
 

@@ -10,19 +10,16 @@ const {
 } = require('graphql-server-express');
 
 const elasticModel = require('./model/elastic');
-const schema = require('./schema');
 
 const {
   makeExecutableSchema,
   addMockFunctionsToSchema,
 } = require('graphql-tools');
 
-
-// const resolvers = require('../resolvers');
 const createLoaders = (elastic) => {
   return {
-    flowsByIds: new DataLoader(elastic.getFlowsByIds),
-    flowsByJobsIds: new DataLoader(elastic.getFlowsByJobsIds),
+    // flowsByIds: new DataLoader(elastic.getFlowsByIds),
+    combinationsByIds: new DataLoader(elastic.getCombinationsByIds),
   }
 }
 
@@ -43,19 +40,19 @@ const circuitMiddleware = function(userConfig) {
     ),
   });
 
-  addMockFunctionsToSchema({
-    schema,
-    preserveResolvers: true,
-  });
+  // addMockFunctionsToSchema({
+  //   schema,
+  //   preserveResolvers: true,
+  // });
 
-  router.use('/graphql', bodyParser.json(), (req, res) => {
+  router.use('/graphql', bodyParser.json(), (...args) => {
     graphqlExpress({
       schema,
       context: {
         elastic,
         loaders: createLoaders(elastic),
       },
-    })(req, res);
+    })(...args);
   });
 
   router.use('/graphiql', graphiqlExpress({

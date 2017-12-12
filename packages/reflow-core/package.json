@@ -34,12 +34,13 @@
     "mocha": "^4"
   },
   "dependencies": {
-    "reflow-reporter": "^2.3.1",
     "decache": "^4.2.0",
     "duration": "^0.2.0",
+    "flakeid": "^0.1.0",
     "intercept-stdout": "^0.1.2",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
+    "reflow-reporter": "^2.3.1",
     "threads": "^0.8.1"
   },
   "scripts": {

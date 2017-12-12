@@ -10,6 +10,10 @@ query getJobsList {
     startTime
     targetBranch
     trigger
+    numberOfThreads
+    numberOfFlows
+    sourceBranch
+    tags
   }
 }
 `;

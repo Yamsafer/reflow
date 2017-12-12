@@ -14,7 +14,6 @@ query getCombinationsList($flowID: ID!) {
       pending
       failures
       startTime
-      combinationNumber
       result
     }
   }

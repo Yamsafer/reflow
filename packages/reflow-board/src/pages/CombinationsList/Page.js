@@ -67,9 +67,9 @@ class JobsList extends Component {
               </button>
             </div>
           }
-          <h4>Job Details</h4>
+          <h4>Flow Details</h4>
             Result: {overallResult}
-          <h4>Status</h4>
+          <h5>Status</h5>
           <ul>
             <li className="passes">passes: <em>{passes}</em></li>
             <li className="pending">pending: <em>{pending}</em></li>

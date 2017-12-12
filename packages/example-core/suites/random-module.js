@@ -1,4 +1,4 @@
 const getValue = function() {
   return "Hello!";
 }
-export default getValue
+module.exports = getValue

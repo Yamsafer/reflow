@@ -5,9 +5,18 @@ import Container from './Container';
 const jobsDetailsQuery = gql`
 query JobsDetailsQuery($jobID: ID!) {
   job(id: $jobID) {
+    targetBranch
+    trigger
+    numberOfThreads
+    id
+    numberOfFlows
     flows {
       id
       title
+      result
+      failures
+      pending
+      passes
     }
   }
 }

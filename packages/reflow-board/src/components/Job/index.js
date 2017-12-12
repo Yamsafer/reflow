@@ -8,7 +8,7 @@ import './style.css';
 
 const Job = ({job, onClick}) => {
   const date = moment(job.startTime).fromNow()
-  const idText = `Job #${job.id.substring(0, 5)}`;
+  const idText = `Job #${job.id.substr(-6)}`;
   const jobDetails = `Yamsafer Backend (${job.targetBranch}) - ${job.trigger}`
 
   return (

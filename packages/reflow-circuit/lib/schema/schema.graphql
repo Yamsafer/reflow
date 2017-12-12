@@ -17,6 +17,9 @@ type Job {
   sourceBranch: String
   targetBranch: String
   trigger: String
+  numberOfThreads: Int!,
+  numberOfFlows: Int!,
+  tags: [String],
   pageInfo: PageInfo!
 }
 
@@ -33,7 +36,6 @@ type Flow {
 type Combination {
   id: ID!
   startTime: Float!
-  combinationNumber: Int!
   endTime: Float!
   passes: Int!
   pending: Int!
@@ -44,13 +46,11 @@ type Combination {
 }
 
 type Suite {
-  id: ID!
   title: String!
   tests: [Test]!
 }
 
 type Test {
-  id: ID!
   title: String!
   result: Result!
   speed: Speed!
@@ -60,14 +60,13 @@ type Test {
 }
 
 type Diagram {
-  id: ID
   viz: String!
 }
 
 type TestErr {
   message: String
   htmlMessage: String
-  stack: String
+  stacktrace: String
   sourceURL: String
   line: String
 }
@@ -78,45 +77,59 @@ type TestErr {
 # Inputs
 
 input FlowInput {
-  id: ID
+  id: ID!
   title: String!
-  combinations: [CombinationInput]!
-  result: Result!
 }
 
 input JobInput {
-  id: ID
+  id: ID!
   startTime: Float!
-  endTime: Float!
-  flow: FlowInput!
   sourceBranch: String
   targetBranch: String
+  numberOfThreads: Int!
+  numberOfFlows: Int!
+  tags: [String]
   trigger: String
 }
 
 input CombinationInput {
   id: ID
-  combinationNumber: Int!
+  jobDetails: JobInput!
+  flowDetails: FlowInput!
   numberOfSuites: Int!
   startTime: Float!
   endTime: Float!
-  job: JobInput!
+  passes: Int!
+  pending: Int!
+  skipped: Int!
+  failures: Int!
+  duration: Float!
   suites: [SuiteInput]!
+  result: Result!
   diagram: DiagramInput
 }
 
 input SuiteInput {
-  id: ID
   title: String!
-  tests: [TestInput]!
+  tests: [TestInput]
 }
 
 input TestInput {
-  id: ID
   title: String!
   result: Result!
-  speed: Speed!
-  duration: Float!
+  speed: Speed
+  code: String
+  duration: Float
+  body: String
+  err: TestErrInput
+}
+
+input TestErrInput {
+  message: String
+  htmlMessage: String
+  stacktrace: String
+  sourceURL: String
+  line: String
 }
 
 input DiagramInput {
@@ -125,8 +138,8 @@ input DiagramInput {
 
 # Enums
 enum Speed {
-  FAST
-  SLOW
+  fast
+  slow
 }
 
 enum Result {
@@ -142,13 +155,13 @@ type Query {
   suite(id: ID!): Suite
   job(id: ID!): Job
   flow(id: ID!): Flow
-  flows(jobID: ID!): [Flow]
+  flows(jobID: ID!, first: Int, after: String): [Flow]
   combination(id: ID!): Combination
   jobs(first: Int!, after: String): [Job]
 }
 
 type Mutation {
-  newCombination(input: CombinationInput!): Combination
+  insertCombination(input: CombinationInput!): Combination
 }
 
 schema {

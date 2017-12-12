@@ -3,7 +3,6 @@ const MochaReflow = require('./mocha-reflow').default;
 const reflowProps = require('./props');
 const decache = require('decache');
 
-const intercept = require("intercept-stdout");
 const path = require('path');
 
 let vmRunner;
@@ -29,16 +28,7 @@ const executeSuites = function(branch) {
 }
 
 
-const executeTree = function({tree, mochaConfig}, done) {
-  const stdoutCapture = {
-    treeIndex: tree.index,
-    stdout: [],
-  };
-
-  const unhook_intercept = intercept(function(text) {
-    stdoutCapture.stdout.push(text);
-    return ""
-  });
+const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done) {
 
   const {
     require: mochaRequiredFiles,
@@ -56,9 +46,8 @@ const executeTree = function({tree, mochaConfig}, done) {
     reporter: 'reflow-reporter',
     reporterOptions: {
       batch: true,
-      meta: {
-        jobId: '13',
-      }
+      flowDetails,
+      jobDetails,
     },
   });
 
@@ -70,12 +59,8 @@ const executeTree = function({tree, mochaConfig}, done) {
   suites.forEach(executeSuites);
 
   mochaReflowInstance.run(failures => {
-    unhook_intercept();
     mochaReflowInstance.files.forEach(decache)
     global.reflow.teardown()
-    console.log(tree.name)
-    const stdoutText = stdoutCapture.stdout.join("");
-    console.log(stdoutText)
     done(failures)
   })
 }

@@ -1,0 +1,19 @@
+files:
+  - ./subflow/**/*.js
+  - ./hooks/**/*.js
+  - ./suites/**/*.spec.js
+  - ./flow/**/*.js
+# tags:
+  # - core
+  # - prepaid
+# mode: analyze
+
+numberOfThreads: 2
+# numberOfThreads: 7
+
+mocha:
+  reporter: 'list'
+  bail: false
+  timeout: 30000
+  require:
+    - setup.js

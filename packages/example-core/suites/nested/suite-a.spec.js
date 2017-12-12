@@ -1,4 +1,4 @@
-import randomModule from '../random-module';
+const randomModule = require('../random-module');
 
 describe('Suite A', function() {
   before(function() {

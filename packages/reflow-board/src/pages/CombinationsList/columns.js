@@ -28,7 +28,7 @@ const details = {
 }
 
 export default [
-  combinationNumber,
+  // combinationNumber,
   status,
   details,
 ];

@@ -5,6 +5,9 @@ const defaults = require('lodash.defaults');
 const getStacktrace = require('./util/get-stacktrace');
 const getErrorMessage = require('./util/get-error-message');
 
+const http = require('http');
+
+
 const defaultConfig = {
   batch: true,
   meta: {},
@@ -14,13 +17,11 @@ const ReflowReporter = function(runner, options) {
   const {
     batch,
     flowDetails, // TODO: move inside after finalinzing the interface
-    // title
     jobDetails,
-    // startTime
-    // targetBranch
-    // sourceBranch
-    // trigger
   } = defaults(options && options.reporterOptions, defaultConfig);
+
+
+  const keepAliveAgent = new http.Agent({ keepAlive: true });
 
   mocha.reporters.Base.call(this, runner);
   const stats = this.stats;
@@ -28,11 +29,11 @@ const ReflowReporter = function(runner, options) {
   let results = [];
   let CURRENT_CURSOR;
   let startTime;
-  let totalSuites;
+  let numberOfSuites;
 
   function report (type, data) {
     if(type === 'case') {
-      results[CURRENT_CURSOR].cases.push(data)
+      results[CURRENT_CURSOR].tests.push(data)
     } else if(type === 'suite') {
       results.push(data)
       CURRENT_CURSOR = results.length - 1;
@@ -48,25 +49,58 @@ const ReflowReporter = function(runner, options) {
       pending: stats.pending,
       passes: stats.passes,
       failures: stats.failures,
-      errors: stats.failures,
       skipped: stats.tests - stats.failures - stats.passes,
       endTime: Date.parse(new Date()),
       duration: (stats.duration / 1000) || 0,
-      status: 'SUCCESS',
+      result: stats.failures? 'FAILURE' : 'SUCCESS',
+      numberOfSuites,
+      startTime: startTime,
+      flowDetails,
+      jobDetails: Object.assign({}, jobDetails, {
+        startTime: Date.parse(jobDetails.startTime),
+      }),
     }
-    process.stdout.write(JSON.stringify(report));
+
+    const postData = JSON.stringify({
+      operationName: "insertCombination",
+      query: "mutation insertCombination($combination: CombinationInput!) {\n  insertCombination(input: $combination) {\n    id\n  }\n}\n",
+      variables: {
+        combination: report,
+      },
+    });
+
+
+    const req = http.request({
+      agent: keepAliveAgent,
+      port: 3000,
+      method: 'POST',
+      hostname: 'localhost',
+      path: '/graphql',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+      }
+    });
+
+    req.write(postData);
+    req.end();
+
+    process.stdout.write('\nGenerating Report:\n');
+    process.stdout.write(JSON.stringify(report, 2, 2));
+    // console.log('report::', report)
+    process.stdout.write('\n');
     results = [];
   }
 
   runner.on('start', function() {
     startTime = Date.parse(new Date());
-    totalSuites = runner.grepTotal(runner.suite);
+    numberOfSuites = runner.grepTotal(runner.suite);
   });
 
   runner.on('suite', function (suite) {
     report('suite', {
       title: utils.escape(suite.title),
-      cases: []
+      tests: []
     });
   });
 
@@ -83,7 +117,7 @@ const ReflowReporter = function(runner, options) {
 
   runner.on('pending', function (test) {
     report('case', {
-      status: 'PENDING',
+      result: 'PENDING',
       title: utils.escape(test.title),
     })
   });
@@ -91,9 +125,11 @@ const ReflowReporter = function(runner, options) {
   runner.on('fail', function (test) {
     const err = test.err;
     report('case', {
-      status: 'FAILURE',
+      result: 'FAILURE',
       title: utils.escape(test.title),
       code: utils.escape(utils.clean(test.body)),
+      speed: test.speed,
+      duration: test.duration,
       err: {
         stacktrace: utils.escape(getStacktrace(err)),
         message: utils.escape(getErrorMessage(err)),

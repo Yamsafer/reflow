@@ -10,13 +10,11 @@ query getSuites($combinationID: ID!) {
     failures
     suites(first: 100) {
       title
-      id
       tests {
         title
         result
         speed
         duration
-        id
         body
         err {
           htmlMessage

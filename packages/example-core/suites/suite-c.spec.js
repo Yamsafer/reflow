@@ -5,7 +5,7 @@ describe('Suite C', function() {
       setTimeout(resolve, 600)
     })
   })
-  it('does assertions', function() {
+  it.skip('does assertions', function() {
     expect(1).to.equal(1);
   })
 })

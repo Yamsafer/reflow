@@ -9,13 +9,13 @@ class JobsList extends Component {
     super(props);
     this.onJobSelect = this.onJobSelect.bind(this);
     this.state = {
-      selectedJob: null,
+      selectedJobID: null,
     }
   }
   onJobSelect(jobID) {
     console.log(jobID)
     const newState = {
-      selectedJob: jobID,
+      selectedJobID: jobID,
     };
 
     this.setState(() => newState);
@@ -23,7 +23,7 @@ class JobsList extends Component {
   render() {
     const { data: {loading, error, jobs }} = this.props;
     const {
-      selectedJob,
+      selectedJobID,
     } = this.state;
 
     if (loading) {
@@ -39,7 +39,7 @@ class JobsList extends Component {
           { jobs.map( job => <Job key={job.id} job={job} onClick={this.onJobSelect} />) }
         </div>
         <div className="col-xs-8">
-          <JobDetails key={selectedJob} jobID={selectedJob} />
+          <JobDetails key={selectedJobID} jobID={selectedJobID} />
         </div>
       </div>
     );
