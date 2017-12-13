@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import Job from '../../components/Job'
-import JobDetails from '../../containers/JobDetails';
+import FlowsList from '../../containers/FlowsList';
 
 import './style.css'
 class JobsList extends Component {
@@ -39,7 +39,7 @@ class JobsList extends Component {
           { jobs.map( job => <Job key={job.id} job={job} onClick={this.onJobSelect} />) }
         </div>
         <div className="col-xs-8">
-          <JobDetails key={selectedJobID} jobID={selectedJobID} />
+          <FlowsList key={selectedJobID} jobID={selectedJobID} />
         </div>
       </div>
     );

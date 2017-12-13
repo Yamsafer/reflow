@@ -6,9 +6,9 @@ import columns from './columns';
 
 const JobsList = (props) => {
   const data =  props.data || {};
-  const {loading, error, job= {flows: []} } = data;
+  const {loading, error, flows } = data;
   if (error) return <p>{error.message}</p>;
-  const tableData = job.flows;
+  const tableData = flows || [];
   const pageSize = 15;
 
   return (
@@ -25,7 +25,7 @@ const JobsList = (props) => {
         style={{height: 'calc(100vh - 200px)'}}
         className="-striped -highlight"
       />
-      {props.jobID && <div style={{height: 120}}>
+      {/*props.jobID &&false && <div style={{height: 120}}>
         <h4>Job Details</h4>
         <div className="row">
           <div className="col-xs-6">
@@ -41,11 +41,11 @@ const JobsList = (props) => {
             </ul>
           </div>
         </div>
-      </div> }
+      </div> */}
     </div>
   )
   return (
-    <div>{job.flows.map(flow => <Flow key={flow.id} flow={flow}/>)}</div>
+    <div>{flows.map((flow, i) => <Flow key={i} flow={flow}/>)}</div>
   );
 };
 

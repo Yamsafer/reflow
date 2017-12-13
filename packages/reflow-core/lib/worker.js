@@ -41,7 +41,7 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
   })
 
   global.reflow = reflowProps;
-  const mochaReflowConfig = Object.assign({}, mochaRestConfigs, {
+  const mochaReflowConfig = Object.assign({
     ui: 'reflow-bdd',
     reporter: 'reflow-reporter',
     reporterOptions: {
@@ -49,7 +49,7 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
       flowDetails,
       jobDetails,
     },
-  });
+  }, mochaRestConfigs);
 
 
   mochaReflowInstance = new MochaReflow(mochaReflowConfig);

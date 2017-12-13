@@ -13,7 +13,7 @@ const elasticModel = require('./model/elastic');
 
 const {
   makeExecutableSchema,
-  addMockFunctionsToSchema,
+  // addMockFunctionsToSchema,
 } = require('graphql-tools');
 
 const createLoaders = (elastic) => {

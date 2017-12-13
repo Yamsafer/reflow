@@ -11,6 +11,9 @@ const http = require('http');
 const defaultConfig = {
   batch: true,
   meta: {},
+  port: 3000,
+  hostname: 'localhost',
+  path: '/graphql',
 };
 
 const ReflowReporter = function(runner, options) {
@@ -18,6 +21,10 @@ const ReflowReporter = function(runner, options) {
     batch,
     flowDetails, // TODO: move inside after finalinzing the interface
     jobDetails,
+    port,
+    hostname,
+    path,
+    headers,
   } = defaults(options && options.reporterOptions, defaultConfig);
 
 
@@ -72,14 +79,14 @@ const ReflowReporter = function(runner, options) {
 
     const req = http.request({
       agent: keepAliveAgent,
-      port: 3000,
       method: 'POST',
-      hostname: 'localhost',
-      path: '/graphql',
-      headers: {
+      port,
+      hostname,
+      path,
+      headers: Object.assign({
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(postData),
-      }
+      }, headers),
     });
 
     req.write(postData);
@@ -87,7 +94,6 @@ const ReflowReporter = function(runner, options) {
 
     process.stdout.write('\nGenerating Report:\n');
     process.stdout.write(JSON.stringify(report, 2, 2));
-    // console.log('report::', report)
     process.stdout.write('\n');
     results = [];
   }

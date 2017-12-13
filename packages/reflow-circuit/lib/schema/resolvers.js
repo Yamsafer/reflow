@@ -14,6 +14,9 @@ const resolverMap = {
     flows(parent, args, {elastic}, info) {
       return elastic.getFlows(args.jobID);
     },
+    flow(parent, args, {elastic}, info) {
+      return elastic.getFlow(args.id);
+    },
   },
   Mutation: {
     insertCombination(parent, {input}, {elastic}, info) {

@@ -3,7 +3,7 @@
   "version": "2.3.1",
   "description": "Reflow Circuit",
   "author": "Ahmad Bamieh",
-  "main": "./lib/index.js",
+  "main": "index.js",
   "license": "MIT",
   "repository": {
     "type": "git",

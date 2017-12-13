@@ -105,8 +105,21 @@ module.exports = client => ({
         }
       }
     }).then(result => {
-      console.log('result:::::::', result);
-      return result;
+      const Flows = result.aggregations.categories.names.buckets.map(bucket => {
+        return bucket.top_sales_hits.hits.hits.map(combination => {
+          const data = combination._source;
+          return {
+            id: data.flowDetails.id,
+            title: data.flowDetails.title,
+            passes: data.passes,
+            pending: data.pending,
+            failures: data.failures,
+            combinations: [],
+            result: data.result,
+          }
+        })
+      }).find(Boolean);
+      return Flows;
     })
   },
   getCombinationsByIds(combinationIds) {
@@ -123,5 +136,54 @@ module.exports = client => ({
       }
     }))
   },
+  getFlow(flowId) {
+    return client.search({
+      index: 'reflow',
+      type: 'flow',
+      size: 0,
+      body: {
+        aggs: {
+          categories: {
+            filter: { term: { "flowDetails.id" : flowId } },
+            aggs: {
+              "top_combinations": {
+                "top_hits": {
+                  "sort": [
+                    {
+                      "startTime": {
+                        "order": "asc"
+                      }
+                    }
+                  ],
+                  "_source": "*",
+                  "size" : 1
+                }
+              },
+              totalPasses: { "sum": { "field": "passes" } },
+              totalFailures: { "sum": { "field": "failures" } },
+              totalPending: { "sum": { "field": "pending" } },
+            }
+          }
+        }
+      }
+    }).then(result => {
+      console.log('result::', result)
+      const resultHits =  result.aggregations.categories.top_combinations.hits.hits;
+      const Combinations = resultHits.map(hit => {
+        return Object.assign({}, hit._source, {
+          id: hit._id,
+        });
+      });
+      const Flow = {
+        id: resultHits[0]._source.flowDetails.id,
+        passes: result.aggregations.categories.totalPasses.value,
+        pending: result.aggregations.categories.totalPending.value,
+        failures: result.aggregations.categories.totalFailures.value,
+        combinations: Combinations
+      }
+      console.log('Flow::', Flow);
+      return Flow;
+    })
+  }
 })
 

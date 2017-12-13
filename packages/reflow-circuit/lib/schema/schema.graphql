@@ -53,8 +53,8 @@ type Suite {
 type Test {
   title: String!
   result: Result!
-  speed: Speed!
-  duration: Float!
+  speed: Speed
+  duration: Float
   body: String
   err: TestErr
 }

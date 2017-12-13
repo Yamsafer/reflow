@@ -2,27 +2,19 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import Container from './Container';
 
-const jobsDetailsQuery = gql`
-query JobsDetailsQuery($jobID: ID!) {
-  job(id: $jobID) {
-    targetBranch
-    trigger
-    numberOfThreads
+const flowsList = gql`
+query flowsList($jobID: ID!) {
+  flows(jobID: $jobID) {
     id
-    numberOfFlows
-    flows {
-      id
-      title
-      result
-      failures
-      pending
-      passes
-    }
+    title
+    passes
+    pending
+    failures
   }
 }
 `;
 
-export default graphql(jobsDetailsQuery, {
+export default graphql(flowsList, {
   skip: (props) => typeof props.jobID !== "string",
   // props.match.params.flowID
   options: (props) => ({

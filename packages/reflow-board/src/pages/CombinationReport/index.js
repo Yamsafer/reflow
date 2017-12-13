@@ -18,7 +18,7 @@ query getSuites($combinationID: ID!) {
         body
         err {
           htmlMessage
-          stack
+          stacktrace
           message
           sourceURL
           line
