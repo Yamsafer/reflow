@@ -1,10 +1,10 @@
 {
   "name": "example-core",
-  "version": "2.0.5",
+  "version": "3.0.0-alpha.1",
   "dependencies": {
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
-    "reflow-core": "^2.3.1"
+    "reflow-core": "^3.0.0-alpha.1"
   },
   "scripts": {
     "start": "reflow"

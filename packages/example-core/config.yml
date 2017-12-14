@@ -12,7 +12,12 @@ numberOfThreads: 2
 # numberOfThreads: 7
 
 mocha:
-  reporter: 'list'
+  # reporter: 'list'
+  reporterOptions:
+    hostname: 'automation.yamsafer.com'
+    protocol: 'https:'
+    port: 5555
+    path: '/graphql'
   bail: false
   timeout: 30000
   require:

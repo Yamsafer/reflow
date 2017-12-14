@@ -1,16 +1,13 @@
-const path = require('path');
-
 const elasticsearch = require('elasticsearch');
 const cors = require('cors')
 
 const express = require('express');
 
 const config = {
-  elasticHost: 'localhost:9200',
   log: 'trace'
 }
 
-async function init() {
+function init() {
   const app = express();
   app.use(cors());
 
@@ -27,11 +24,11 @@ async function init() {
     }
   });
 
-  app.use('/', require('reflow-circuit')({
+  app.use(require('reflow-circuit')({
     elastic: elasticClient,
   }))
 
-  // app.use('/', require('reflow-board')());
+  app.use(require('reflow-board')());
 
   app.listen(3000);
 }

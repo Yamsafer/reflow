@@ -32,6 +32,7 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
 
   const {
     require: mochaRequiredFiles,
+    reporterOptions,
     ...mochaRestConfigs
   } = mochaConfig
 
@@ -45,12 +46,20 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
     ui: 'reflow-bdd',
     reporter: 'reflow-reporter',
     reporterOptions: {
+      ...(reporterOptions||{}),
       batch: true,
-      flowDetails,
-      jobDetails,
+      flowDetails: {
+        ...(reporterOptions.flowDetails||{}),
+        ...flowDetails,
+      },
+      jobDetails: {
+        ...(reporterOptions.jobDetails||{}),
+        ...jobDetails,
+      },
     },
   }, mochaRestConfigs);
 
+  console.log('flowDetails, jobDetails', flowDetails, jobDetails)
 
   mochaReflowInstance = new MochaReflow(mochaReflowConfig);
 
@@ -61,7 +70,7 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
   mochaReflowInstance.run(failures => {
     mochaReflowInstance.files.forEach(decache)
     global.reflow.teardown()
-    done(failures)
+    // done(failures)
   })
 }
 

@@ -23,6 +23,8 @@ const executeMatrix = function(matrix, config) {
     jobDetails,
     flowDetails,
   });
+
+
   matrix.forEach(sendToPool);
   let failures = 0;
   let done = false;
@@ -32,7 +34,8 @@ const executeMatrix = function(matrix, config) {
       failures += jobFailures;
     })
     .on('error', function(job, error) {
-      throw new Error('Job errored:', error)
+      console.log('Job errored:');
+      throw error;
     })
     .on('finished', function() {
       console.log('Everything done, shutting down the thread pool.');
