@@ -8,15 +8,15 @@ files:
   # - prepaid
 # mode: analyze
 
-numberOfThreads: 2
+numberOfThreads: 12
 # numberOfThreads: 7
 
 mocha:
   # reporter: 'list'
   reporterOptions:
-    hostname: 'automation.yamsafer.com'
-    protocol: 'https:'
-    port: 5555
+    hostname: 'localhost'
+    protocol: 'http'
+    port: 3000
     path: '/graphql'
   bail: false
   timeout: 30000

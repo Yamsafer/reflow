@@ -15,7 +15,7 @@ query getSuites($combinationID: ID!) {
         result
         speed
         duration
-        body
+        code
         err {
           htmlMessage
           stacktrace

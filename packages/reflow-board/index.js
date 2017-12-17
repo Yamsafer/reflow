@@ -11,7 +11,7 @@ const boardMiddleware = function(config) {
     res.sendFile(path.join(buildPath, 'index.html'));
   });
 
-  return router
+  return router;
 }
 
 module.exports = boardMiddleware;

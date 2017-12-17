@@ -59,8 +59,6 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
     },
   }, mochaRestConfigs);
 
-  console.log('flowDetails, jobDetails', flowDetails, jobDetails)
-
   mochaReflowInstance = new MochaReflow(mochaReflowConfig);
 
   const suites = [].concat(tree.suites);
@@ -70,7 +68,7 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
   mochaReflowInstance.run(failures => {
     mochaReflowInstance.files.forEach(decache)
     global.reflow.teardown()
-    // done(failures)
+    process.nextTick(() => done(failures))
   })
 }
 

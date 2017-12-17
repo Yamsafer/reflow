@@ -10,20 +10,17 @@ const https = require('https');
 
 
 const defaultConfig = {
-  batch: true,
-  meta: {},
   port: 3000,
   hostname: 'localhost',
   path: '/graphql',
+  protocol: 'http',
   // flowDetails: {}, // TODO: move inside after finalinzing the interface
   // jobDetails: {},
 };
 
-const ReflowReporter = function(runner, options ={}) {
-
+const ReflowReporter = function(runner, options = {}) {
   const reporterOptions = options.reporterOptions || {};
   const {
-    batch,
     flowDetails, // TODO: move inside after finalinzing the interface
     jobDetails,
     port,
@@ -33,72 +30,79 @@ const ReflowReporter = function(runner, options ={}) {
     headers,
   } = defaults(reporterOptions, defaultConfig);
 
-  const keepAliveAgent = new https.Agent({ keepAlive: true });
+  const tcpModule = protocol === 'https' ? https : http;
+
+  const keepAliveAgent = new tcpModule.Agent({ keepAlive: true });
 
   mocha.reporters.Base.call(this, runner);
   const stats = this.stats;
 
   let results = [];
-  let CURRENT_CURSOR;
   let startTime;
   let numberOfSuites;
 
+  let CURRENT_RESULTS_CURSOR;
+
   function report (type, data) {
-    if(type === 'case') {
-      results[CURRENT_CURSOR].tests.push(data)
-    } else if(type === 'suite') {
-      results.push(data)
-      CURRENT_CURSOR = results.length - 1;
-    }
-    if(!batch) {
-      submitReport();
+    switch(type) {
+      case "case":
+        results[CURRENT_RESULTS_CURSOR].tests.push(data)
+        break;
+      case "suite":
+        results.push(data)
+        CURRENT_RESULTS_CURSOR = results.length - 1;
+        break;
     }
   }
 
   function submitReport() {
-    process.stdout.write('\nGenerating Report ... ');
-    const report = {
-      suites: results,
-      pending: stats.pending,
-      passes: stats.passes,
-      failures: stats.failures,
-      skipped: stats.tests - stats.failures - stats.passes,
-      endTime: Date.parse(new Date()),
-      duration: (stats.duration / 1000) || 0,
-      result: stats.failures? 'FAILURE' : 'SUCCESS',
-      numberOfSuites,
-      startTime: startTime,
-      flowDetails,
-      jobDetails: Object.assign({}, jobDetails, {
-        startTime: Date.parse(jobDetails.startTime),
-      }),
-    }
-    process.stdout.write('Done');
-
-    const postData = JSON.stringify({
-      operationName: "insertCombination",
-      query: "mutation insertCombination($combination: CombinationInput!) {\n  insertCombination(input: $combination) {\n    id\n  }\n}\n",
-      variables: {
-        combination: report,
-      },
-    });
-    process.stdout.write(`\nSending request to: ${hostname}:${port}${path}`);
-    // const requestLayer = https;
-    const reqOptions = {
-      agent: keepAliveAgent,
-      method: 'POST',
-      port,
-      hostname,
-      path,
-      // protocol,
-      headers: Object.assign({
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(postData),
-      }, headers),
-    };
     try {
 
-      const req = https.request(reqOptions);
+      process.stdout.write('\nGenerating Report ... ');
+      const report = {
+        suites: results,
+        pending: stats.pending,
+        passes: stats.passes,
+        failures: stats.failures,
+        skipped: stats.tests - stats.failures - stats.passes,
+        endTime: Date.parse(new Date()),
+        duration: (stats.duration / 1000) || 0,
+        result: stats.failures? 'FAILURE' : 'SUCCESS',
+        numberOfSuites,
+        startTime: startTime,
+        flowDetails,
+        jobDetails: Object.assign({}, jobDetails, {
+          startTime: Date.parse(jobDetails.startTime),
+        }),
+      }
+      process.stdout.write('Done');
+
+      const postData = JSON.stringify({
+        operationName: "insertCombination",
+        query: "mutation insertCombination($combination: CombinationInput!) {\n  insertCombination(input: $combination) {\n    id\n  }\n}\n",
+        variables: {
+          combination: report,
+        },
+      });
+      process.stdout.write(`\nSending request to: ${hostname}:${port}${path}`);
+
+      // const keepAliveAgent = new tcpModule.Agent({ keepAlive: true });
+      const reqOptions = {
+        agent: keepAliveAgent,
+        method: 'POST',
+        port,
+        hostname,
+        path,
+        protocol: `${protocol}:`,
+        headers: Object.assign({
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(postData),
+        }, headers),
+      };
+
+      // console.log('reqOptions::', reqOptions)
+
+      const req = tcpModule.request(reqOptions);
 
       req.on('error', (e) => {
         console.error(e);
@@ -106,14 +110,16 @@ const ReflowReporter = function(runner, options ={}) {
 
       req.write(postData);
       req.end();
+      // keepAliveAgent.destroy()
 
-      process.stdout.write('\nReport sent:\n');
-      process.stdout.write(JSON.stringify(report, 2, 2));
-      process.stdout.write('\n');
+      process.stdout.write('\nReport sent\n');
+      // process.stdout.write(JSON.stringify(report, 2, 2));
+      // process.stdout.write('\n');
       results = [];
     } catch(err) {
-      console.log('got err!!@#!@#!', err)
+      console.log('err::', err)
     }
+
   }
 
   runner.on('start', function() {
@@ -128,16 +134,22 @@ const ReflowReporter = function(runner, options ={}) {
     });
   });
 
+  let metadata = [];
+  global.metadata = function(...args) {
+    metadata.push(args);
+  }
+
   runner.on('pass', function (test) {
     report('case', {
       title: utils.escape(test.title),
       code: utils.escape(utils.clean(test.body)),
       speed: test.speed,
+      metadata: metadata.length? utils.escape(JSON.stringify(metadata)) : undefined,
       duration: test.duration,
       result: "SUCCESS"
-    })
+    });
+    metadata = [];
   });
-
 
   runner.on('pending', function (test) {
     report('case', {

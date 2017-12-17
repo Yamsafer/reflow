@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './style.css';
+import he from 'he';
 
 class Pass extends Component{
   constructor(props) {
@@ -15,13 +16,12 @@ class Pass extends Component{
     }))
   }
   render() {
-    const {title, duration, speed, body} = this.props;
+    const {title, duration, speed, code} = this.props;
     const {showCode} = this.state;
-    const code = body
     return (
       <li className={`test pass ${speed.toLowerCase()}`} onClick={this.toggleShowCode}>
         <h2>{title}<span className="duration">{duration}ms</span></h2>
-        {!!code && showCode && <pre><code>{code}</code></pre>}
+        {!!code && showCode && <pre><code>{he.decode(code)}</code></pre>}
       </li>
     )
   }
@@ -68,14 +68,13 @@ class Fail extends Component {
     }))
   }
   render() {
-    const {err, title, body, } = this.props
+    const {err, title, code, } = this.props
     const {showCode} = this.state;
-    const code = body;
 
     return (
       <li className="test fail" onClick={this.toggleShowCode} >
         <h2>{title}</h2>
-        {showCode && code && <pre><code>{code}</code></pre>}
+        {showCode && code && <pre><code>{he.decode(code)}</code></pre>}
         {showCode && <JSXERR err={err} />}
       </li>
     )

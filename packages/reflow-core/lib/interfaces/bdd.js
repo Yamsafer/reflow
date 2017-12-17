@@ -60,14 +60,24 @@ module.exports = Mocha.interfaces['reflow-bdd'] = function (suite) {
         }
       });
 
-      return;
       return newSuite
     };
 
+    // context.metadata = function(...args) {
+    //   console.log('WERWERWERWER')
+    //   try{
+    //     var suite = suites[0];
+    //     // suite.metadata = args;
+    //     // console.log(':suite.metadata:', Object.keys(suite.tests))
+    //     console.log(':suite.metadata:', suite.tests)
+    //   } catch (err) {
+    //     console.log('ERROR::::', err)
+    //   }
+    // }
     /**
      *  Hooks
      */
-    
+
     context.hook = function(name, getFns) {
       var suite = suites[0];
       const newHooks = getFns()
@@ -88,9 +98,9 @@ module.exports = Mocha.interfaces['reflow-bdd'] = function (suite) {
 
       newHooks.beforeAll && suite.beforeAll(newHooks.beforeAll);
       newHooks.afterAll && suite.afterAll(newHooks.afterAll);
-      return 
+      return
     }
-    
+
     /**
      * Pending describe.
      */
@@ -145,7 +155,7 @@ module.exports = Mocha.interfaces['reflow-bdd'] = function (suite) {
      */
 
     context.xit = context.xspecify = context.it.skip = function (title) {
-      context.it(title);
+      return context.it(title);
     };
 
     /**

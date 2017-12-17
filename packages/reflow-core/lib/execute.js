@@ -47,7 +47,8 @@ const executeMatrix = function(matrix, config) {
     });
 
   process.on('exit', function() {
-    if(done) process.exit(failures ? 1 : 0);
+    if(!done) console.log('Exited before done')
+    process.exit(+!!failures);
   })
   return pool
 }

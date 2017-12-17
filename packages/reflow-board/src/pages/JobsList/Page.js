@@ -1,30 +1,14 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import moment from 'moment';
 import Job from '../../components/Job'
 import FlowsList from '../../containers/FlowsList';
 
 import './style.css'
-class JobsList extends Component {
-  constructor(props) {
-    super(props);
-    this.onJobSelect = this.onJobSelect.bind(this);
-    this.state = {
-      selectedJobID: null,
-    }
-  }
-  onJobSelect(jobID) {
-    console.log(jobID)
-    const newState = {
-      selectedJobID: jobID,
-    };
-
-    this.setState(() => newState);
-  }
+class JobsList extends PureComponent {
   render() {
-    const { data: {loading, error, jobs }} = this.props;
-    const {
-      selectedJobID,
-    } = this.state;
+    const { data: {loading, error, jobs }, match} = this.props;
+    const projectName = match.params.projectName;
+    const selectedJobID = match.params.jobID;
 
     if (loading) {
       return <p>Loading ...</p>;
@@ -36,7 +20,7 @@ class JobsList extends Component {
     return (
       <div className="row">
         <div className="col-xs-4">
-          { jobs.map( job => <Job key={job.id} job={job} onClick={this.onJobSelect} />) }
+          { jobs.map( job => <Job key={job.id} job={job} link={`/project/${projectName}/job/${job.id}`} />) }
         </div>
         <div className="col-xs-8">
           <FlowsList key={selectedJobID} jobID={selectedJobID} />

@@ -6,18 +6,18 @@ import StatusCircle from '../StatusCircle';
 
 import './style.css';
 
-const Job = ({job, onClick}) => {
+const Job = ({job, link}) => {
   const date = moment(job.startTime).fromNow()
   const idText = `Job #${job.id.substr(-6)}`;
   const jobDetails = `Yamsafer Backend (${job.targetBranch}) - ${job.trigger}`
 
   return (
-    <button type="button" className="btn btn-link job-card" onClick={() => onClick(job.id)}>
+    <Link to={link} type="button" className="btn btn-link job-card">
       <StatusCircle status={job.result} />
       <div className="job-id">{idText}</div>
       <div className="job-details">{jobDetails}</div>
       <div className="job-date">{date}</div>
-    </button>
+    </Link>
   )
 }
 export default Job

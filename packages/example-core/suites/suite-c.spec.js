@@ -1,11 +1,14 @@
 describe('Suite C', function() {
   before(function() {
-    console.log('before Suite C');
+    console.log('I AM IN SUITE C!!!!!!!!!!!');
     return new Promise((resolve, reject) => {
       setTimeout(resolve, 600)
     })
   })
-  it.skip('does assertions', function() {
+  it('does assertions', function() {
+    console.log('hello world i am')
+    metadata('inside test C')
+    metadata({'hi': 'lol'})
     expect(1).to.equal(1);
   })
 })

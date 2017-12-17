@@ -35,7 +35,7 @@ module.exports = client => ({
           "endTime": {
             "max":{ "field": "endTime" }
           },
-          numberOfSuites: {
+          totalNumberOfSuites: {
             "sum":{ "field": "numberOfSuites" }
           },
           "top_tags": {
@@ -44,12 +44,18 @@ module.exports = client => ({
               "size": cursorInfo.first,
             },
             "aggs": {
+              "currentNumberOfCombinations": {
+                "terms": {
+                  "field": "jobDetails.id",
+                  "size": 1,
+                },
+              },
               "top_sales_hits": {
                 "top_hits": {
                   "sort": [
                     {
                       "jobDetails.startTime": {
-                        "order": "asc"
+                        "order": "desc"
                       }
                     }
                   ],
@@ -65,9 +71,25 @@ module.exports = client => ({
       }
     }).then(result => {
       return result.aggregations.top_tags.buckets.map(bucket => {
+
+        const jobDetails = bucket.top_sales_hits.hits.hits[0]._source.jobDetails;
+        const currentNumberOfCombinations = bucket.currentNumberOfCombinations.buckets[0].doc_count;
+        const totalNumberOfCombinations = jobDetails.numberOfCombinations;
+
+        const totalFailures = result.aggregations.failures.value;
+        console.log('currentNumberOfFlows:', currentNumberOfFlows)
+        console.log('totalNumberOfFlows:', totalNumberOfFlows)
+        const totalNumberOfSuites = result.aggregations.totalNumberOfSuites.value;
+
+        const GetResult = function () {
+          if(totalNumberOfFlows > currentNumberOfCombinations) return 'PENDING';
+          return totalFailures > 0 ? "FAILURE" : "SUCCESS";
+        }
+
         return {
-          ...bucket.top_sales_hits.hits.hits[0]._source.jobDetails,
-          result: result.aggregations.failures.value > 0 ? "FAILURE" : "SUCCESS"
+          ...jobDetails,
+          numberOfSuites: totalNumberOfSuites,
+          result: GetResult(),
         }
       });
     })
@@ -95,7 +117,7 @@ module.exports = client => ({
                         }
                       ],
                       "_source": "*",
-                      "size" : 1
+                      "size" : 100,
                     }
                   }
                 }
@@ -156,7 +178,7 @@ module.exports = client => ({
                     }
                   ],
                   "_source": "*",
-                  "size" : 1
+                  "size" : 100,
                 }
               },
               totalPasses: { "sum": { "field": "passes" } },

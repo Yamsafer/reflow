@@ -21,8 +21,8 @@ import {
 
 const client = new ApolloClient({
   link: createHttpLink({
-    uri: '/graphql',
-    // uri: 'http://localhost:3000/graphql',
+    // uri: '/graphql',
+    uri: 'http://localhost:3000/graphql',
   }),
   cache: new InMemoryCache(),
 });
@@ -41,6 +41,8 @@ class App extends Component {
             <div className="App container-fluid">
               <Switch>
                 <Route exact path="/" component={JobsList}/>
+                <Route exact path="/project/:projectName" component={JobsList}/>
+                <Route exact path="/project/:projectName/job/:jobID" component={JobsList}/>
                 <Route path="/flow/:flowID" component={CombinationsList}/>
                 <Route path="/combination/:combinationID" component={CombinationReport}/>
                 <Route component={ NotFound }/>

@@ -94,7 +94,9 @@ class Reflow {
     })
   }
   runFlows() {
-    Object.values(this.flows).forEach(this.runFlow.bind(this))
+    const flowsList = Object.values(this.flows);
+    console.log(`${flowsList.length} total flows.`)
+    flowsList.forEach(this.runFlow.bind(this))
   }
   analyzeFlows() {
     const analyzedMatrices = Object.values(this.flows).map(this.analyze.bind(this));
@@ -119,21 +121,21 @@ class Reflow {
     if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
     const matrix = evaluateFlow(suites, this.options.tags);
 
-    const totalForks = matrix.length;
+    const totalCombinations = matrix.length;
     const normalizedMatrix = matrix.map((tree, i) => ({
-      name: `${name}: fork #${i+1}/${totalForks}`,
+      name: `${name}: combination #${i+1}/${totalCombinations}`,
       type: "tree",
       index: i,
       suites: tree,
     }))
 
-
-    const threadCount = Math.min(this.options.numberOfThreads, totalForks);
-
+    const threadCount = Math.min(this.options.numberOfThreads, totalCombinations);
+    const totalFlows = Object.keys(this.flows).length
     const jobDetails = {
       id: this.flake.gen(),
       numberOfThreads: threadCount,
-      numberOfFlows: Object.keys(this.flows).length,
+      numberOfCombinations: totalCombinations,
+      numberOfFlows: totalFlows,
       tags: this.options.tags,
       startTime: new Date(),
     }
@@ -144,7 +146,7 @@ class Reflow {
     }
 
     console.log(`Spinning of ${threadCount} threads.`);
-    console.log(`${name}: (${totalForks} total flows)`)
+    console.log(`${name}: (${totalCombinations} total combinations)`)
 
     executeMatrix(normalizedMatrix, {
       ...this.options,
