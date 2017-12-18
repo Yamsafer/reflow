@@ -5,8 +5,11 @@
   float: right;
 }
 .status-circle.success {
-  background-color: yellow;
+  background-color: #01f304;
+}
+.status-circle.pending {
+  background-color: #aeaeae;
 }
 .status-circle.fail {
-  background-color: red;
+  background-color: #cd0001;
 }

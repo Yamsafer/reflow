@@ -68,7 +68,7 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
   mochaReflowInstance.run(failures => {
     mochaReflowInstance.files.forEach(decache)
     global.reflow.teardown()
-    process.nextTick(() => done(failures))
+    setTimeout(() => done(failures), 0)
   })
 }
 

@@ -36,9 +36,10 @@ const Pending = ({title}) => {
 }
 
 const JSXERR = ({err}) => {
-  const stacktrace = !!err && err.stacktrace;
-  const message = !!err && err.message;
-  const htmlMessage = !!err && err.htmlMessage;
+  if(!err) return <div />
+  const stacktrace = !!err.stacktrace && he.decode(err.stacktrace);
+  const message = !!err.message && he.decode(err.message);
+  const htmlMessage = !!err.htmlMessage && he.decode(err.htmlMessage);
 
   if (htmlMessage && stacktrace) {
     return (
@@ -51,7 +52,6 @@ const JSXERR = ({err}) => {
   } else if (message) {
     return <pre className="error">{message}{stacktrace}</pre>
   }
-  return <div />
 };
 
 class Fail extends Component {
@@ -70,7 +70,7 @@ class Fail extends Component {
   render() {
     const {err, title, code, } = this.props
     const {showCode} = this.state;
-
+    console.log("error code::", code)
     return (
       <li className="test fail" onClick={this.toggleShowCode} >
         <h2>{title}</h2>

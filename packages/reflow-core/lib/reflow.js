@@ -132,10 +132,12 @@ class Reflow {
     const threadCount = Math.min(this.options.numberOfThreads, totalCombinations);
     const totalFlows = Object.keys(this.flows).length
     const jobDetails = {
-      id: this.flake.gen(),
+      id: this.options.job.id || this.flake.gen(),
       numberOfThreads: threadCount,
       numberOfCombinations: totalCombinations,
       numberOfFlows: totalFlows,
+      sourceBranch: this.options.job.source,
+      targetBranch: : this.options.job.target,
       tags: this.options.tags,
       startTime: new Date(),
     }

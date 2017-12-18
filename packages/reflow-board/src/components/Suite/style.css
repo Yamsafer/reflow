@@ -249,10 +249,10 @@ code .number { color: #2F6FAD }
 #mocha .test.pass pre {
     display: none;
 }
-*/
 #mocha .test.fail pre {
     display: none;
 }
+*/
 
 #mocha .test pre.error {
     display: block;

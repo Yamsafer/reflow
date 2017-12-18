@@ -7,6 +7,7 @@ import './style.css';
 import ApolloClient from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 
+import ProjectsPage from '../pages/ProjectsPage';
 import JobsList from '../pages/JobsList';
 import CombinationsList from '../pages/CombinationsList'
 import CombinationReport from '../pages/CombinationReport'
@@ -40,8 +41,8 @@ class App extends Component {
             </nav>
             <div className="App container-fluid">
               <Switch>
-                <Route exact path="/" component={JobsList}/>
-                <Route exact path="/project/:projectName" component={JobsList}/>
+                <Route exact path="/" component={ProjectsPage}/>
+                <Route exact path="/project/:projectName" component={ProjectsPage}/>
                 <Route exact path="/project/:projectName/job/:jobID" component={JobsList}/>
                 <Route path="/flow/:flowID" component={CombinationsList}/>
                 <Route path="/combination/:combinationID" component={CombinationReport}/>

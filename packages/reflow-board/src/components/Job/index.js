@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import StatusCircle from '../StatusCircle';
 
-import './style.css';
 
 const Job = ({job, link}) => {
   const date = moment(job.startTime).fromNow()

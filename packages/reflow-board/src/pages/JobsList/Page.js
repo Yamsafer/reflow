@@ -1,33 +1,42 @@
 import React, {PureComponent} from 'react';
-import moment from 'moment';
 import Job from '../../components/Job'
+import JobsList from '../../containers/JobsList';
 import FlowsList from '../../containers/FlowsList';
 
-import './style.css'
-class JobsList extends PureComponent {
+class Page extends PureComponent {
   render() {
-    const { data: {loading, error, jobs }, match} = this.props;
+    const { match } = this.props;
     const projectName = match.params.projectName;
     const selectedJobID = match.params.jobID;
-
-    if (loading) {
-      return <p>Loading ...</p>;
-    }
-    if (error) {
-      return <p>{error.message}</p>;
-    }
 
     return (
       <div className="row">
         <div className="col-xs-4">
-          { jobs.map( job => <Job key={job.id} job={job} link={`/project/${projectName}/job/${job.id}`} />) }
+          {/*<JobsList projcetName={projectName} />*/}
         </div>
         <div className="col-xs-8">
           <FlowsList key={selectedJobID} jobID={selectedJobID} />
+                {/*props.jobID &&false && <div style={{height: 120}}>
+        <h4>Job Details</h4>
+        <div className="row">
+          <div className="col-xs-6">
+            <ul>
+              <li>Target Branch: {job.targetBranch}</li>
+              <li>Trigger: {job.trigger}</li>
+            </ul>
+          </div>
+          <div className="col-xs-6">
+            <ul>
+              <li># Threads: {job.numberOfThreads}</li>
+              <li># Flows: {job.numberOfFlows}</li>
+            </ul>
+          </div>
+        </div>
+      </div> */}
         </div>
       </div>
     );
   }
 }
 
-export default JobsList
+export default Page

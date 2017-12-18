@@ -10,7 +10,7 @@ describe('Suite B', function() {
   })
   it('does B assertions', function() {
     return new Promise((resolve, reject) => {
-      expect(1).to.equal(2);
+      expect(1).to.equal(1);
       setTimeout(resolve, 600)
     })
   })

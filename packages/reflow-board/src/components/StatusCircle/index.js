@@ -5,6 +5,7 @@ const matchStatus = function(status) {
   switch(status) {
     case 'SUCCESS': return 'success';
     case 'FAILURE': return 'fail';
+    case 'PENDING': return 'pending';
     default: return '';
   }
 }

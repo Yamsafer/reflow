@@ -8,7 +8,7 @@ const JobsList = (props) => {
   const data =  props.data || {};
   const {loading, error, flows } = data;
   if (error) return <p>{error.message}</p>;
-  const tableData = flows || [];
+  const tableData = (flows || []).map(flow => flow);
   const pageSize = 15;
 
   return (
@@ -22,26 +22,9 @@ const JobsList = (props) => {
         defaultPageSize={pageSize}
         showPageSizeOptions={false}
         sortable={false}
-        style={{height: 'calc(100vh - 200px)'}}
+        style={{height: 'calc(100vh - 80px)'}}
         className="-striped -highlight"
       />
-      {/*props.jobID &&false && <div style={{height: 120}}>
-        <h4>Job Details</h4>
-        <div className="row">
-          <div className="col-xs-6">
-            <ul>
-              <li>Target Branch: {job.targetBranch}</li>
-              <li>Trigger: {job.trigger}</li>
-            </ul>
-          </div>
-          <div className="col-xs-6">
-            <ul>
-              <li># Threads: {job.numberOfThreads}</li>
-              <li># Flows: {job.numberOfFlows}</li>
-            </ul>
-          </div>
-        </div>
-      </div> */}
     </div>
   )
   return (

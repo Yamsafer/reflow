@@ -10,7 +10,6 @@ files:
 
 numberOfThreads: 12
 # numberOfThreads: 7
-
 mocha:
   # reporter: 'list'
   reporterOptions:

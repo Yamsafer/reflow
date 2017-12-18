@@ -23,27 +23,29 @@ module.exports = client => ({
       size: 0,
       body: {
         "aggs": {
-          "passes": {
-            "sum":{ "field": "passes" }
-          },
-          "failures": {
-            "sum":{ "field": "failures" }
-          },
-          "pending": {
-            "sum":{ "field": "pending" }
-          },
-          "endTime": {
-            "max":{ "field": "endTime" }
-          },
-          totalNumberOfSuites: {
-            "sum":{ "field": "numberOfSuites" }
-          },
           "top_tags": {
             "terms": {
               "field": "jobDetails.id",
               "size": cursorInfo.first,
+              "order" : { "JobStartTime" : "desc" },
             },
             "aggs": {
+              "passes": {
+                "sum":{ "field": "passes" }
+              },
+              "failures": {
+                "sum":{ "field": "failures" }
+              },
+              "pending": {
+                "sum":{ "field": "pending" }
+              },
+              "endTime": {
+                "max":{ "field": "endTime" }
+              },
+              totalNumberOfSuites: {
+                "sum":{ "field": "numberOfSuites" }
+              },
+              "JobStartTime" : { "min" : { "field" : "jobDetails.startTime" } },
               "currentNumberOfCombinations": {
                 "terms": {
                   "field": "jobDetails.id",
@@ -55,7 +57,7 @@ module.exports = client => ({
                   "sort": [
                     {
                       "jobDetails.startTime": {
-                        "order": "desc"
+                        "order": "asc"
                       }
                     }
                   ],
@@ -71,25 +73,26 @@ module.exports = client => ({
       }
     }).then(result => {
       return result.aggregations.top_tags.buckets.map(bucket => {
-
         const jobDetails = bucket.top_sales_hits.hits.hits[0]._source.jobDetails;
         const currentNumberOfCombinations = bucket.currentNumberOfCombinations.buckets[0].doc_count;
         const totalNumberOfCombinations = jobDetails.numberOfCombinations;
 
-        const totalFailures = result.aggregations.failures.value;
-        console.log('currentNumberOfFlows:', currentNumberOfFlows)
-        console.log('totalNumberOfFlows:', totalNumberOfFlows)
-        const totalNumberOfSuites = result.aggregations.totalNumberOfSuites.value;
+        const totalFailures = bucket.failures.value;
+        console.log('totalFailures:', totalFailures)
+        console.log('currentNumberOfCombinations:', currentNumberOfCombinations)
+        console.log('totalNumberOfCombinations:', totalNumberOfCombinations)
+        const totalNumberOfSuites = bucket.totalNumberOfSuites.value;
 
-        const GetResult = function () {
-          if(totalNumberOfFlows > currentNumberOfCombinations) return 'PENDING';
+        const getResult = function () {
+          if(totalNumberOfCombinations > currentNumberOfCombinations) return 'PENDING';
           return totalFailures > 0 ? "FAILURE" : "SUCCESS";
         }
+        console.log('result::::::::::', getResult())
 
         return {
           ...jobDetails,
           numberOfSuites: totalNumberOfSuites,
-          result: GetResult(),
+          result: getResult(),
         }
       });
     })
