@@ -21,16 +21,19 @@ exports.builder = {
     default: {},
   },
   "job.id": {
+    alias: 'buildNumber',
     type: 'string',
     description: 'job Id',
   },
   "job.source": {
+    alias:'sourceBranch',
     type: 'string',
-    description: 'Github Tests Source Branch.',
+    description: 'Github branch to test against.',
   },
   "job.target": {
+    alias:'targetBranch',
     type: 'string',
-    description: 'Github Target branch to test against.',
+    description: 'Github branch where the tests live.',
   },
   extensions: {
     type: 'array',

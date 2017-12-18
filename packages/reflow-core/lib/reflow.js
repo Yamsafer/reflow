@@ -137,7 +137,7 @@ class Reflow {
       numberOfCombinations: totalCombinations,
       numberOfFlows: totalFlows,
       sourceBranch: this.options.job.source,
-      targetBranch: : this.options.job.target,
+      targetBranch: this.options.job.target,
       tags: this.options.tags,
       startTime: new Date(),
     }
