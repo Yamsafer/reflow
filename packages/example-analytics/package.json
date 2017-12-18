@@ -1,6 +1,6 @@
 {
   "name": "example-analytics",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.6",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
@@ -10,8 +10,8 @@
     "elasticsearch": "^14.0.0",
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
-    "reflow-circuit": "^3.0.0-alpha.5",
-    "reflow-board": "^3.0.0-alpha.5"
+    "reflow-circuit": "^3.0.0-alpha.6",
+    "reflow-board": "^3.0.0-alpha.6"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"

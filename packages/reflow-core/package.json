@@ -1,6 +1,6 @@
 {
   "name": "reflow-core",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.6",
   "description": "Reflow Core",
   "author": "Ahmad Bamieh",
   "license": "MIT",
@@ -41,7 +41,7 @@
     "intercept-stdout": "^0.1.2",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
-    "reflow-reporter": "^3.0.0-alpha.5",
+    "reflow-reporter": "^3.0.0-alpha.6",
     "threads": "^0.8.1",
     "yargs": "^10.0.3"
   },
