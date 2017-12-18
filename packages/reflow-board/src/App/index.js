@@ -20,10 +20,10 @@ import {
   Switch,
 } from 'react-router-dom';
 
+const uri = process.env.REFLOW_DEVELOPMENT? 'http://localhost:3000/graphql': '/graphql';
 const client = new ApolloClient({
   link: createHttpLink({
-    uri: '/graphql',
-    // uri: 'http://localhost:3000/graphql',
+    uri,
   }),
   cache: new InMemoryCache(),
 });
