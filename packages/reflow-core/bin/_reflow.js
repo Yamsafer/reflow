@@ -11,7 +11,7 @@ const config = getConfigs(configPath);
 Yargs
   .commandDir('./commands')
   .config(config)
-  .env()
+  .env('REFLOW')
   .showHelpOnFail(true)
   .command({
     command: '*',
