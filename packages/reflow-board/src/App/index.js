@@ -22,8 +22,8 @@ import {
 
 const client = new ApolloClient({
   link: createHttpLink({
-    // uri: '/graphql',
-    uri: 'http://localhost:3000/graphql',
+    uri: '/graphql',
+    // uri: 'http://localhost:3000/graphql',
   }),
   cache: new InMemoryCache(),
 });

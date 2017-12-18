@@ -1,6 +1,6 @@
 'use strict';
-require('babel-register')()
-const targetFolder = "lib";
+// require('babel-register')()
+// const targetFolder = "lib";
 
-// const targetFolder = "distribution";
+const targetFolder = "distribution";
 module.exports = require(`./${targetFolder}/reflow`);
