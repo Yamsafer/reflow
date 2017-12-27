@@ -7,6 +7,6 @@
     "reflow-core": "^3.0.0-alpha.7"
   },
   "scripts": {
-    "start": "reflow run"
+    "start": "reflow run --sourceBranch=DEV-XXXX --targetBranch=example-core"
   }
 }

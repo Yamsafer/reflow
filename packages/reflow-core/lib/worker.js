@@ -14,8 +14,8 @@ const pushToMocha = ({ path }) => {
   mochaReflowInstance.files.push(path);
 };
 
-const executeSubTree = function(tree) {
-  const suites = [].concat(tree.suites);
+const executeSubTree = function(combination) {
+  const suites = [].concat(combination.suites);
   suites.forEach(executeSuites);
 }
 
@@ -28,7 +28,7 @@ const executeSuites = function(branch) {
 }
 
 
-const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done) {
+const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDetails}, done) {
 
   const {
     require: mochaRequiredFiles,
@@ -51,6 +51,7 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
       flowDetails: {
         ...(reporterOptions.flowDetails||{}),
         ...flowDetails,
+        DAG,
       },
       jobDetails: {
         ...(reporterOptions.jobDetails||{}),
@@ -61,14 +62,15 @@ const executeTree = function({tree, mochaConfig, flowDetails, jobDetails}, done)
 
   mochaReflowInstance = new MochaReflow(mochaReflowConfig);
 
-  const suites = [].concat(tree.suites);
+  const suites = [].concat(combination.suites);
 
   suites.forEach(executeSuites);
 
   mochaReflowInstance.run(failures => {
     mochaReflowInstance.files.forEach(decache)
     global.reflow.teardown()
-    setTimeout(() => done(failures), 0)
+
+    setTimeout(() => done(failures), 1000)
   })
 }
 

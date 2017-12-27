@@ -55,19 +55,21 @@ class JobsList extends Component {
     return (
       <div className="row">
         <div className="col-xs-4">
+          <h1 className="title">Flow Details</h1>
           {(failures > 0 || true) &&
             <div>
               <button
                 id="toggle-passes"
                 type="button"
                 onClick={this.onTogglePasses}
+                style={{float: 'right'}}
                 className={`btn btn-danger btn-xs toggle-passes ${checkedClass}`}
               >
                 show failures only
               </button>
             </div>
           }
-          <h4>Flow Details</h4>
+
             Result: {overallResult}
           <h5>Status</h5>
           <ul>
@@ -78,9 +80,10 @@ class JobsList extends Component {
           </ul>
         </div>
         <div className="col-xs-8">
+        <h1 className="title">Combinations</h1>
           <ReactTable
             filtered={filters}
-            style={{height: 'calc(100vh - 82px)'}}
+            style={{height: 'calc(100vh - 130px)'}}
             data={combinations}
             columns={columns}
             defaultPageSize={20}

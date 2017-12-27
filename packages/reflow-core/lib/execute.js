@@ -1,6 +1,7 @@
 import path from 'path'
 import Duration from 'duration';
 import threadPool from './thread-pool'
+import {analyzeCombination} from './analyze'
 
 const executeMatrix = function(matrix, config) {
   const {
@@ -17,8 +18,9 @@ const executeMatrix = function(matrix, config) {
     threadsToSpawn: numberOfThreads,
   });
 
-  const sendToPool = tree => pool.send({
-    tree,
+  const sendToPool = combination => pool.send({
+    DAG: analyzeCombination(combination),
+    combination,
     mochaConfig,
     jobDetails,
     flowDetails,

@@ -10,8 +10,8 @@ export default [{
   Header: "Result",
   accessor: "result",
 }, {
-  Header: "Target Branch",
-  accessor: "targetBranch",
+  Header: "Source Branch",
+  accessor: "sourceBranch",
 },{
   Header: "Start Time",
   accessor: "startTime",
@@ -24,14 +24,11 @@ export default [{
     width: 65,
     Expander: ({ isExpanded, ...rest }) =>
       <div>
-        {isExpanded
-          ? <span>&#x2299;</span>
-          : <span>&#x2295;</span>}
+        <span dangerouslySetInnerHTML={{__html: isExpanded? '&#x2299;' : '&#x2295;'}} />
       </div>,
     style: {
       cursor: "pointer",
       fontSize: 25,
-      padding: "0",
       textAlign: "center",
       userSelect: "none"
     },

@@ -19,7 +19,15 @@ const resolveTypes = function(branch) {
   return resolveVector(branch);
 }
 
-
+const analyzeCombination = function(combination) {
+  return combination
+    .map(resolveTypes)
+    .map(combination => {
+      return combination.map(
+        (name, index, array) => index !== 0 && `${array[index-1]} -> ${name}`
+      ).filter(Boolean)
+    });
+}
 const analyzeMatrix = function(combinations) {
   const analyticsMap = combinations.map(combination => {
     return combination.map(resolveTypes);
@@ -35,3 +43,6 @@ const analyzeMatrix = function(combinations) {
 
 export default analyzeMatrix
 
+export {
+  analyzeCombination,
+}

@@ -5,17 +5,19 @@ import FlowsList from '../../containers/FlowsList';
 
 class Page extends PureComponent {
   render() {
-    const { match } = this.props;
+    const { match, data } = this.props;
     const projectName = match.params.projectName;
     const selectedJobID = match.params.jobID;
 
     return (
       <div className="row">
         <div className="col-xs-4">
+          <h1 className="title">Job Details</h1>
           {/*<JobsList projcetName={projectName} />*/}
         </div>
         <div className="col-xs-8">
-          <FlowsList key={selectedJobID} jobID={selectedJobID} />
+          <h1 className="title">Flows</h1>
+          <FlowsList key={selectedJobID} jobID={selectedJobID} data={data} />
                 {/*props.jobID &&false && <div style={{height: 120}}>
         <h4>Job Details</h4>
         <div className="row">

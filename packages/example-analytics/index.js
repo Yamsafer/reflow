@@ -28,7 +28,7 @@ function init() {
     elastic: elasticClient,
   }))
 
-  app.use(require('reflow-board')());
+  // app.use(require('reflow-board')());
 
   app.listen(3000);
 }

@@ -3,7 +3,7 @@
   "version": "3.0.0-alpha.7",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "cross-env REFLOW_DEVELOPMENT=1 node index.js"
   },
   "dependencies": {
     "cors": "^2.8.4",
@@ -14,6 +14,7 @@
     "reflow-board": "^3.0.0-alpha.7"
   },
   "devDependencies": {
+    "cross-env": "^5.1.1",
     "nodemon": "^1.12.1"
   }
 }

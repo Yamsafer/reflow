@@ -181,7 +181,7 @@ module.exports = client => ({
                     }
                   ],
                   "_source": "*",
-                  "size" : 100,
+                  "size" : 1,
                 }
               },
               totalPasses: { "sum": { "field": "passes" } },
