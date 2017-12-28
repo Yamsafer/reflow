@@ -1,0 +1,15 @@
+.status-circle {
+  border-radius: 50%;
+  width: 11px;
+  height: 11px;
+  float: right;
+}
+.status-circle.success {
+  background-color: #01f304;
+}
+.status-circle.pending {
+  background-color: #aeaeae;
+}
+.status-circle.fail {
+  background-color: #cd0001;
+}

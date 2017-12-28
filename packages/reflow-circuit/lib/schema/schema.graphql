@@ -1,0 +1,172 @@
+# Graphs
+type PageInfo {
+  total: Int!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+}
+# Types
+
+# A reflow|e2e CI Job
+type Job {
+  # ID of the CI Job
+  id: ID!
+  result: Result!
+  flows: [Flow]
+  startTime: Float!
+  endTime: Float!
+  sourceBranch: String
+  targetBranch: String
+  trigger: String
+  numberOfThreads: Int!,
+  numberOfCombinations: Int!,
+  numberOfFlows: Int!,
+  tags: [String],
+  pageInfo: PageInfo!
+}
+
+type Flow {
+  id: ID!
+  title: String!
+  passes: Int!
+  pending: Int!
+  failures: Int!
+  combinations: [Combination]!
+  result: Result!
+}
+
+type Combination {
+  id: ID!
+  startTime: Float!
+  endTime: Float!
+  passes: Int!
+  pending: Int!
+  failures: Int!
+  result: Result!
+  suites(first: Int!): [Suite]!
+  diagram: Diagram
+}
+
+type Suite {
+  title: String!
+  tests: [Test]!
+}
+
+type Test {
+  title: String!
+  result: Result!
+  speed: Speed
+  duration: Float
+  code: String
+  err: TestErr
+}
+
+type Diagram {
+  viz: String!
+}
+
+type TestErr {
+  message: String
+  htmlMessage: String
+  stacktrace: String
+  sourceURL: String
+  line: String
+}
+
+# Scalars
+# scalar Date
+
+# Inputs
+
+input FlowInput {
+  id: ID!
+  title: String!
+}
+
+input JobInput {
+  id: ID!
+  startTime: Float!
+  sourceBranch: String
+  targetBranch: String
+  numberOfThreads: Int!
+  numberOfCombinations: Int!
+  numberOfFlows: Int!
+  tags: [String]
+  trigger: String
+}
+
+input CombinationInput {
+  id: ID
+  jobDetails: JobInput!
+  flowDetails: FlowInput!
+  numberOfSuites: Int!
+  startTime: Float!
+  endTime: Float!
+  passes: Int!
+  pending: Int!
+  skipped: Int!
+  failures: Int!
+  duration: Float!
+  suites: [SuiteInput]!
+  result: Result!
+  diagram: DiagramInput
+}
+
+input SuiteInput {
+  title: String!
+  tests: [TestInput]
+}
+
+input TestInput {
+  title: String!
+  result: Result!
+  speed: Speed
+  code: String
+  duration: Float
+  metadata: [String]
+  err: TestErrInput
+}
+
+input TestErrInput {
+  message: String
+  htmlMessage: String
+  stacktrace: String
+  sourceURL: String
+  line: String
+}
+
+input DiagramInput {
+  viz: String!
+}
+
+# Enums
+enum Speed {
+  fast
+  slow
+}
+
+enum Result {
+  SUCCESS
+  FAILURE
+  PENDING
+}
+
+
+# Root Schema
+
+type Query {
+  suite(id: ID!): Suite
+  job(id: ID!): Job
+  flow(id: ID!): Flow
+  flows(jobID: ID!, first: Int, after: String): [Flow]
+  combination(id: ID!): Combination
+  jobs(first: Int!, after: String): [Job]
+}
+
+type Mutation {
+  insertCombination(input: CombinationInput!): Combination
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

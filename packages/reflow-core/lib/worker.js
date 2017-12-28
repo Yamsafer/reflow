@@ -3,7 +3,6 @@ const MochaReflow = require('./mocha-reflow').default;
 const reflowProps = require('./props');
 const decache = require('decache');
 
-const intercept = require("intercept-stdout");
 const path = require('path');
 
 let vmRunner;
@@ -15,8 +14,8 @@ const pushToMocha = ({ path }) => {
   mochaReflowInstance.files.push(path);
 };
 
-const executeSubTree = function(tree) {
-  const suites = [].concat(tree.suites);
+const executeSubTree = function(combination) {
+  const suites = [].concat(combination.suites);
   suites.forEach(executeSuites);
 }
 
@@ -29,19 +28,11 @@ const executeSuites = function(branch) {
 }
 
 
-const executeTree = function({tree, mochaConfig}, done) {
-  const stdoutCapture = {
-    treeIndex: tree.index,
-    stdout: [],
-  };
-
-  const unhook_intercept = intercept(function(text) {
-    stdoutCapture.stdout.push(text);
-    return ""
-  });
+const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDetails}, done) {
 
   const {
     require: mochaRequiredFiles,
+    reporterOptions,
     ...mochaRestConfigs
   } = mochaConfig
 
@@ -51,26 +42,36 @@ const executeTree = function({tree, mochaConfig}, done) {
   })
 
   global.reflow = reflowProps;
-  const mochaReflowConfig = Object.assign({}, mochaRestConfigs, {
+  const mochaReflowConfig = Object.assign({
     ui: 'reflow-bdd',
-  });
-  
+    reporter: 'reflow-reporter',
+    reporterOptions: {
+      ...(reporterOptions||{}),
+      batch: true,
+      flowDetails: {
+        ...(reporterOptions.flowDetails||{}),
+        ...flowDetails,
+        DAG,
+      },
+      jobDetails: {
+        ...(reporterOptions.jobDetails||{}),
+        ...jobDetails,
+      },
+    },
+  }, mochaRestConfigs);
 
   mochaReflowInstance = new MochaReflow(mochaReflowConfig);
-  
-  const suites = [].concat(tree.suites);
-  
+
+  const suites = [].concat(combination.suites);
+
   suites.forEach(executeSuites);
 
   mochaReflowInstance.run(failures => {
-    unhook_intercept();
     mochaReflowInstance.files.forEach(decache)
     global.reflow.teardown()
-    console.log(tree.name)
-    const stdoutText = stdoutCapture.stdout.join("");
-    console.log(stdoutText)
-    done(failures)
-  }) 
+
+    setTimeout(() => done(failures), 1000)
+  })
 }
 
 

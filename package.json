@@ -4,6 +4,8 @@
     "lerna": "^2.4.0"
   },
   "scripts": {
+    "lerna:publish": "lerna publish",
+    "lerna:clean": "lerna clean",
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:test": "lerna run --scope reflow-core --scope reflow-analytics test",
     "lerna:report-coverage": "lerna run report-coverage"

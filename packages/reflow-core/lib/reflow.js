@@ -1,11 +1,11 @@
 import _ from 'lodash'
 
 import threadPool from './thread-pool';
-import Duration from 'duration';
 import lookupFiles from './utils/lookup-files';
 import executeMatrix from './execute'
 import { evaluateFlow, evaluateSubflow } from './evaluate';
 import analyzeMatrix from './analyze'
+import FlakeId from 'flakeid'
 
 
 const createReflowContext = function(filepath) {
@@ -81,6 +81,7 @@ class Reflow {
     this.subflows = {};
     this.flows = {};
     this.hooks = {};
+    this.flake = new FlakeId();
 
     this.run = false;
 
@@ -93,7 +94,9 @@ class Reflow {
     })
   }
   runFlows() {
-    Object.values(this.flows).forEach(this.runFlow.bind(this))
+    const flowsList = Object.values(this.flows);
+    console.log(`${flowsList.length} total flows.`)
+    flowsList.forEach(this.runFlow.bind(this))
   }
   analyzeFlows() {
     const analyzedMatrices = Object.values(this.flows).map(this.analyze.bind(this));
@@ -118,29 +121,40 @@ class Reflow {
     if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
     const matrix = evaluateFlow(suites, this.options.tags);
 
-    const totalForks = matrix.length;
+    const totalCombinations = matrix.length;
     const normalizedMatrix = matrix.map((tree, i) => ({
-      name: `${name}: fork #${i+1}/${totalForks}`,
+      name: `${name}: combination #${i+1}/${totalCombinations}`,
       type: "tree",
       index: i,
       suites: tree,
     }))
 
-    const startTime = new Date();
+    const threadCount = Math.min(this.options.numberOfThreads, totalCombinations);
+    const totalFlows = Object.keys(this.flows).length
+    const jobDetails = {
+      id: this.options.job.id || this.flake.gen(),
+      numberOfThreads: threadCount,
+      numberOfCombinations: totalCombinations,
+      numberOfFlows: totalFlows,
+      sourceBranch: this.options.job.source,
+      targetBranch: this.options.job.target,
+      tags: this.options.tags,
+      startTime: new Date(),
+    }
 
-    const threadCount = Math.min(this.options.numberOfThreads, totalForks);
+    const flowDetails = {
+      id: this.flake.gen(),
+      title: name,
+    }
 
     console.log(`Spinning of ${threadCount} threads.`);
-    console.log(`${name}: (${totalForks} total flows)`)
-    const threadPool = executeMatrix(normalizedMatrix, {
-      ...this.options,
-      numberOfThreads: threadCount,
-    });
+    console.log(`${name}: (${totalCombinations} total combinations)`)
 
-    threadPool.on('finished', function() {
-      const duration = new Duration(startTime, new Date())
-      console.log(`Finished All ${totalForks} Flows in ${duration.toString(1, 1)}`);
-    })
+    executeMatrix(normalizedMatrix, {
+      ...this.options,
+      flowDetails,
+      jobDetails,
+    });
   }
 }
 

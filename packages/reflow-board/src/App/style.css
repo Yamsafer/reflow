@@ -1,0 +1,30 @@
+
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+  outline: none !important;
+}
+
+.navbar {
+  background-color: #301b28;
+  border-radius: 0 !important;
+}
+.App {
+  /*text-align: center;*/
+}
+.App-logo {
+  height: 100%;
+}
+.App-header {
+  background-color: #301b28;
+  height: 55px;
+  /*padding: 10px;*/
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}

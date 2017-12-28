@@ -1,36 +1,59 @@
-import MochaReflow from './mocha-reflow';
-import threadPool from './thread-pool'
 import path from 'path'
+import Duration from 'duration';
+import threadPool from './thread-pool'
+import {analyzeCombination} from './analyze'
 
 const executeMatrix = function(matrix, config) {
   const {
     mocha: mochaConfig,
-    numberOfThreads,
+    jobDetails,
+    flowDetails,
   } = config;
+  const startTime = jobDetails.startTime;
+  const numberOfThreads = jobDetails.numberOfThreads;
+  const numberOfFlows = jobDetails.numberOfFlows;
 
   const pool = threadPool({
     workerPath: path.join(__dirname, './worker.js'),
     threadsToSpawn: numberOfThreads,
   });
 
-  const sendToPool = tree => pool.send({tree, mochaConfig})
+  const sendToPool = combination => pool.send({
+    DAG: analyzeCombination(combination),
+    combination,
+    mochaConfig,
+    jobDetails,
+    flowDetails,
+  });
+
+
   matrix.forEach(sendToPool);
   let failures = 0;
+  let errored = false;
+  let done = false;
 
   pool
     .on('done', function(job, jobFailures) {
       failures += jobFailures;
     })
     .on('error', function(job, error) {
-      throw new Error('Job errored:', error)
+      errored = true;
+      console.log('Job errored:');
+      throw error;
     })
     .on('finished', function() {
       console.log('Everything done, shutting down the thread pool.');
+      const duration = new Duration(startTime, new Date())
+      console.log(`Finished All ${numberOfFlows} Flows in ${duration.toString(1, 1)}`);
       console.log(`${failures} total errors.`);
       pool.killAll();
-      process.exit(failures)
+      done = true;
     });
 
+  process.on('exit', function() {
+    if(!done) console.log('Exited before done')
+    process.exit(+!!(errored || failures));
+  })
   return pool
 }
 

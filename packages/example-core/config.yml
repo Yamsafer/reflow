@@ -1,0 +1,23 @@
+files:
+  - ./subflow/**/*.js
+  - ./hooks/**/*.js
+  - ./suites/**/*.spec.js
+  - ./flow/**/*.js
+# tags:
+  # - core
+  # - prepaid
+# mode: analyze
+
+numberOfThreads: 12
+# numberOfThreads: 7
+mocha:
+  # reporter: 'list'
+  reporterOptions:
+    hostname: 'localhost'
+    protocol: 'http'
+    port: 3000
+    path: '/graphql'
+  bail: false
+  timeout: 30000
+  require:
+    - setup.js

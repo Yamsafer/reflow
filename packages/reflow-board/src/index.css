@@ -1,0 +1,48 @@
+@charset "utf-8";
+
+body {
+  font: 1.225em/1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+h1 {
+  margin-top: 15px;
+  font-size: 2em;
+  font-weight: 200;
+}
+
+h1.title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h1 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1 a:hover {
+  text-decoration: underline;
+}
+
+
+.hidden {
+  display: none;
+}
+
+h2 {
+  font-size: 12px;
+  font-weight: normal;
+  cursor: pointer;
+}
