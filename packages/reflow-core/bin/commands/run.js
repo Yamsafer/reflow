@@ -85,8 +85,6 @@ exports.handler = function (config) {
                   .compact()
                   .value();
 
-  console.log('reflow.files::', reflow.files)
-
   try {
     reflow.gatherMatrices()
   } catch (err) {

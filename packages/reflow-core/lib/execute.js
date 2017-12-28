@@ -29,6 +29,7 @@ const executeMatrix = function(matrix, config) {
 
   matrix.forEach(sendToPool);
   let failures = 0;
+  let errored = false;
   let done = false;
 
   pool
@@ -36,6 +37,7 @@ const executeMatrix = function(matrix, config) {
       failures += jobFailures;
     })
     .on('error', function(job, error) {
+      errored = true;
       console.log('Job errored:');
       throw error;
     })
@@ -50,7 +52,7 @@ const executeMatrix = function(matrix, config) {
 
   process.on('exit', function() {
     if(!done) console.log('Exited before done')
-    process.exit(+!!failures);
+    process.exit(+!!(errored || failures));
   })
   return pool
 }
