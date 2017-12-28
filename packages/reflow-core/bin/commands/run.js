@@ -83,9 +83,22 @@ exports.handler = function (config) {
   reflow.files = _(config.files)
                   .flatMap(lookupFiles(ROOTPATH, config))
                   .compact()
-                  .value()
+                  .value();
 
-  reflow.gatherMatrices()
+  console.log('reflow.files::', reflow.files)
 
-  reflow.runFlows()
+  try {
+    reflow.gatherMatrices()
+  } catch (err) {
+    console.error('Error Gathering Matrices')
+    console.error(err);
+    process.exit(1);
+  }
+  try {
+    reflow.runFlows()
+  } catch(err) {
+    console.error('Error Running Flows')
+    console.error(err);
+    throw err
+  }
 }

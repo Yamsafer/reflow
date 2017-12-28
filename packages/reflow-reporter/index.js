@@ -134,9 +134,11 @@ const ReflowReporter = function(runner, options = {}) {
     });
   });
 
-  let metadata = [];
-  global.metadata = function(...args) {
-    metadata.push(args);
+
+  let metadataContent = [];
+
+  global.metadata = function(message, meta) {
+    metadataContent.push({ message, meta });
   }
 
   runner.on('pass', function (test) {
@@ -144,11 +146,12 @@ const ReflowReporter = function(runner, options = {}) {
       title: utils.escape(test.title),
       code: utils.escape(utils.clean(test.body)),
       speed: test.speed,
-      metadata: metadata.length? utils.escape(JSON.stringify(metadata)) : undefined,
+      metadata: metadataContent.length? metadataContent : undefined,
       duration: test.duration,
       result: "SUCCESS"
     });
-    metadata = [];
+
+    metadataContent = [];
   });
 
   runner.on('pending', function (test) {
