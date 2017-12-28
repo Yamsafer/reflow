@@ -9,17 +9,29 @@ const createHook = function(name, condition) {
   }
 }
 
-describe.only('evaluate flow', function() {
+describe('Evaluate flow', function() {
+  describe('Conditional Forking', function() {
+    it('removes false predicates from forks', function() {
+      const actualFlow = [
+        [
+          createHook('s1', () => false),
+          createHook('s2'),
+          createHook('s3'),
+        ],
+      ];
 
-  it('test evaluateFlow length', function() {
-    const flow = [
-      [
-        createHook('s1', () => false),
-        createHook('s2'),
-      ],
-    ];
+      const expectedFlow = [
+        [
+          createHook('s2'),
+          createHook('s3'),
+        ],
+      ];
 
-    const combinations = evaluateFlow(flow);
-    expect(combinations.length).to.equal(1);
-  })
-})
+      const actualCombinations = evaluateFlow(actualFlow);
+      const expectedCombinations = evaluateFlow(expectedFlow);
+
+      expect(actualCombinations).to.have.lengthOf(2);
+      expect(actualCombinations).to.deep.equal(expectedCombinations);
+    });
+  });
+});
