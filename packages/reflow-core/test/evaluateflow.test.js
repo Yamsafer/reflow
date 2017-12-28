@@ -1,23 +1,25 @@
 import {evaluateFlow} from '../lib/evaluate'
 
 
-const createSuite = function(name, condition) {
+const createHook = function(name, condition) {
   return {
-    name, 
-    type: 'suite',
+    name,
+    type: 'hook',
     condition,
   }
 }
 
-describe('evaluate flow', function() {
+describe.only('evaluate flow', function() {
 
   it('test evaluateFlow length', function() {
-    const suites = [
-       [
-      createSuite('s1', () => false),     
-      createSuite('s2'),
+    const flow = [
+      [
+        createHook('s1', () => false),
+        createHook('s2'),
       ],
-      ]
-      expect(evaluateFlow(suites).length).to.equal(1);
+    ];
+
+    const combinations = evaluateFlow(flow);
+    expect(combinations.length).to.equal(1);
   })
 })
