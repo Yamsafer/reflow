@@ -1,6 +1,6 @@
 {
   "name": "example-analytics",
-  "version": "3.0.0-alpha.8",
+  "version": "3.0.0-alpha.10",
   "scripts": {
     "dev": "node index.js",
     "start": "cross-env REFLOW_DEVELOPMENT=1 node index.js"
@@ -9,8 +9,8 @@
     "cors": "^2.8.4",
     "elasticsearch": "^14.0.0",
     "express": "^4.16.2",
-    "reflow-circuit": "^3.0.0-alpha.8",
-    "reflow-board": "^3.0.0-alpha.8"
+    "reflow-circuit": "^3.0.0-alpha.10",
+    "reflow-board": "^3.0.0-alpha.10"
   },
   "devDependencies": {
     "cross-env": "^5.1.1"
