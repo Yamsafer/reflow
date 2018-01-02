@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import cartesian from './cartesian';
 const types = ["suite", "subflow", "fork", "hook"];
-const conditionalTypes = ["subflow", "hook", "suite"];
+const conditionalTypes = ["subflow", "hook", "fork"];
 
 
 const evaluateSubflow = function(name, getDetail) {
   const {suites, ...rest} = getDetail();
   if(!_.isArray(suites)) throw new Error(`no suites provided in subflow "${name}".`);
-  
-  
+
+
   const cartesianed = cartesian(
     ...suites.map(suite => [].concat(suite))
   ) || [];
