@@ -164,4 +164,4 @@ describe('Reflow Reporter', function () {
     })
   })
 
-});
+ });
