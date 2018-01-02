@@ -52,14 +52,11 @@ const evaluateFlow = function(suites, activeTags) {
     .map(combination => combination.reduce((acc, branch) => {
       if(branch.condition && conditionalTypes.includes(branch.type)) {
         const pass = branch.condition(acc);
-        if(!pass) {
-          return "[]";
-        }
+        if(!pass) return acc;
       }
       acc.push(branch);
       return acc;
-    },[]));
-    _.pull(conditionedCart, "[]")
+    }, []));
   return _.uniqWith(conditionedCart, _.isEqual);
 }
 
