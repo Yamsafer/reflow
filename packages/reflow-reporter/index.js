@@ -137,8 +137,6 @@ const ReflowReporter = function(runner, options = {}) {
 
   let metadataContent = [];
   global.metadata = function(message, meta) {
-    // message = typeof message  === "string" ? message
-    //       : JSON.stringify(message).replace(new RegExp('\"', 'g'),'`');
     metadataContent.push({
       message: JSON.stringify(message),
       meta: JSON.stringify(meta),
