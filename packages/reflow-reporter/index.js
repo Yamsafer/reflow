@@ -136,9 +136,11 @@ const ReflowReporter = function(runner, options = {}) {
 
 
   let metadataContent = [];
-
   global.metadata = function(message, meta) {
-    metadataContent.push({ message, meta });
+    metadataContent.push({
+      message: JSON.stringify(message),
+      meta: JSON.stringify(meta),
+    });
   }
 
   runner.on('pass', function (test) {

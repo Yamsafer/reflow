@@ -31,6 +31,7 @@ type Flow {
   pending: Int!
   failures: Int!
   combinations: [Combination]!
+  DAG: [String]
   result: Result!
 }
 
@@ -58,10 +59,16 @@ type Test {
   duration: Float
   code: String
   err: TestErr
+  metadata: [metadata]
 }
 
 type Diagram {
   viz: String!
+}
+
+type metadata {
+  meta: String
+  message:String
 }
 
 type TestErr {
@@ -80,6 +87,7 @@ type TestErr {
 input FlowInput {
   id: ID!
   title: String!
+  DAG: [String]
 }
 
 input JobInput {
@@ -122,8 +130,13 @@ input TestInput {
   speed: Speed
   code: String
   duration: Float
-  metadata: [String]
+  metadata: [metadataInput]
   err: TestErrInput
+}
+
+input metadataInput {
+  meta: String
+  message: String
 }
 
 input TestErrInput {
