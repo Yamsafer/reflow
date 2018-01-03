@@ -2,6 +2,24 @@ import React, {Component} from 'react';
 import './style.css';
 import he from 'he';
 
+const CodeAndMetadata = ({code, metadata}) => {
+  const metaItems = metadata && metadata.map(metaItem => {
+    return (
+      <pre>
+        {metaItem.message && <code>message: {metaItem.message}</code>}
+        {metaItem.meta && <code>meta: {metaItem.meta}</code>}
+      </pre>
+    )
+  });
+  return (
+    <div>
+      <pre>
+        {!!code && <code>{he.decode(code)}</code>}
+      </pre>
+      {metaItems}
+    </div>
+  )
+}
 class Pass extends Component{
   constructor(props) {
     super(props);
@@ -16,12 +34,13 @@ class Pass extends Component{
     }))
   }
   render() {
-    const {title, duration, speed, code} = this.props;
+    const {title, duration, speed, code, metadata} = this.props;
+    console.log('metadata::::::', metadata)
     const {showCode} = this.state;
     return (
       <li className={`test pass ${speed.toLowerCase()}`} onClick={this.toggleShowCode}>
         <h2>{title}<span className="duration">{duration}ms</span></h2>
-        {!!code && showCode && <pre><code>{he.decode(code)}</code></pre>}
+        {showCode && <CodeAndMetadata code={code} metadata={metadata} />}
       </li>
     )
   }
@@ -68,13 +87,13 @@ class Fail extends Component {
     }))
   }
   render() {
-    const {err, title, code, } = this.props
+    const {err, title, code, metadata, } = this.props
     const {showCode} = this.state;
     console.log("error code::", code)
     return (
       <li className="test fail" onClick={this.toggleShowCode} >
         <h2>{title}</h2>
-        {showCode && code && <pre><code>{he.decode(code)}</code></pre>}
+        {showCode && <CodeAndMetadata code={code} metadata={metadata} />}
         {showCode && <JSXERR err={err} />}
       </li>
     )

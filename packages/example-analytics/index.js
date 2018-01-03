@@ -28,9 +28,11 @@ function init() {
     elastic: elasticClient,
   }))
 
-  // app.use(require('reflow-board')());
+  app.use(require('reflow-board')());
 
-  app.listen(3000);
+  app.listen(3000, function() {
+    console.log('Server Running on port 3000')
+  });
 }
 
 init();

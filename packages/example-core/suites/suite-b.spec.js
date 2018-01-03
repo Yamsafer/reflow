@@ -9,7 +9,7 @@ describe('Suite B', function() {
     })
   })
   it('does B assertions', function() {
-    metadata({'a':3,'b':'test','c':{'cc':true}})
+    metadata({'a':3,'b':'test','c':{'cc':true}}, {level: 'warn'})
     metadata(1);
     return new Promise((resolve, reject) => {
       expect(1).to.equal(1);

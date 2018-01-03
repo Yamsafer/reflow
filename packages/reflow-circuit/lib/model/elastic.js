@@ -120,7 +120,7 @@ module.exports = client => ({
                         }
                       ],
                       "_source": "*",
-                      "size" : 100,
+                      "size" : 1,
                     }
                   }
                 }
@@ -181,7 +181,7 @@ module.exports = client => ({
                     }
                   ],
                   "_source": "*",
-                  "size" : 1,
+                  "size" : 100,
                 }
               },
               totalPasses: { "sum": { "field": "passes" } },

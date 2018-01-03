@@ -1,4 +1,4 @@
-flow('Reflow Matrix', function() {
+flow('Flow #1', function() {
   return [
     getHook('Before All', ['core']),
     getHook('After All', ['core']),

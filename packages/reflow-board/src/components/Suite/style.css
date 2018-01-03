@@ -192,14 +192,9 @@ code .number { color: #2F6FAD }
 
 
 
-
-
 /*
   Source: https://github.com/blond/mocha-simple-html-reporter
  */
-
-
-
 
 
 /*
@@ -210,6 +205,10 @@ code .number { color: #2F6FAD }
     display: none;
 }
 */
+
+#mocha .test pre code {
+  display: block;
+}
 
 #mocha .test pre.error {
     display: block;
