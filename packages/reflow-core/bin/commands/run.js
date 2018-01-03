@@ -15,6 +15,11 @@ exports.builder = {
       require: [],
     },
   },
+  "mocha.reporter": {
+    alias:'mochaReporter',
+    type: 'string',
+    description: 'mocha reporter',
+  },
   job: {
     type: 'object',
     description: 'job details',
@@ -50,6 +55,7 @@ exports.builder = {
 }
 
 exports.handler = function (config) {
+  console.log('config::', config)
   const _ = require('lodash');
   const path = require('path');
   const fs = require('fs');
