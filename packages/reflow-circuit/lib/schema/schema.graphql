@@ -17,10 +17,10 @@ type Job {
   sourceBranch: String
   targetBranch: String
   trigger: String
-  numberOfThreads: Int!,
-  numberOfCombinations: Int!,
-  numberOfFlows: Int!,
-  tags: [String],
+  numberOfThreads: Int!
+  numberOfCombinations: Int!
+  numberOfFlows: Int!
+  tags: [String]
   pageInfo: PageInfo!
 }
 
@@ -49,6 +49,7 @@ type Combination {
 
 type Suite {
   title: String!
+  level: Int!
   tests: [Test]!
 }
 

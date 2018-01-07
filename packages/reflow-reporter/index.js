@@ -147,10 +147,9 @@ const ReflowReporter = function(runner, options = {}) {
     });
   }
 
-  runner.on('hook end', function() {
-    console.log('hook end!!')
-    console.log(metadataContent);
-  });
+  // runner.on('hook end', function() {
+  //   console.log(metadataContent);
+  // });
 
   runner.on('pass', function (test) {
     report('case', {
