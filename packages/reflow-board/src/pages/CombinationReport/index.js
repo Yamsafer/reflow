@@ -10,6 +10,7 @@ query getSuites($combinationID: ID!) {
     failures
     suites(first: 100) {
       title
+      level
       tests {
         title
         result

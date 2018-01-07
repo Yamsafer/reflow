@@ -35,7 +35,6 @@ class Pass extends Component{
   }
   render() {
     const {title, duration, speed, code, metadata} = this.props;
-    console.log('metadata::::::', metadata)
     const {showCode} = this.state;
     return (
       <li className={`test pass ${speed.toLowerCase()}`} onClick={this.toggleShowCode}>
@@ -107,6 +106,22 @@ const decideComponent = (status) => {
   }
 }
 
+const Heading = ({level, title}) => {
+  const cx = `suite-level-${level}`;
+
+  switch(level) {
+    case 1:
+      return <h1 className={cx}>{title}</h1>;
+    case 2:
+      return <h2 className={cx}>{title}</h2>;
+    case 3:
+      return <h3 className={cx}>{title}</h3>;
+    case 4:
+      return <h4 className={cx}>{title}</h4>;
+    default:
+      return <h5 className={cx}>{title}</h5>;
+  }
+}
 const Suite = ({suite, onlyFailures}) => {
 
   const tests = suite.tests
@@ -120,7 +135,7 @@ const Suite = ({suite, onlyFailures}) => {
 
   return (
     <div>
-      <li className="suite">
+      <li className={`suite suite-level-${suite.level}`}>
         <h1>{suite.title}</h1>
         <ul>
           {tests}

@@ -39,18 +39,16 @@ const ReflowReporter = function(runner, options = {}) {
 
   let results = [];
   let startTime;
+  let level = 1;
   let numberOfSuites;
-
-  let CURRENT_RESULTS_CURSOR;
 
   function report (type, data) {
     switch(type) {
       case "case":
-        results[CURRENT_RESULTS_CURSOR].tests.push(data)
+        results[results.length - 1].tests.push(data);
         break;
       case "suite":
-        results.push(data)
-        CURRENT_RESULTS_CURSOR = results.length - 1;
+        results.push(data);
         break;
     }
   }
@@ -128,10 +126,16 @@ const ReflowReporter = function(runner, options = {}) {
   });
 
   runner.on('suite', function (suite) {
+    level = level + 1;
     report('suite', {
       title: utils.escape(suite.title),
-      tests: []
+      tests: [],
+      level,
     });
+  });
+
+  runner.on('suite end', function () {
+    level = level - 1;
   });
 
 
@@ -142,6 +146,11 @@ const ReflowReporter = function(runner, options = {}) {
       meta: JSON.stringify(meta),
     });
   }
+
+  runner.on('hook end', function() {
+    console.log('hook end!!')
+    console.log(metadataContent);
+  });
 
   runner.on('pass', function (test) {
     report('case', {

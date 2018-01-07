@@ -121,6 +121,7 @@ input CombinationInput {
 
 input SuiteInput {
   title: String!
+  level: Int!
   tests: [TestInput]
 }
 
