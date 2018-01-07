@@ -50,7 +50,6 @@ const circuitMiddleware = function(userConfig) {
       schema,
       context: {
         elastic,
-        user,
         loaders: createLoaders(elastic),
       },
     })(...args);

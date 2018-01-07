@@ -87,7 +87,6 @@ module.exports = client => ({
           if(totalNumberOfCombinations > currentNumberOfCombinations) return 'PENDING';
           return totalFailures > 0 ? "FAILURE" : "SUCCESS";
         }
-        console.log('result::::::::::', getResult())
 
         return {
           ...jobDetails,
