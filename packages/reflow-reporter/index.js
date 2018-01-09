@@ -151,7 +151,7 @@ const ReflowReporter = function(runner, options = {}) {
   global.trackRequest = function(request) {
     const postData = {
       operationName: "trackRequest",
-      query: "mutation trackRequest($request: RequestEventInput!) {\n  trackRequest(input: $request) {\n    name\n  }\n}\n",
+      query: "mutation trackRequest($request: RequestEventInput!) {\n  trackRequest(input: $request) {\n    id\n  }\n}\n",
       variables: {
         request: {
           ...request,
