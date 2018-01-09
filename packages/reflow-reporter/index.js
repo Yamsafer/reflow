@@ -52,9 +52,9 @@ const ReflowReporter = function(runner, options = {}) {
         break;
     }
   }
-  function sendRequest(data) {
-    process.stdout.write(`\nSending request to: ${hostname}:${port}${path}`);
-    const postData = JSON.stringify(data, 2, 2);
+  function sendRequest(type, data) {
+    process.stdout.write(`\nSending request (${type}) to: ${hostname}:${port}${path}`);
+    const postData = JSON.stringify(data);
     const reqOptions = {
       agent: keepAliveAgent,
       method: 'POST',
@@ -67,7 +67,19 @@ const ReflowReporter = function(runner, options = {}) {
         'Content-Length': Buffer.byteLength(postData),
       }, headers),
     };
-    const req = tcpModule.request(reqOptions);
+    const req = tcpModule.request(reqOptions, (res) => {
+      if(type === 'request track') {
+        console.log(`STATUS: ${res.statusCode}`);
+        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+        res.setEncoding('utf8');
+        res.on('data', (chunk) => {
+          console.log(`BODY: ${chunk}`);
+        });
+        res.on('end', () => {
+          console.log('No more data in response.');
+        });
+      }
+    });
 
     req.on('error', (e) => {
       console.error(e);
@@ -108,7 +120,7 @@ const ReflowReporter = function(runner, options = {}) {
         },
       };
 
-      sendRequest(postData);
+      sendRequest('combination', postData);
       results = [];
     } catch(err) {
       console.log('err::', err)
@@ -148,7 +160,7 @@ const ReflowReporter = function(runner, options = {}) {
       },
     };
 
-    sendRequest(postData)
+    sendRequest('request track', postData)
   }
   global.metadata = function(message, meta) {
     metadataContent.push({
