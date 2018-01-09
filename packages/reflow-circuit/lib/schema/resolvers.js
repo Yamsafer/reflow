@@ -1,22 +1,25 @@
 const resolverMap = {
   Query: {
-    combination(parent, args, {loaders}, info) {
+    combination(parent, args, {loaders}) {
       return loaders.combinationsByIds.load(args.id);
     },
-    jobs(parent, args, {elastic}, info) {
+    jobs(parent, args, {elastic}) {
       return elastic.getJobs(args);
     },
-    flows(parent, args, {elastic}, info) {
+    flows(parent, args, {elastic}) {
       return elastic.getFlows(args.jobID);
     },
-    flow(parent, args, {elastic}, info) {
+    flow(parent, args, {elastic}) {
       return elastic.getFlow(args.id);
-    },
+    }
   },
   Mutation: {
-    insertCombination(parent, {input}, {elastic}, info) {
+    insertCombination(parent, {input}, {elastic}) {
       return elastic.newCombination(input);
-    }
+    },
+    trackRequest(parent, {input}, {elastic}) {
+      return elastic.insertRequestEvent(input)
+    },
   }
 };
 

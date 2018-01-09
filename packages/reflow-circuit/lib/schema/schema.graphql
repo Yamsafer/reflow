@@ -166,6 +166,66 @@ enum Result {
   PENDING
 }
 
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  OPTIONS
+  DELETE
+  HEAD
+  PATCH
+}
+
+type RequestEvent {
+  id: ID!
+  # Stringified JSON
+  header: String!
+  # Stringified JSON
+  searchParams: String!
+  href: String!
+  hash: String!
+  protocol: String!
+  search: String!
+  hostname: String!
+  port: String!
+  pathname: String!
+  search: String!
+  statusCode: Int!
+  method: HttpMethod!
+  statusMessage: String!
+  startTime: Float!
+  endTime: Float!
+  duration: Float!
+  details: String
+}
+
+input RequestEventInput {
+  # Stringified JSON
+  header: String!
+  # Stringified JSON
+  searchParams: String!
+  href: String!
+  duration: Float!
+  hash: String!
+  protocol: String!
+  search: String!
+  hostname: String!
+  port: String!
+  pathname: String!
+  redirects: Int!
+  redirectsList: String!
+  search: String!
+  statusCode: Int!
+  method: String!
+  statusMessage: String!
+  startTime: Float!
+  endTime: Float!
+  details: String
+}
+
+enum TrackTypes {
+  request
+}
 
 # Root Schema
 
@@ -176,10 +236,12 @@ type Query {
   flows(jobID: ID!, first: Int, after: String): [Flow]
   combination(id: ID!): Combination
   jobs(first: Int!, after: String): [Job]
+  # trackedRequests: [RequestEvent]
 }
 
 type Mutation {
   insertCombination(input: CombinationInput!): Combination
+  trackRequest(input: RequestEventInput): RequestEvent
 }
 
 schema {

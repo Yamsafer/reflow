@@ -52,6 +52,31 @@ const ReflowReporter = function(runner, options = {}) {
         break;
     }
   }
+  function sendRequest(data) {
+    process.stdout.write(`\nSending request to: ${hostname}:${port}${path}`);
+    const postData = JSON.stringify(data, 2, 2);
+    const reqOptions = {
+      agent: keepAliveAgent,
+      method: 'POST',
+      port,
+      hostname,
+      path,
+      protocol: `${protocol}:`,
+      headers: Object.assign({
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+      }, headers),
+    };
+    const req = tcpModule.request(reqOptions);
+
+    req.on('error', (e) => {
+      console.error(e);
+    });
+
+    req.write(postData);
+    req.end();
+    process.stdout.write('\nRequest sent.\n');
+  }
 
   function submitReport() {
     try {
@@ -75,44 +100,15 @@ const ReflowReporter = function(runner, options = {}) {
       }
       process.stdout.write('Done');
 
-      const postData = JSON.stringify({
+      const postData = {
         operationName: "insertCombination",
         query: "mutation insertCombination($combination: CombinationInput!) {\n  insertCombination(input: $combination) {\n    id\n  }\n}\n",
         variables: {
           combination: report,
         },
-      });
-      process.stdout.write(`\nSending request to: ${hostname}:${port}${path}`);
-
-      // const keepAliveAgent = new tcpModule.Agent({ keepAlive: true });
-      const reqOptions = {
-        agent: keepAliveAgent,
-        method: 'POST',
-        port,
-        hostname,
-        path,
-        protocol: `${protocol}:`,
-        headers: Object.assign({
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(postData),
-        }, headers),
       };
 
-      // console.log('reqOptions::', reqOptions)
-
-      const req = tcpModule.request(reqOptions);
-
-      req.on('error', (e) => {
-        console.error(e);
-      });
-
-      req.write(postData);
-      req.end();
-      // keepAliveAgent.destroy()
-
-      process.stdout.write('\nReport sent\n');
-      // process.stdout.write(JSON.stringify(report, 2, 2));
-      // process.stdout.write('\n');
+      sendRequest(postData);
       results = [];
     } catch(err) {
       console.log('err::', err)
@@ -140,6 +136,15 @@ const ReflowReporter = function(runner, options = {}) {
 
 
   let metadataContent = [];
+  global.trackRequest = function(request) {
+    const postData = {
+      operationName: "trackRequest",
+      query: "mutation trackRequest($request: RequestEventInput!) {\n  track(input: $request) {\n    name\n  }\n}\n",
+      variables: { request },
+    };
+
+    sendRequest(postData)
+  }
   global.metadata = function(message, meta) {
     metadataContent.push({
       message: JSON.stringify(message),

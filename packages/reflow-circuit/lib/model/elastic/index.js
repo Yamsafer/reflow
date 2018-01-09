@@ -1,4 +1,6 @@
+const requestTracking = require('./tracking/request')
 module.exports = client => ({
+  ...requestTracking(client),
   newCombination(body) {
     return client.index({
       index: 'reflow',

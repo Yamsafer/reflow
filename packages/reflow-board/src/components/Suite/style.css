@@ -11,13 +11,13 @@
 }*/
 
 #mocha .suite.suite-level-1 { margin-left: 15px; }
-#mocha .suite.suite-level-2 { margin-left: 20px; }
-#mocha .suite.suite-level-3 { margin-left: 25px; }
-#mocha .suite.suite-level-4 { margin-left: 30px; }
-#mocha .suite.suite-level-5 { margin-left: 35px; }
+#mocha .suite.suite-level-2 { margin-left: 30px; }
+#mocha .suite.suite-level-3 { margin-left: 40px; }
+#mocha .suite.suite-level-4 { margin-left: 50px; }
+#mocha .suite.suite-level-5 { margin-left: 60px; }
 
 #mocha .suite.suite-level-1 h1 { font-size: 2em; }
-#mocha .suite.suite-level-2 h1 { font-size: 1.8em; margin-top: 0px; }
+#mocha .suite.suite-level-2 h1 { font-size: 1.7em; margin-top: 0px; }
 #mocha .suite.suite-level-3 h1 { font-size: 1.6em; margin-top: 0px; }
 #mocha .suite.suite-level-4 h1 { font-size: 1.45em; margin-top: 0px; }
 #mocha .suite.suite-level-5 h1 { font-size: 1.3em; margin-top: 0px; }
