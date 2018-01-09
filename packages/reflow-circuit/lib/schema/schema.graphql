@@ -202,6 +202,7 @@ type RequestEvent {
 
 input RequestEventInput {
   # Stringified JSON
+  jobID: ID
   header: String!
   source: String
   # Stringified JSON
@@ -223,10 +224,6 @@ input RequestEventInput {
   startTime: Float!
   endTime: Float!
   details: String
-}
-
-enum TrackTypes {
-  request
 }
 
 # Root Schema
