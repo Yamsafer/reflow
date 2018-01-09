@@ -178,6 +178,7 @@ enum HttpMethod {
 
 type RequestEvent {
   id: ID!
+  source: String
   # Stringified JSON
   header: String!
   # Stringified JSON
@@ -202,6 +203,7 @@ type RequestEvent {
 input RequestEventInput {
   # Stringified JSON
   header: String!
+  source: String
   # Stringified JSON
   searchParams: String!
   href: String!
