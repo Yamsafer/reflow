@@ -37,8 +37,8 @@ class Pass extends Component{
     const {title, duration, speed, code, metadata} = this.props;
     const {showCode} = this.state;
     return (
-      <li className={`test pass ${speed.toLowerCase()}`} onClick={this.toggleShowCode}>
-        <h2>{title}<span className="duration">{duration}ms</span></h2>
+      <li className={`test pass ${speed.toLowerCase()}`}>
+        <h2 onClick={this.toggleShowCode}>{title}<span className="duration">{duration}ms</span></h2>
         {showCode && <CodeAndMetadata code={code} metadata={metadata} />}
       </li>
     )
@@ -48,7 +48,7 @@ class Pass extends Component{
 const Pending = ({title}) => {
   return (
     <li className="test pass pending">
-      <h2>{title}</h2>
+      <h2>{he.decode(title)}</h2>
     </li>
   )
 }
@@ -88,10 +88,9 @@ class Fail extends Component {
   render() {
     const {err, title, code, metadata, } = this.props
     const {showCode} = this.state;
-    console.log("error code::", code)
     return (
-      <li className="test fail" onClick={this.toggleShowCode} >
-        <h2>{title}</h2>
+      <li className="test fail" >
+        <h2 onClick={this.toggleShowCode}>{he.decode(title)}</h2>
         {showCode && <CodeAndMetadata code={code} metadata={metadata} />}
         {showCode && <JSXERR err={err} />}
       </li>
@@ -106,22 +105,6 @@ const decideComponent = (status) => {
   }
 }
 
-const Heading = ({level, title}) => {
-  const cx = `suite-level-${level}`;
-
-  switch(level) {
-    case 1:
-      return <h1 className={cx}>{title}</h1>;
-    case 2:
-      return <h2 className={cx}>{title}</h2>;
-    case 3:
-      return <h3 className={cx}>{title}</h3>;
-    case 4:
-      return <h4 className={cx}>{title}</h4>;
-    default:
-      return <h5 className={cx}>{title}</h5>;
-  }
-}
 const Suite = ({suite, onlyFailures}) => {
 
   const tests = suite.tests
@@ -136,7 +119,7 @@ const Suite = ({suite, onlyFailures}) => {
   return (
     <div>
       <li className={`suite suite-level-${suite.level}`}>
-        <h1>{suite.title}</h1>
+        <h1>{he.decode(suite.title)}</h1>
         <ul>
           {tests}
         </ul>

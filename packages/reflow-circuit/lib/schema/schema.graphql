@@ -214,10 +214,10 @@ input RequestEventInput {
   search: String!
   hostname: String!
   port: String!
+  environment: String
   pathname: String!
   redirects: Int!
   redirectsList: String!
-  search: String!
   statusCode: Int!
   method: String!
   statusMessage: String!
