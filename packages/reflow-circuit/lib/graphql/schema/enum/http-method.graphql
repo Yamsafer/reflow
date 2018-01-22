@@ -1,0 +1,9 @@
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  OPTIONS
+  DELETE
+  HEAD
+  PATCH
+}

@@ -1,0 +1,8 @@
+{
+  "elastic": {
+    "log": "trace",
+    "host": "localhost",
+    "port": "9200",
+    "protocol": "http",
+  }
+}

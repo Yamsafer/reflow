@@ -1,6 +1,9 @@
 const requestTracking = require('./tracking/request')
+const jobs = require('./reflow/jobs');
+
 module.exports = client => ({
   ...requestTracking(client),
+  ...jobs(client),
   newCombination(body) {
     return client.index({
       index: 'reflow',
@@ -17,86 +20,6 @@ module.exports = client => ({
       suites: body.suites,
       diagram: body.diagram,
     }));
-  },
-  getJobs(cursorInfo) {
-    return client.search({
-      index: 'reflow',
-      type: 'flow',
-      size: 0,
-      body: {
-        "aggs": {
-          "top_tags": {
-            "terms": {
-              "field": "jobDetails.id",
-              "size": cursorInfo.first,
-              "order" : { "JobStartTime" : "desc" },
-            },
-            "aggs": {
-              "passes": {
-                "sum":{ "field": "passes" }
-              },
-              "failures": {
-                "sum":{ "field": "failures" }
-              },
-              "pending": {
-                "sum":{ "field": "pending" }
-              },
-              "endTime": {
-                "max":{ "field": "endTime" }
-              },
-              totalNumberOfSuites: {
-                "sum":{ "field": "numberOfSuites" }
-              },
-              "JobStartTime" : { "min" : { "field" : "jobDetails.startTime" } },
-              "currentNumberOfCombinations": {
-                "terms": {
-                  "field": "jobDetails.id",
-                  "size": 1,
-                },
-              },
-              "top_sales_hits": {
-                "top_hits": {
-                  "sort": [
-                    {
-                      "jobDetails.startTime": {
-                        "order": "asc"
-                      }
-                    }
-                  ],
-                  "_source": {
-                    "includes": [ "jobDetails" ]
-                  },
-                  "size" : 1
-                }
-              }
-            }
-          }
-        }
-      }
-    }).then(result => {
-      return result.aggregations.top_tags.buckets.map(bucket => {
-        const jobDetails = bucket.top_sales_hits.hits.hits[0]._source.jobDetails;
-        const currentNumberOfCombinations = bucket.currentNumberOfCombinations.buckets[0].doc_count;
-        const totalNumberOfCombinations = jobDetails.numberOfCombinations;
-
-        const totalFailures = bucket.failures.value;
-        console.log('totalFailures:', totalFailures)
-        console.log('currentNumberOfCombinations:', currentNumberOfCombinations)
-        console.log('totalNumberOfCombinations:', totalNumberOfCombinations)
-        const totalNumberOfSuites = bucket.totalNumberOfSuites.value;
-
-        const getResult = function () {
-          if(totalNumberOfCombinations > currentNumberOfCombinations) return 'PENDING';
-          return totalFailures > 0 ? "FAILURE" : "SUCCESS";
-        }
-
-        return {
-          ...jobDetails,
-          numberOfSuites: totalNumberOfSuites,
-          result: getResult(),
-        }
-      });
-    })
   },
   getFlows(jobId) {
     return client.search({
@@ -166,30 +89,20 @@ module.exports = client => ({
     return client.search({
       index: 'reflow',
       type: 'flow',
-      size: 0,
+      size: 2,
+      scroll: '30s',
+      _source: "*",
       body: {
-        aggs: {
-          categories: {
-            filter: { term: { "flowDetails.id" : flowId } },
-            aggs: {
-              "top_combinations": {
-                "top_hits": {
-                  "sort": [
-                    {
-                      "startTime": {
-                        "order": "asc"
-                      }
-                    }
-                  ],
-                  "_source": "*",
-                  "size" : 100,
-                }
-              },
-              totalPasses: { "sum": { "field": "passes" } },
-              totalFailures: { "sum": { "field": "failures" } },
-              totalPending: { "sum": { "field": "pending" } },
-            }
+        query: {
+          match: {
+            "flowDetails.id": flowId,
           }
+        },
+        "sort": [ "_doc" ],
+        aggs: {
+          totalPasses: { sum: { field: "passes" } },
+          totalFailures: { sum: { field: "failures" } },
+          totalPending: { sum: { field: "pending" } },
         }
       }
     }).then(result => {
@@ -202,9 +115,9 @@ module.exports = client => ({
       });
       const Flow = {
         id: resultHits[0]._source.flowDetails.id,
-        passes: result.aggregations.categories.totalPasses.value,
-        pending: result.aggregations.categories.totalPending.value,
-        failures: result.aggregations.categories.totalFailures.value,
+        passes: result.aggregations.totalPasses.value,
+        pending: result.aggregations.totalPending.value,
+        failures: result.aggregations.totalFailures.value,
         combinations: Combinations
       }
       console.log('Flow::', Flow);

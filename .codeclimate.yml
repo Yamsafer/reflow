@@ -6,9 +6,9 @@ engines:
       - javascript
     exclude_paths:
       - "packages/**/distribution/"
+      - "packages/**/build/"
       - "features/"
       - "**/node_modules/"
-      - script/
       - "**/test/"
   eslint:
     enabled: true

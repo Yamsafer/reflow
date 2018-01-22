@@ -1,0 +1,5 @@
+enum Speed {
+  fast
+  medium
+  slow
+}

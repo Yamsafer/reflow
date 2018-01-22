@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import Suite from '../../components/Suite'
+import FailuresFilter from '../../components/FailuresFilter'
+import ReportDetails from '../../components/ReportDetails';
 
 import './style.css'
 class SuitesList extends Component {
@@ -37,35 +39,25 @@ class SuitesList extends Component {
       startTime,
     } = combination;
 
-    const ms = () => "";
-    const checkedClass = onlyFailures? "active" : "";
     const hidePassesClass = onlyFailures? "hide-passes" : "";
     const overallResult = "UNKOWN"
     return (
       <div className="row">
         <div className="col-xs-4">
-            {(failures > 0 || true) &&
-              <div>
-                <button
-                  id="toggle-passes"
-                  type="button"
-                  onClick={this.onTogglePasses}
-                  className={`btn btn-danger btn-xs toggle-passes ${checkedClass}`}
-                >
-                  show failures only
-                </button>
-              </div>
-            }
-            <h4>Report Details</h4>
-              Result: {overallResult}
-            <h5>Status</h5>
-            <ul>
-              <li className="passes">passes: <em>{passes}</em></li>
-              <li className="pending">pending: <em>{pending}</em></li>
-              <li className="failures">failures: <em>{failures}</em></li>
-              <li className="duration">duration: <em>{ms(endTime - startTime)}</em></li>
-            </ul>
-          </div>
+          <FailuresFilter
+            active={onlyFailures}
+            disabled={!failures}
+            onToggle={this.onTogglePasses}
+          />
+          <ReportDetails
+            passes={passes}
+            pending={pending}
+            failures={failures}
+            endTime={endTime}
+            startTime={startTime}
+            overallResult={overallResult}
+          />
+        </div>
         <div className="col-xs-8">
           <div className={`report ${hidePassesClass}`} id="mocha">
             <div id="mocha">

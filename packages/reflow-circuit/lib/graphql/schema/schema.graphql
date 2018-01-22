@@ -1,0 +1,23 @@
+type User implements Node {
+  id: ID!
+  projects(after: String, first: Int, before: String, last: Int): ProjectConnection
+  jobs(projectID: ID!, after: String, first: Int, before: String, last: Int): JobConnection
+  flows(jobID: ID!, after: String, first: Int, before: String, last: Int): FlowConnection
+}
+
+type Query {
+  viewer: User
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+}
+
+# type Mutation {
+#   addTodo(input: AddTodoInput!): AddTodoPayload
+# }
+
+schema {
+  query: Query
+  # mutation: Mutation
+}

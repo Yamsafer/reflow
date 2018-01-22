@@ -3,8 +3,8 @@
   "version": "3.0.0-alpha.19",
   "private": true,
   "scripts": {
-    "dev": "node index.js",
-    "start": "cross-env REFLOW_DEVELOPMENT=1 node index.js"
+    "setup": "node lib/setup.js",
+    "start": "cross-env REFLOW_DEVELOPMENT=1 node lib/server.js"
   },
   "dependencies": {
     "cors": "^2.8.4",

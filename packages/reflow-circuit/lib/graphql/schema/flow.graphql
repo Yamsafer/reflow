@@ -1,0 +1,20 @@
+type FlowConnection {
+  pageInfo: PageInfo!
+  edges: [FlowEdge]
+}
+
+type FlowEdge {
+  node: Flow
+  cursor: String!
+}
+
+type Flow implements Node {
+  id: ID!
+  title: String!
+  passes: Int!
+  pending: Int!
+  failures: Int!
+  combinations(after: String, first: Int, before: String, last: Int): CombinationConnection
+  DAG: [String]
+  result: Result!
+}

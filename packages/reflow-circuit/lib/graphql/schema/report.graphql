@@ -1,0 +1,32 @@
+type Suite {
+  title: String!
+  level: Int!
+  tests: [Test]!
+}
+
+type Test {
+  title: String!
+  result: Result!
+  speed: Speed
+  duration: Float
+  code: String
+  err: TestErr
+  metadata: [metadata]
+}
+
+type Diagram {
+  viz: String!
+}
+
+type metadata {
+  meta: String
+  message: String
+}
+
+type TestErr {
+  message: String
+  htmlMessage: String
+  stacktrace: String
+  sourceURL: String
+  line: String
+}

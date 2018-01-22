@@ -1,0 +1,22 @@
+type CombinationConnection {
+  pageInfo: PageInfo!
+  edges: [CombinationEdge]
+}
+
+type CombinationEdge {
+  node: Combination
+  cursor: String!
+}
+
+type Combination implements Node {
+  id: ID!
+  startTime: Float!
+  endTime: Float!
+  passes: Int!
+  pending: Int!
+  failures: Int!
+  result: Result!
+  suites(after: String, first: Int, before: String, last: Int): [Suite]!
+  diagram: Diagram
+}
+

@@ -69,7 +69,7 @@ type Diagram {
 
 type metadata {
   meta: String
-  message:String
+  message: String
 }
 
 type TestErr {

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import ReactTable from 'react-table'
 import columns from './columns';
-
+import ReportDetails from '../../components/ReportDetails';
+import FailuresFilter from '../../components/FailuresFilter'
 
 const decideOverallStatus = (combinationResults, failures) => {
   const isPending = combinationResults.some(result => result === "Pending");
@@ -40,15 +41,10 @@ class JobsList extends Component {
       startTime,
       combinations,
     } = flow;
-    const ms = () => {}
-
-
-
 
     const combinationResults = combinations.map(combination => combination.result);
     const overallResult = decideOverallStatus(combinationResults, failures);
 
-    const checkedClass = onlyFailures? "active" : "";
     const failureFilter = { id: 'result', value: 'FAILURE' };
     const filters = onlyFailures? [failureFilter]: [];
 
@@ -56,28 +52,20 @@ class JobsList extends Component {
       <div className="row">
         <div className="col-xs-4">
           <h1 className="title">Flow Details</h1>
-          {(failures > 0 || true) &&
-            <div>
-              <button
-                id="toggle-passes"
-                type="button"
-                onClick={this.onTogglePasses}
-                style={{float: 'right'}}
-                className={`btn btn-danger btn-xs toggle-passes ${checkedClass}`}
-              >
-                show failures only
-              </button>
-            </div>
-          }
-
-            Result: {overallResult}
-          <h5>Status</h5>
-          <ul>
-            <li className="passes">passes: <em>{passes}</em></li>
-            <li className="pending">pending: <em>{pending}</em></li>
-            <li className="failures">failures: <em>{failures}</em></li>
-            <li className="duration">duration: <em>{ms(endTime - startTime)}</em></li>
-          </ul>
+          <FailuresFilter
+            active={onlyFailures}
+            disabled={!failures}
+            onToggle={this.onTogglePasses}
+            style={{float: 'right'}}
+          />
+          <ReportDetails
+            passes={passes}
+            pending={pending}
+            failures={failures}
+            endTime={endTime}
+            startTime={startTime}
+            overallResult={overallResult}
+          />
         </div>
         <div className="col-xs-8">
         <h1 className="title">Combinations</h1>

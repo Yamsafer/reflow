@@ -1,0 +1,24 @@
+type JobConnection {
+  pageInfo: PageInfo!
+  edges: [JobEdge]
+}
+
+type JobEdge {
+  node: Job
+  cursor: String!
+}
+
+type Job implements Node {
+  id: ID!
+  result: Result!
+  flows(after: String, first: Int, before: String, last: Int): FlowConnection
+  startTime: Float!
+  endTime: Float!
+  sourceBranch: String
+  targetBranch: String
+  trigger: String
+  numberOfThreads: Int!
+  numberOfCombinations: Int!
+  numberOfFlows: Int!
+  tags: [String]
+}

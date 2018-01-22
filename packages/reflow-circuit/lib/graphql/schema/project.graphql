@@ -1,0 +1,15 @@
+type ProjectConnection {
+  pageInfo: PageInfo!
+  edges: [ProjectEdge]
+}
+
+type ProjectEdge {
+  node: Project
+  cursor: String!
+}
+
+type Project implements Node {
+  id: ID!
+  title: String!
+  jobs(after: String, first: Int, before: String, last: Int): JobConnection
+}

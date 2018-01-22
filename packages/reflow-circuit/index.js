@@ -1,2 +1,5 @@
 'use strict';
-module.exports = require('./lib/index');
+module.exports = {
+  middleware: require('./lib/middleware'),
+  setup: require('./lib/setup'),
+}

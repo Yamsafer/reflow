@@ -32,11 +32,9 @@ const circuitMiddleware = function(userConfig) {
   const elastic = elasticModel(config.elastic);
 
   const schema = makeExecutableSchema({
-    typeDefs: [
-      loadSchema('schema/schema.graphql'),
-    ],
+    typeDefs: loadSchema('./graphql/schema'),
     resolvers: _.merge(
-      require('./schema/resolvers')
+      require('./graphql/resolvers')
     ),
   });
 
@@ -61,6 +59,5 @@ const circuitMiddleware = function(userConfig) {
 
   return router;
 }
-
 
 module.exports = circuitMiddleware;
