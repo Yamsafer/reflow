@@ -1,4 +1,4 @@
-const elastic = require('./elastic');
+const Elastic = require('./elastic');
 const config = require('../config.json');
 
 const elasticInstance = new Elastic(config);

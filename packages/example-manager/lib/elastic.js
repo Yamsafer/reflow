@@ -16,11 +16,11 @@ class Elastic {
     const circuit = require('reflow-circuit');
 
     return circuit.setup({
-      client: elasticClient,
+      client: this.client,
     });
   }
   ping() {
-    elasticClient.ping({}, function (error) {
+    this.client.ping({}, function (error) {
       if (error) {
         console.trace('elasticsearch cluster is down!');
       } else {
