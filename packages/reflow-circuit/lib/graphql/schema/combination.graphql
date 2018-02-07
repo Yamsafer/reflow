@@ -24,7 +24,6 @@ input CombinationInput {
   id: ID!
   jobDetails: JobInput!
   flowDetails: FlowInput!
-  projectDetails: ProjectInput!
   numberOfSuites: Int!
   startTime: Float!
   endTime: Float!

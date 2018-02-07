@@ -9,8 +9,6 @@ const {
   graphiqlExpress,
 } = require('graphql-server-express');
 
-const elasticModel = require('./model/elastic');
-
 const {
   makeExecutableSchema,
   // addMockFunctionsToSchema,

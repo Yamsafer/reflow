@@ -153,10 +153,9 @@ const ReflowReporter = function(runner, options = {}) {
       operationName: "trackRequest",
       query: "mutation trackRequest($request: RequestEventInput!) {\n  trackRequest(input: $request) {\n    id\n  }\n}\n",
       variables: {
-        request: {
-          ...request,
+        request: Object.assign({}, request, {
           jobID: jobDetails.id,
-        }
+        }),
       },
     };
 

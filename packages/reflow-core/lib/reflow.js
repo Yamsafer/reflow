@@ -131,13 +131,21 @@ class Reflow {
 
     const threadCount = Math.min(this.options.numberOfThreads, totalCombinations);
     const totalFlows = Object.keys(this.flows).length
+    const projectDetails = {
+      id: "6366977657833263104",
+      title: this.options.project.title,
+      jenkins: this.options.project.jenkins,
+      githubSource: this.options.project.githubSource,
+      githubTarget: this.options.project.githubTarget,
+    }
     const jobDetails = {
-      id: this.options.job.id || this.flake.gen(),
+      id: this.flake.gen(),
       numberOfThreads: threadCount,
       numberOfCombinations: totalCombinations,
       numberOfFlows: totalFlows,
       sourceBranch: this.options.job.source,
       targetBranch: this.options.job.target,
+      jenkins: this.options.job.id,
       tags: this.options.tags,
       startTime: new Date(),
     }

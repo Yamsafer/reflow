@@ -15,7 +15,5 @@ type Project implements Node {
 }
 
 input ProjectInput {
-  id: ID!
-  github: String
-  jenkins: String
+  token: ID!
 }

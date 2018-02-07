@@ -76,7 +76,7 @@ const getQuery = (key, input) => {
       return {
         query: insertJobsByProjectIDCQL,
         params: [
-          input.projectDetails.id,
+          "6366977657833263104",
           input.jobDetails.id,
           input.id,
           input.jobDetails.github,
