@@ -9,16 +9,40 @@ type JobEdge {
 }
 
 type Job implements Node {
+  # Job flake ID
   id: ID!
+  # Tests Status of the job
   result: Result!
-  flows(after: String, first: Int, before: String, last: Int): FlowConnection
+  # Status of the job Completion
+  status: Status!
   startTime: Float!
-  endTime: Float!
+  endTime: Float
   sourceBranch: String
   targetBranch: String
   trigger: String
+  github: String
+  jenkins: String
+  numberOfThreads: Int!
+  totalNumberOfCombinations: Int!
+  currentNumberOfCombinations: Int!
+  firstReported: Float
+  lastReported: Float
+  numberOfFlows: Int!
+  tags: [String]
+  flows(after: String, first: Int, before: String, last: Int): FlowConnection
+}
+
+input JobInput {
+  id: ID!
+  startTime: Float!
+  sourceBranch: String
+  github: String
+  jenkins: String
+  targetBranch: String
   numberOfThreads: Int!
   numberOfCombinations: Int!
   numberOfFlows: Int!
   tags: [String]
+  trigger: String
 }
+

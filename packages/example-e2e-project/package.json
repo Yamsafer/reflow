@@ -1,5 +1,5 @@
 {
-  "name": "example-core",
+  "name": "example-e2e-project",
   "version": "3.0.0-alpha.15",
   "private": true,
   "dependencies": {

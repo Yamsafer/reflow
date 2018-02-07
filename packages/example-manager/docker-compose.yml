@@ -1,5 +1,19 @@
 version: '2.2'
 services:
+  cassandra-node1:
+    container_name: cassandra-node1
+    image: bitnami/cassandra:latest
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_SEEDS=cassandra-node1
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_PASSWORD=password123
+    # links:
+    ports:
+      - "9042:9042"
+      - "7199:7199"
+    volumes:
+      - $PWD/cassandra-data:/bitnami
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.1.0
     container_name: elasticsearch

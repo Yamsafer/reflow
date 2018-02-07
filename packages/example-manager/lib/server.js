@@ -1,20 +1,16 @@
-const express = require('express');
-const cors    = require('cors');
-
-const config = require('../config.json');
-const Elastic = require('./elastic');
-const circuit = require('reflow-circuit');
-const board   = require('reflow-board');
+const express              = require('express');
+const cors                 = require('cors');
+const config               = require('../config.json');
+const circuit              = require('reflow-circuit');
+const board                = require('reflow-board');
+const cassandraConnection  = require('reflow-cassandra-connection');
 
 const app = express();
-const elasticInstance = new Elastic(config);
-
 app.use(cors());
-elasticInstance.ping();
 
-app.use(circuit.middleware({
-  elastic: elasticInstance.client,
-}))
+app.use(circuit({
+  connection: cassandraConnection(config.cassandra),
+}));
 
 app.use(board());
 

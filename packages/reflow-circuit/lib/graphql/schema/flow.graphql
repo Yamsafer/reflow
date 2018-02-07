@@ -15,6 +15,19 @@ type Flow implements Node {
   pending: Int!
   failures: Int!
   combinations(after: String, first: Int, before: String, last: Int): CombinationConnection
+  # Tests Status of the flow
+  result: Result!
+  # Status of the flow Completion
+  status: Status!
+  totalNumberOfFlowCombinations: Int!
+  currentNumberOfFlowCombinations: Int!
   DAG: [String]
   result: Result!
+}
+
+input FlowInput {
+  id: ID!
+  title: String!
+  totalCombinations: Int!
+  DAG: [String]
 }

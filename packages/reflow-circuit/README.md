@@ -1,5 +1,35 @@
 # reflow|circuit
 
+queries:
+list all projects
+  => last ran job
+  => last job status
+  => github repo
+  => jenkins link
+
+list all jobs
+  => status of the job
+  => number of threads
+  => number of flows
+  => number of combinations
+  => source branch
+  => target branch
+  => started at
+  => completed at
+
+list all flows
+  => number of combinations in the flow
+  => number of successes
+  => number of failures
+
+list all combinations
+  => number of success
+  => number of failures
+  => number of skipped
+
+
+view report for combination
+  => spit reporter output for combination
 
 ## Elastic
 

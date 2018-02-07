@@ -1,3 +1,4 @@
+import React from 'react';
 const ms = _ => `${_}ms`;
 
 const ReportDetails = (props) => {

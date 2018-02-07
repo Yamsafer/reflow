@@ -1,8 +1,10 @@
 {
-  "elastic": {
-    "log": "trace",
-    "host": "localhost",
-    "port": "9200",
-    "protocol": "http",
+  "port": "3000",
+  "cassandra": {
+    "keyspace": "reflow",
+    "contactPoints": ["localhost"],
+    "replication": "{ 'class': 'SimpleStrategy', 'replication_factor' : 1 }",
+    "username": "cassandra",
+    "password": "password123"
   }
 }

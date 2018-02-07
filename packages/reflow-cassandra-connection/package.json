@@ -1,0 +1,9 @@
+{
+  "name": "reflow-cassandra-connection",
+  "version": "3.0.0-alpha.19",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "cassandra-driver": "^3.3.0"
+  }
+}

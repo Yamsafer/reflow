@@ -13,3 +13,9 @@ type Project implements Node {
   title: String!
   jobs(after: String, first: Int, before: String, last: Int): JobConnection
 }
+
+input ProjectInput {
+  id: ID!
+  github: String
+  jenkins: String
+}

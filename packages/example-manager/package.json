@@ -1,5 +1,5 @@
 {
-  "name": "example-analytics",
+  "name": "example-manager",
   "version": "3.0.0-alpha.19",
   "private": true,
   "scripts": {
@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "cors": "^2.8.4",
-    "elasticsearch": "^14.0.0",
     "express": "^4.16.2",
+    "reflow-board": "^3.0.0-alpha.19",
     "reflow-circuit": "^3.0.0-alpha.19",
-    "reflow-board": "^3.0.0-alpha.19"
+    "reflow-cassandra-connection": "^3.0.0-alpha.19"
   },
   "devDependencies": {
     "cross-env": "^5.1.1"

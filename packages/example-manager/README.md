@@ -19,7 +19,14 @@ $ cp config.example.json config.json
 ```
 
 
-## Start elasticsearch
+## Start connection
+You only need to setup one connection as a preferred database storage based on what suites your project.
+
+### Cassandra
+This step is not required if you have a cassandra cluster running.
+
+
+### Elasticsearch
 This step is not required if you have an already running elasicsearch cluster.
 Here we use `docker` to run a containarized elasticsearch cluster.
 

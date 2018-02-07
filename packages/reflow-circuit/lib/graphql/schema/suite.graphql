@@ -1,0 +1,78 @@
+type SuiteConnection {
+  pageInfo: PageInfo!
+  edges: [SuiteEdge]
+}
+
+type SuiteEdge {
+  node: Suite
+  cursor: String!
+}
+
+type Suite implements Node {
+  id: ID!
+  title: String!
+  level: Int!
+  tests: [Test]
+}
+
+type Test {
+  title: String!
+  result: Result!
+  speed: Speed
+  duration: Float
+  code: String
+  err: TestErr
+  metadata: [metadata]
+}
+
+type metadata {
+  meta: String
+  message: String
+}
+
+type TestErr {
+  message: String
+  htmlMessage: String
+  stacktrace: String
+  sourceURL: String
+  line: String
+}
+
+type Diagram {
+  viz: String!
+}
+
+input SuiteInput {
+  id: ID!
+  title: String!
+  level: Int!
+  tests: [TestInput]
+}
+
+input TestInput {
+  id: ID!
+  title: String!
+  result: Result!
+  speed: Speed
+  code: String
+  duration: Float
+  metadata: [metadataInput]
+  err: TestErrInput
+}
+
+input metadataInput {
+  meta: String
+  message: String
+}
+
+input TestErrInput {
+  message: String
+  htmlMessage: String
+  stacktrace: String
+  sourceURL: String
+  line: String
+}
+
+input DiagramInput {
+  viz: String!
+}

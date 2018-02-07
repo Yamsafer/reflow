@@ -1,5 +1,10 @@
 const globalID = require('../util/global-id');
 const resolverMap = {
+  Mutation: {
+    insertCombination(parent, {input}, {connection}) {
+      return connection.combination.insert(input);
+    },
+  },
   Query: {
     viewer() {
       return {
@@ -35,55 +40,48 @@ const resolverMap = {
     },
   },
   JobConnection: {
-    edges(args) {
-      console.log('JobConnection edges args:::', args)
-      return [{
-        node: {
-          numberOfThreads: 1333,
-          flows: args => args,
-        }
-      }]
+    edges(obj, args, { connection }) {
+      const {projectID, ...cursorInfo} = obj;
+      return connection.job.getByProjectID(projectID, cursorInfo);
     }
   },
   FlowConnection: {
-    edges(obj) {
-      return [{
-        node: {
-          title: 'mobile shit',
-          combinations: args => args,
-        }
-      }]
+    edges(obj, args, { connection }) {
+      const {jobID, ...cursorInfo} = obj;
+      return connection.flow.getByJobID(jobID, cursorInfo);
     }
   },
   CombinationConnection: {
-    edges(obj, args, context) {
-      return [{
-        node: {
-          passes: 111
-        }
-      }]
+    edges(obj, args, { connection }) {
+      const {flowID, ...cursorInfo} = obj;
+      return connection.combination.getByFlowID(flowID, cursorInfo);
+    }
+  },
+  SuiteConnection: {
+    edges(obj, args, { connection }) {
+      const {combinationID, ...cursorInfo} = obj;
+      return connection.suite.getByCombinationID(combinationID, cursorInfo);
     }
   },
   User: {
-    flows(user, args) {
-      return args;
-    },
-    jobs(user, args, { elastic }) {
-      const {projectID, ...cursorInfo} = args;
-      return elastic.getJobs(projectID, cursorInfo);
-      {
-        pageInfo: {
-          jobS: 1
-        },
-        edges: []
-      };
-    },
     projects(user, args) {
       return {
         pageInfo: {},
         edges: []
       };
-    }
+    },
+    jobs(user, args) {
+      return args
+    },
+    flows(user, args) {
+      return args;
+    },
+    combinations(user, args) {
+      return args
+    },
+    suites(user, args) {
+      return args
+    },
   },
 };
 

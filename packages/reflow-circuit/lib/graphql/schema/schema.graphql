@@ -1,9 +1,16 @@
+#
+# project -> job -> flow -> (combination -> suite -> test)
+#
+
 type User implements Node {
   id: ID!
   projects(after: String, first: Int, before: String, last: Int): ProjectConnection
   jobs(projectID: ID!, after: String, first: Int, before: String, last: Int): JobConnection
   flows(jobID: ID!, after: String, first: Int, before: String, last: Int): FlowConnection
+  combinations(flowID: ID!, after: String, first: Int, before: String, last: Int): CombinationConnection
+  suites(combinationID: ID!, after: String, first: Int, before: String, last: Int): SuiteConnection
 }
+
 
 type Query {
   viewer: User
@@ -13,11 +20,11 @@ type Query {
   ): Node
 }
 
-# type Mutation {
-#   addTodo(input: AddTodoInput!): AddTodoPayload
-# }
+type Mutation {
+  insertCombination(input: CombinationInput!): CombinationConnection
+}
 
 schema {
   query: Query
-  # mutation: Mutation
+  mutation: Mutation
 }

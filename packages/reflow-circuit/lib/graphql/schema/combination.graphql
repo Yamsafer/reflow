@@ -15,8 +15,25 @@ type Combination implements Node {
   passes: Int!
   pending: Int!
   failures: Int!
-  result: Result!
-  suites(after: String, first: Int, before: String, last: Int): [Suite]!
+  suites(after: String, first: Int, before: String, last: Int): SuiteConnection
   diagram: Diagram
 }
 
+
+input CombinationInput {
+  id: ID!
+  jobDetails: JobInput!
+  flowDetails: FlowInput!
+  projectDetails: ProjectInput!
+  numberOfSuites: Int!
+  startTime: Float!
+  endTime: Float!
+  passes: Int!
+  pending: Int!
+  skipped: Int!
+  failures: Int!
+  duration: Float!
+  suites: [SuiteInput]!
+  result: Result!
+  diagram: DiagramInput
+}

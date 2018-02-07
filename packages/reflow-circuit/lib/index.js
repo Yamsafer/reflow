@@ -16,20 +16,17 @@ const {
   // addMockFunctionsToSchema,
 } = require('graphql-tools');
 
-const createLoaders = (elastic) => {
-  return {
-    // flowsByIds: new DataLoader(elastic.getFlowsByIds),
-    combinationsByIds: new DataLoader(elastic.getCombinationsByIds),
-  }
-}
+// const createLoaders = (elastic) => {
+//   return {
+//     // flowsByIds: new DataLoader(elastic.getFlowsByIds),
+//     combinationsByIds: new DataLoader(elastic.getCombinationsByIds),
+//   }
+// }
 
 const defaultConfig = {};
 
-const circuitMiddleware = function(userConfig) {
-  const config = _.defaults(userConfig, defaultConfig);
-
+const circuitMiddleware = function({connection}) {
   const router = express.Router();
-  const elastic = elasticModel(config.elastic);
 
   const schema = makeExecutableSchema({
     typeDefs: loadSchema('./graphql/schema'),
@@ -47,8 +44,8 @@ const circuitMiddleware = function(userConfig) {
     graphqlExpress({
       schema,
       context: {
-        elastic,
-        loaders: createLoaders(elastic),
+        connection,
+        // loaders: createLoaders(elastic),
       },
     })(...args);
   });

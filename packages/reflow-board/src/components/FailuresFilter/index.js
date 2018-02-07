@@ -1,3 +1,4 @@
+import React from 'react';
 const FailuresFilter = (props) => {
   const {
     active,
@@ -21,3 +22,5 @@ const FailuresFilter = (props) => {
     </button>
   )
 }
+
+export default FailuresFilter
