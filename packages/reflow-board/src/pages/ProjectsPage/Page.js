@@ -8,7 +8,6 @@ import './style.css'
 class ProjectsPage extends PureComponent {
   render() {
     const { data, match } = this.props;
-    console.log('data::', data)
     const projectName = match.params.projectName;
     const projects = [{link: "/project/yamsafer-backend/", name: "Yamsafer Backend"}]
     return (

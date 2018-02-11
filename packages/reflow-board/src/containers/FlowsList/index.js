@@ -4,10 +4,13 @@ import Flow from '../../components/Flow'
 import ReactTable from 'react-table'
 import columns from './columns';
 
+import {isNonEmpty, getRelayData} from '../../util'
+
 const JobsList = (props) => {
-  const {loading, error, flows } = props.data || {};
+  const {loading, error, viewer } = props.data || {};
   if (error) return <p>{error.message}</p>;
-  const tableData = (flows || []).map(flow => flow);
+  console.log('viewer::', viewer)
+  const tableData = getRelayData(viewer, 'flows');
   const pageSize = 15;
 
   return (
@@ -26,9 +29,6 @@ const JobsList = (props) => {
       />
     </div>
   )
-  return (
-    <div>{flows.map((flow, i) => <Flow key={i} flow={flow}/>)}</div>
-  );
 };
 
 export default JobsList

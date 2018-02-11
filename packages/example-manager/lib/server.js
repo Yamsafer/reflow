@@ -12,7 +12,7 @@ app.use(circuit({
   connection: cassandraConnection(config.cassandra),
 }));
 
-app.use(board());
+// app.use(board());
 
 app.listen(config.port, function() {
   console.log(`Server Running on port ${config.port}`)

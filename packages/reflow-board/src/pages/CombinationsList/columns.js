@@ -3,27 +3,27 @@ import { Link } from 'react-router-dom';
 
 const combinationNumber = {
   Header: "Combination #",
-  accessor: "combinationNumber",
+  accessor: "node.combinationNumber",
 };
 const status = {
   Header: "status",
   columns: [{
     Header: "Status",
-    accessor: "result",
+    accessor: "node.result",
   },{
     Header: "Passes",
-    accessor: "passes",
+    accessor: "node.passes",
   },{
     Header: "Failures",
-    accessor: "failures",
+    accessor: "node.failures",
   }, {
     Header: "Pending",
-    accessor: "pending",
+    accessor: "node.pending",
   }]
 }
 const details = {
   Header: "Details",
-  accessor: "id",
+  accessor: "node.id",
   Cell: e =><Link to={`/combination/${e.value}`}>{"Click here"}</Link>
 }
 

@@ -14,10 +14,7 @@ type User implements Node {
 
 type Query {
   viewer: User
-  node(
-    # The ID of an object
-    id: ID!
-  ): Node
+  node(id: ID!): Node
 }
 
 type Mutation {

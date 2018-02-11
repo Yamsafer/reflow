@@ -1,4 +1,5 @@
 const transform = require('../../util/transform');
+const globalID = require('../../util/global-id');
 
 const selectCQL = `
   SELECT
@@ -20,17 +21,20 @@ const selectCQL = `
   GROUP BY project_id, job_id ORDER BY job_id DESC;`;
 
 module.exports = client => ({
-  getByProjectID(projectID, cursorInfo) {
+  getByProjectID(encodedProjectID, cursorInfo) {
+    const projectID = globalID.decode(encodedProjectID).id;
+    console.log('projectID::', projectID)
+
     return client.execute(selectCQL, [projectID])
       .then(result => {
         return result.rows.map(row => {
-          const id = row.job_id.toJSON();
+          const jobID = globalID.encode('job', row.job_id.toJSON());
           const currComb = row.current_number_of_combinations.toJSON();
           const totalComb = row.total_number_of_combinations;
 
           return {
             node: {
-              id,
+              id: jobID,
               result: transform.result(currComb, totalComb, row.failures),
               endTime: transform.endTime(currComb, totalComb, row.last_reported),
               status: transform.status(currComb, totalComb),
@@ -47,7 +51,7 @@ module.exports = client => ({
               startTime: row.start_at,
               firstReported: row.first_reported,
               lastReported: row.last_reported,
-              flows: {jobID: id}
+              flows: { jobID }
             }
           }
         });

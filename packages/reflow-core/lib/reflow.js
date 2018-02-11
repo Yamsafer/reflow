@@ -82,9 +82,8 @@ class Reflow {
     this.flows = {};
     this.hooks = {};
     this.flake = new FlakeId();
-
     this.run = false;
-
+    this.jobID = this.flake.gen();
   }
 
   gatherMatrices() {
@@ -96,7 +95,43 @@ class Reflow {
   runFlows() {
     const flowsList = Object.values(this.flows);
     console.log(`${flowsList.length} total flows.`)
-    flowsList.forEach(this.runFlow.bind(this))
+    let totalCombinations = 0;
+    const matrices = flowsList.map(({name, fn}) => {
+      const suites = fn();
+      if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
+      const matrix = evaluateFlow(suites, this.options.tags);
+      const currentCombinations = matrix.length
+      totalCombinations += currentCombinations;
+
+      return {
+        matrix: matrix.map((tree, i) => ({
+          name: `${name}: combination #${i+1}/${currentCombinations}`,
+          type: "tree",
+          index: i,
+          suites: tree,
+        })),
+        flowDetails: {
+          id: this.flake.gen(),
+          title: name,
+          totalCombinations: currentCombinations,
+        },
+      }
+    });
+
+    this.jobDetails = {
+      id: this.jobID,
+      numberOfThreads: Math.min(this.options.numberOfThreads, totalCombinations),
+      numberOfCombinations: totalCombinations,
+      numberOfFlows: flowsList.length,
+      sourceBranch: this.options.job.source,
+      targetBranch: this.options.job.target,
+      jenkins: this.options.job.id,
+      tags: this.options.tags,
+      startTime: new Date(),
+    }
+    console.log(`Job Details: ${JSON.stringify(this.jobDetails, 2, 2)}`);
+
+    matrices.forEach(matrix => this.runFlow(matrix))
   }
   analyzeFlows() {
     const analyzedMatrices = Object.values(this.flows).map(this.analyze.bind(this));
@@ -116,52 +151,12 @@ class Reflow {
     };
   }
 
-  runFlow({name, fn}) {
-    const suites = fn();
-    if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
-    const matrix = evaluateFlow(suites, this.options.tags);
-
-    const totalCombinations = matrix.length;
-    const normalizedMatrix = matrix.map((tree, i) => ({
-      name: `${name}: combination #${i+1}/${totalCombinations}`,
-      type: "tree",
-      index: i,
-      suites: tree,
-    }))
-
-    const threadCount = Math.min(this.options.numberOfThreads, totalCombinations);
-    const totalFlows = Object.keys(this.flows).length
-    const projectDetails = {
-      id: "6366977657833263104",
-      title: this.options.project.title,
-      jenkins: this.options.project.jenkins,
-      githubSource: this.options.project.githubSource,
-      githubTarget: this.options.project.githubTarget,
-    }
-    const jobDetails = {
-      id: this.flake.gen(),
-      numberOfThreads: threadCount,
-      numberOfCombinations: totalCombinations,
-      numberOfFlows: totalFlows,
-      sourceBranch: this.options.job.source,
-      targetBranch: this.options.job.target,
-      jenkins: this.options.job.id,
-      tags: this.options.tags,
-      startTime: new Date(),
-    }
-
-    const flowDetails = {
-      id: this.flake.gen(),
-      title: name,
-    }
-
-    console.log(`Spinning of ${threadCount} threads.`);
-    console.log(`${name}: (${totalCombinations} total combinations)`)
-
-    executeMatrix(normalizedMatrix, {
+  runFlow({matrix, flowDetails}) {
+    console.log(`Running "${flowDetails.title}" Flow (${flowDetails.totalCombinations} total combinations)`)
+    executeMatrix(matrix, {
       ...this.options,
       flowDetails,
-      jobDetails,
+      jobDetails: this.jobDetails,
     });
   }
 }

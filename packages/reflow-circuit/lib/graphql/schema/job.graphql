@@ -9,7 +9,6 @@ type JobEdge {
 }
 
 type Job implements Node {
-  # Job flake ID
   id: ID!
   # Tests Status of the job
   result: Result!
@@ -33,7 +32,7 @@ type Job implements Node {
 }
 
 input JobInput {
-  id: ID!
+  id: FlakeID!
   startTime: Float!
   sourceBranch: String
   github: String

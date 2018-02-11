@@ -26,7 +26,7 @@ type Flow implements Node {
 }
 
 input FlowInput {
-  id: ID!
+  id: FlakeID!
   title: String!
   totalCombinations: Int!
   DAG: [String]

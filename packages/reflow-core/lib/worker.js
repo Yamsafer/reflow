@@ -3,6 +3,8 @@ const MochaReflow = require('./mocha-reflow').default;
 const reflowProps = require('./props');
 const decache = require('decache');
 
+const FlakeId = require('flakeid');
+
 const path = require('path');
 
 let vmRunner;
@@ -42,12 +44,14 @@ const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDet
   })
 
   global.reflow = reflowProps;
+  const combinationID = new FlakeId({}).gen();
   const mochaReflowConfig = Object.assign({
     ui: 'reflow-bdd',
     reporter: 'reflow-reporter',
     reporterOptions: {
       ...(reporterOptions||{}),
       batch: true,
+      combinationID,
       flowDetails: {
         ...(reporterOptions.flowDetails||{}),
         ...flowDetails,

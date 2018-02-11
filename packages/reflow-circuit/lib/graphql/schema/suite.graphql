@@ -43,14 +43,12 @@ type Diagram {
 }
 
 input SuiteInput {
-  id: ID!
   title: String!
   level: Int!
   tests: [TestInput]
 }
 
 input TestInput {
-  id: ID!
   title: String!
   result: Result!
   speed: Speed

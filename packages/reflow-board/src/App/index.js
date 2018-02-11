@@ -8,7 +8,7 @@ import ApolloClient from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 
 import ProjectsPage from '../pages/ProjectsPage';
-import JobsList from '../pages/JobsList';
+import FlowsPage from '../pages/FlowsPage';
 import CombinationsList from '../pages/CombinationsList'
 import CombinationReport from '../pages/CombinationReport'
 import NotFound from '../pages/NotFound'
@@ -42,7 +42,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={ProjectsPage}/>
                 <Route exact path="/project/:projectName" component={ProjectsPage}/>
-                <Route exact path="/project/:projectName/job/:jobID" component={JobsList}/>
+                <Route exact path="/project/:projectName/job/:jobID" component={FlowsPage}/>
                 <Route path="/flow/:flowID" component={CombinationsList}/>
                 <Route path="/combination/:combinationID" component={CombinationReport}/>
                 <Route component={ NotFound }/>

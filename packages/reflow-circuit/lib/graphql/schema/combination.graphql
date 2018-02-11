@@ -21,7 +21,7 @@ type Combination implements Node {
 
 
 input CombinationInput {
-  id: ID!
+  id: FlakeID!
   jobDetails: JobInput!
   flowDetails: FlowInput!
   numberOfSuites: Int!

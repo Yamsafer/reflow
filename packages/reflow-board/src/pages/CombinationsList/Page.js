@@ -25,7 +25,9 @@ class JobsList extends Component {
     }))
   }
   render() {
-    const { data: {loading, error, flow }} = this.props;
+    const { data: {loading, error, node }} = this.props;
+    console.log('node:::, ', node)
+
     const { onlyFailures } = this.state
     if (loading) {
       return <p>Loading ...</p>;
@@ -40,9 +42,9 @@ class JobsList extends Component {
       endTime,
       startTime,
       combinations,
-    } = flow;
+    } = node;
 
-    const combinationResults = combinations.map(combination => combination.result);
+    const combinationResults = combinations.edges.map(edge => edge.node.result);
     const overallResult = decideOverallStatus(combinationResults, failures);
 
     const failureFilter = { id: 'result', value: 'FAILURE' };
@@ -72,7 +74,7 @@ class JobsList extends Component {
           <ReactTable
             filtered={filters}
             style={{height: 'calc(100vh - 130px)'}}
-            data={combinations}
+            data={combinations.edges}
             columns={columns}
             defaultPageSize={20}
             className="-striped -highlight"

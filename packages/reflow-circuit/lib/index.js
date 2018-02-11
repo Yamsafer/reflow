@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
-const DataLoader = require('dataloader');
 const loadSchema = require('./util/load-graphql');
 
 const {
@@ -13,13 +12,6 @@ const {
   makeExecutableSchema,
   // addMockFunctionsToSchema,
 } = require('graphql-tools');
-
-// const createLoaders = (elastic) => {
-//   return {
-//     // flowsByIds: new DataLoader(elastic.getFlowsByIds),
-//     combinationsByIds: new DataLoader(elastic.getCombinationsByIds),
-//   }
-// }
 
 const defaultConfig = {};
 
@@ -43,7 +35,6 @@ const circuitMiddleware = function({connection}) {
       schema,
       context: {
         connection,
-        // loaders: createLoaders(elastic),
       },
     })(...args);
   });

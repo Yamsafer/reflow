@@ -3,18 +3,35 @@ import gql from 'graphql-tag';
 import Page from './Page';
 
 const getCombinationsList = gql`
-query getCombinationsList($flowID: ID!) {
-  flow(id: $flowID) {
-    passes
-    pending
-    failures
-    combinations {
-      id
+query getNode($flowID: ID!) {
+  node(id: $flowID) {
+    ... on Flow {
+        id
+      title
       passes
       pending
       failures
-      startTime
       result
+      status
+      DAG
+      totalNumberOfFlowCombinations
+      currentNumberOfFlowCombinations
+      combinations {
+        edges {
+          node {
+            id
+            startTime
+            endTime
+            passes
+            pending
+            passes
+            failures
+            diagram {
+              viz
+            }
+          }
+        }
+      }
     }
   }
 }

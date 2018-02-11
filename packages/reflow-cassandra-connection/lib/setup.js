@@ -37,6 +37,18 @@ const schema = [`
     PRIMARY KEY ((job_id), flow_id, combiantion_id)
   ) WITH CLUSTERING ORDER BY (flow_id DESC, combiantion_id DESC);
   `, `
+  CREATE TABLE IF NOT EXISTS flows_by_flow_id (
+    flow_id bigint,
+    flow_title text,
+    combiantion_id bigint,
+    combination_successes int,
+    combination_failures int,
+    combination_skipped int,
+    combiantion_total int,
+    total_number_of_flow_combinations int,
+    PRIMARY KEY ((flow_id), combiantion_id)
+  ) WITH CLUSTERING ORDER BY (combiantion_id DESC);
+  `, `
   CREATE TABLE IF NOT EXISTS combinations_by_flow_id (
     flow_id bigint,
     combiantion_id bigint,
@@ -76,7 +88,7 @@ const schema = [`
   `, `
   CREATE TABLE IF NOT EXISTS suites_by_combination_id (
     combination_id bigint,
-    suite_id bigint,
+    suite_id timeuuid,
     title text,
     level int,
     tests list<FROZEN <test>>,

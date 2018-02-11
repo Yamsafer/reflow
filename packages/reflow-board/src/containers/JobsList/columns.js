@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 
 export default [{
   Header: "Job ID",
-  accessor: "id",
+  accessor: "node.id",
   Cell: e =><Link to={`job/${e.value}`}>{`Job #${e.value.substr(-6)}`}</Link>
 }, {
   Header: "Result",
-  accessor: "result",
+  accessor: "node.result",
 }, {
   Header: "Source Branch",
-  accessor: "sourceBranch",
+  accessor: "node.sourceBranch",
 },{
   Header: "Start Time",
-  accessor: "startTime",
+  accessor: "node.startTime",
   Cell: e => <div>{moment(e.value).fromNow()}</div>
 }, {
   Header: "Expand",

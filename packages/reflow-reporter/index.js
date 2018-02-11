@@ -14,14 +14,15 @@ const defaultConfig = {
   hostname: 'localhost',
   path: '/graphql',
   protocol: 'http',
-  // flowDetails: {}, // TODO: move inside after finalinzing the interface
+  // flowDetails: {},
   // jobDetails: {},
 };
 
 const ReflowReporter = function(runner, options = {}) {
   const reporterOptions = options.reporterOptions || {};
   const {
-    flowDetails, // TODO: move inside after finalinzing the interface
+    combinationID,
+    flowDetails,
     jobDetails,
     port,
     protocol,
@@ -68,17 +69,14 @@ const ReflowReporter = function(runner, options = {}) {
       }, headers),
     };
     const req = tcpModule.request(reqOptions, (res) => {
-      if(type === 'request track') {
-        console.log(`STATUS: ${res.statusCode}`);
-        console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-        res.setEncoding('utf8');
-        res.on('data', (chunk) => {
-          console.log(`BODY: ${chunk}`);
-        });
-        res.on('end', () => {
-          console.log('No more data in response.');
-        });
-      }
+      console.log(`STATUS: ${res.statusCode}`);
+      res.setEncoding('utf8');
+      res.on('data', (chunk) => {
+        console.log(`BODY: ${chunk}`);
+      });
+      res.on('end', () => {
+        console.log('No more data in response.');
+      });
     });
 
     req.on('error', (e) => {
@@ -95,6 +93,7 @@ const ReflowReporter = function(runner, options = {}) {
 
       process.stdout.write('\nGenerating Report ... ');
       const report = {
+        id: combinationID,
         suites: results,
         pending: stats.pending,
         passes: stats.passes,
@@ -114,7 +113,16 @@ const ReflowReporter = function(runner, options = {}) {
 
       const postData = {
         operationName: "insertCombination",
-        query: "mutation insertCombination($combination: CombinationInput!) {\n  insertCombination(input: $combination) {\n    id\n  }\n}\n",
+        query: `
+        mutation insertCombination($combination: CombinationInput!) {
+          insertCombination(input: $combination) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }`,
         variables: {
           combination: report,
         },
@@ -149,17 +157,17 @@ const ReflowReporter = function(runner, options = {}) {
 
   let metadataContent = [];
   global.trackRequest = function(request) {
-    const postData = {
-      operationName: "trackRequest",
-      query: "mutation trackRequest($request: RequestEventInput!) {\n  trackRequest(input: $request) {\n    id\n  }\n}\n",
-      variables: {
-        request: Object.assign({}, request, {
-          jobID: jobDetails.id,
-        }),
-      },
-    };
+    // const postData = {
+    //   operationName: "trackRequest",
+    //   query: "mutation trackRequest($request: RequestEventInput!) {\n  trackRequest(input: $request) {\n    id\n  }\n}\n",
+    //   variables: {
+    //     request: Object.assign({}, request, {
+    //       jobID: jobDetails.id,
+    //     }),
+    //   },
+    // };
 
-    sendRequest('request track', postData)
+    // sendRequest('request track', postData)
   }
   global.metadata = function(message, meta) {
     metadataContent.push({

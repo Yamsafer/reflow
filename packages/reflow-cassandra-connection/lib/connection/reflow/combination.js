@@ -1,4 +1,6 @@
 const transform = require('../../util/transform');
+const globalID = require('../../util/global-id');
+
 const insertJobsByProjectIDCQL = `
   INSERT INTO jobs_by_project_id (
     project_id,
@@ -34,6 +36,18 @@ const insertFlowsByJobIDCQL = `
     total_number_of_flow_combinations
   ) VALUES (?,?,?,?,?,?,?,?,?);`;
 
+const insertFlowsByFlowIDCQL = `
+  INSERT INTO flows_by_flow_id (
+    flow_id,
+    combiantion_id,
+    flow_title,
+    combination_successes,
+    combination_failures,
+    combination_skipped,
+    combiantion_total,
+    total_number_of_flow_combinations
+  ) VALUES (?,?,?,?,?,?,?,?);`;
+
 const insertCombinationByFlowIDCQL = `
   INSERT INTO combinations_by_flow_id (
     flow_id,
@@ -53,7 +67,7 @@ const insertSuitesByCombinationIDCQL = `
     title,
     level,
     tests
-  ) VALUES (?,?,?,?,?);`;
+  ) VALUES (?,now(),?,?,?);`;
 const selectCQL = `SELECT * FROM combinations_by_flow_id WHERE flow_id = ?`;
 
 const getQuery = (key, input) => {
@@ -116,7 +130,7 @@ const getQuery = (key, input) => {
         query: insertSuitesByCombinationIDCQL,
         params: [
           input.id,
-          input.suite.id,
+          // input.suite.id,
           input.suite.title,
           input.suite.level,
           input.suite.tests.map(test => ({
@@ -132,6 +146,20 @@ const getQuery = (key, input) => {
           })),
         ],
       }
+    case 'flowsByFlowIDCQL':
+      return {
+        query: insertFlowsByFlowIDCQL,
+        params: [
+          input.flowDetails.id,
+          input.id,
+          input.flowDetails.title,
+          input.passes,
+          input.failures,
+          input.pending,
+          input.passes + input.failures + input.pending,
+          input.flowDetails.totalCombinations,
+        ]
+      }
   };
 };
 
@@ -140,6 +168,7 @@ module.exports = client => ({
     const queries = [
       getQuery('jobsByProjectID', input),
       getQuery('flowsByJobID', input),
+      getQuery('flowsByFlowIDCQL', input),
       getQuery('combinationsByFlowID', input),
       ...input.suites.map(suite => {
         return getQuery('suitesByCombinationID', {id: input.id, suite})
@@ -155,10 +184,12 @@ module.exports = client => ({
     });
   },
 
-  getByFlowID(flowID, cursorInfo) {
+  getByFlowID(encodedFlowID, cursorInfo) {
+    const flowID = globalID.decode(encodedFlowID).id;
+
     return client.execute(selectCQL, [flowID]).then(result => {
       return result.rows.map(row => {
-        const combinationID = row.combiantion_id.toJSON();
+        const combinationID = globalID.encode('combination', row.combiantion_id.toJSON());
         return {
           node: {
             id: combinationID,

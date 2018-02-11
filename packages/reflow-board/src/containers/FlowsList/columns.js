@@ -4,27 +4,27 @@ import { Link } from 'react-router-dom';
 export default [
   {
     Header: "Flow Title",
-    accessor: "title",
+    accessor: "node.title",
   },
   {
     Header: "Details",
     columns: [{
       Header: "Result",
-      accessor: "result"
+      accessor: "node.result"
     }, {
       Header: "Passes",
-      accessor: "passes"
+      accessor: "node.passes"
     }, {
       Header: "Failures",
-      accessor: "failures"
+      accessor: "node.failures"
     }, {
       Header: "Skipped",
-      accessor: "pending"
+      accessor: "node.pending"
     }]
   },
   {
     Header: "Details",
-    accessor: "id",
+    accessor: "node.id",
     Cell: e =><Link to={`/flow/${e.value}`}>{"Click here"}</Link>
   },
 ]

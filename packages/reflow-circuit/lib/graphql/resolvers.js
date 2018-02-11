@@ -5,10 +5,24 @@ const resolverMap = {
       return connection.combination.insert(input);
     },
   },
+  Node: {
+    __resolveType(obj, context, info) {
+      console.log('Node __resolveType::', obj.type)
+      switch(obj.type) {
+        case 'Flow':
+          return obj.type;
+        default:
+          return 'Flow'; //set to null
+      }
+    },
+  },
   Query: {
-    viewer() {
+    node(obj, args, { connection }) {
+      return connection.node(args.id);
+    },
+    viewer(obj, args, context) {
       return {
-        id: globalID('user', 1),
+        id: 1,
       }
     },
   },
@@ -24,19 +38,8 @@ const resolverMap = {
   },
 
   ProjectConnection: {
-    edges(obj, args) {
-      const projectID = globalID('project', 1);
-      return [{
-        cursor: projectID,
-        node: {
-          id: projectID,
-          title: 'Yamsafer-Backend',
-          jobs: args => ({
-            pageInfo: {A: 2},
-            edges: {projectID, ...args},
-          }),
-        }
-      }];
+    edges(obj, args, { connection }) {
+      return connection.project.get();
     },
   },
   JobConnection: {
