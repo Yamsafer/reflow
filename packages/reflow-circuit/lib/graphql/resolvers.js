@@ -26,6 +26,20 @@ const resolverMap = {
       }
     },
   },
+  FlakeID: {
+    serialize(value) {
+      console.log('FlakeID serialize(value)', value)
+      return value;
+    },
+    parseValue(value) {
+      console.log('FlakeID parseValue(value)', value)
+      return value;
+    },
+    parseLiteral(ast) {
+      console.log('FlakeID parseLiteral(ast)', ast)
+      return ast.value
+    }
+  },
   PageInfo: {
     hasNextPage(connection, args) {
       console.log('connection::', connection)

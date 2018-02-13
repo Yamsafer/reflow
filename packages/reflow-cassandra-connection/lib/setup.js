@@ -8,7 +8,7 @@ const schema = [`
     threads int,
     flows int,
     total_number_of_combinations int,
-    combiantion_id text,
+    combination_id bigint,
     github text,
     jenkins text,
     source_branch text,
@@ -21,45 +21,45 @@ const schema = [`
     combination_end_at timestamp,
     combination_start_at timestamp,
     tags set<text>,
-    PRIMARY KEY ((project_id), job_id, combiantion_id)
-  ) WITH CLUSTERING ORDER BY (job_id DESC, combiantion_id DESC);
+    PRIMARY KEY ((project_id), job_id, combination_id)
+  ) WITH CLUSTERING ORDER BY (job_id DESC, combination_id DESC);
   `, `
   CREATE TABLE IF NOT EXISTS flows_by_job_id (
     job_id bigint,
     flow_id bigint,
     flow_title text,
-    combiantion_id bigint,
+    combination_id bigint,
     combination_successes int,
     combination_failures int,
     combination_skipped int,
     combiantion_total int,
     total_number_of_flow_combinations int,
-    PRIMARY KEY ((job_id), flow_id, combiantion_id)
-  ) WITH CLUSTERING ORDER BY (flow_id DESC, combiantion_id DESC);
+    PRIMARY KEY ((job_id), flow_id, combination_id)
+  ) WITH CLUSTERING ORDER BY (flow_id DESC, combination_id DESC);
   `, `
   CREATE TABLE IF NOT EXISTS flows_by_flow_id (
     flow_id bigint,
     flow_title text,
-    combiantion_id bigint,
+    combination_id bigint,
     combination_successes int,
     combination_failures int,
     combination_skipped int,
     combiantion_total int,
     total_number_of_flow_combinations int,
-    PRIMARY KEY ((flow_id), combiantion_id)
-  ) WITH CLUSTERING ORDER BY (combiantion_id DESC);
+    PRIMARY KEY ((flow_id), combination_id)
+  ) WITH CLUSTERING ORDER BY (combination_id DESC);
   `, `
   CREATE TABLE IF NOT EXISTS combinations_by_flow_id (
     flow_id bigint,
-    combiantion_id bigint,
+    combination_id bigint,
     combination_successes int,
     combination_failures int,
     combination_skipped int,
     combination_total int,
     start_at timestamp,
     end_at timestamp,
-    PRIMARY KEY ((flow_id), combiantion_id)
-  ) WITH CLUSTERING ORDER BY (combiantion_id DESC);
+    PRIMARY KEY ((flow_id), combination_id)
+  ) WITH CLUSTERING ORDER BY (combination_id DESC);
   `, `
   CREATE TYPE IF NOT EXISTS reflow.error (
     message text,
@@ -75,7 +75,6 @@ const schema = [`
   );
   `, `
   CREATE TYPE IF NOT EXISTS reflow.test (
-    test_id bigint,
     combination_id bigint,
     title text,
     result text,

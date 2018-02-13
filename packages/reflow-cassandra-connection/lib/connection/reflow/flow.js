@@ -25,7 +25,7 @@ const getFlowNodeCQL = `
     total_number_of_flow_combinations,
     COUNT(*) as current_number_of_flow_combinations
   FROM flows_by_flow_id WHERE flow_id = ?
-  GROUP BY combiantion_id ORDER BY combiantion_id DESC;`;
+  GROUP BY combination_id ORDER BY combination_id DESC;`;
 
 const flowNode = row => {
   const currComb = row.current_number_of_flow_combinations.toJSON();

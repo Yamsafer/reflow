@@ -5,7 +5,7 @@ const insertJobsByProjectIDCQL = `
   INSERT INTO jobs_by_project_id (
     project_id,
     job_id,
-    combiantion_id,
+    combination_id,
     github,
     jenkins,
     threads,
@@ -27,7 +27,7 @@ const insertFlowsByJobIDCQL = `
   INSERT INTO flows_by_job_id (
     job_id,
     flow_id,
-    combiantion_id,
+    combination_id,
     flow_title,
     combination_successes,
     combination_failures,
@@ -39,7 +39,7 @@ const insertFlowsByJobIDCQL = `
 const insertFlowsByFlowIDCQL = `
   INSERT INTO flows_by_flow_id (
     flow_id,
-    combiantion_id,
+    combination_id,
     flow_title,
     combination_successes,
     combination_failures,
@@ -51,7 +51,7 @@ const insertFlowsByFlowIDCQL = `
 const insertCombinationByFlowIDCQL = `
   INSERT INTO combinations_by_flow_id (
     flow_id,
-    combiantion_id,
+    combination_id,
     combination_successes,
     combination_failures,
     combination_skipped,
@@ -89,10 +89,10 @@ const getQuery = (key, input) => {
     case 'jobsByProjectID':
       return {
         query: insertJobsByProjectIDCQL,
-        params: [
-          "6366977657833263104",
-          input.jobDetails.id,
-          input.id,
+        params: transform.undefined([
+          transform.toBigInt("6366977657833263104"),
+          transform.toBigInt(input.jobDetails.id),
+          transform.toBigInt(input.id),
           input.jobDetails.github,
           input.jobDetails.jenkins,
           input.jobDetails.numberOfThreads,
@@ -104,11 +104,11 @@ const getQuery = (key, input) => {
           input.failures,
           input.pending,
           input.passes + input.failures + input.pending,
-          input.jobDetails.startTime,
-          input.endTime,
-          input.startTime,
+          transform.toDate(input.jobDetails.startTime),
+          transform.toDate(input.endTime),
+          transform.toDate(input.startTime),
           transform.tags(input.jobDetails.tags),
-        ],
+        ]),
       }
     case 'flowsByJobID':
       return {
@@ -134,7 +134,6 @@ const getQuery = (key, input) => {
           input.suite.title,
           input.suite.level,
           input.suite.tests.map(test => ({
-            test_id: test.id,
             combination_id: input.id,
             title: test.title,
             result: test.result,
@@ -165,14 +164,15 @@ const getQuery = (key, input) => {
 
 module.exports = client => ({
   insert(input) {
+    console.log('jobsByProjectID input::', getQuery('jobsByProjectID', input).params)
     const queries = [
       getQuery('jobsByProjectID', input),
-      getQuery('flowsByJobID', input),
-      getQuery('flowsByFlowIDCQL', input),
-      getQuery('combinationsByFlowID', input),
-      ...input.suites.map(suite => {
-        return getQuery('suitesByCombinationID', {id: input.id, suite})
-      }),
+      // getQuery('flowsByJobID', input),
+      // getQuery('flowsByFlowIDCQL', input),
+      // getQuery('combinationsByFlowID', input),
+      // ...input.suites.map(suite => {
+      //   return getQuery('suitesByCombinationID', {id: input.id, suite})
+      // }),
     ];
 
     const queryOpts = {};
@@ -189,7 +189,7 @@ module.exports = client => ({
 
     return client.execute(selectCQL, [flowID]).then(result => {
       return result.rows.map(row => {
-        const combinationID = globalID.encode('combination', row.combiantion_id.toJSON());
+        const combinationID = globalID.encode('combination', row.combination_id.toJSON());
         return {
           node: {
             id: combinationID,

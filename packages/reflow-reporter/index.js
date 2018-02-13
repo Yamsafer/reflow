@@ -110,7 +110,7 @@ const ReflowReporter = function(runner, options = {}) {
         }),
       }
       process.stdout.write('Done');
-
+      console.log('\nreport ::::', JSON.stringify(report, 2, 2))
       const postData = {
         operationName: "insertCombination",
         query: `

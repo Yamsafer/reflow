@@ -28,7 +28,7 @@ module.exports = client => ({
       .then(result => {
         return result.rows.map(row => ({
           node: {
-            id: globalID.encode('suite', row.combiantion_id.toJSON()),
+            id: globalID.encode('suite', row.combination_id.toJSON()),
             title: row.title,
             level: row.level,
             tests: row.tests.map(graphQLTestSchema),
