@@ -7,7 +7,7 @@
     "lerna:publish": "lerna publish",
     "lerna:clean": "lerna clean",
     "lerna:bootstrap": "lerna bootstrap",
-    "lerna:install": "lerna add --scope=example-manager bluebird",
+    "lerna:install": "lerna add --scope=reflow-cassandra-connection express-cassandra",
     "lerna:test": "lerna run --scope reflow-core --scope reflow-analytics test",
     "lerna:report-coverage": "lerna run report-coverage"
   }

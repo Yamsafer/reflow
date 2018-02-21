@@ -4,9 +4,6 @@
   "description": "Reflow Core",
   "author": "Ahmad Bamieh",
   "license": "MIT",
-  "bin": {
-    "reflow": "bin/_reflow.js"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Bamieh/reflow"
@@ -36,14 +33,11 @@
   "dependencies": {
     "decache": "^4.2.0",
     "duration": "^0.2.0",
-    "find-up": "^2.1.0",
     "flakeid": "^0.1.0",
     "intercept-stdout": "^0.1.2",
-    "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
     "reflow-reporter": "^3.0.0-alpha.29",
-    "threads": "^0.8.1",
-    "yargs": "^10.0.3"
+    "threads": "^0.8.1"
   },
   "scripts": {
     "test": "cross-env REFLOW_ENV=DEV mocha",

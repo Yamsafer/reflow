@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "cassandra-driver": "^3.3.0"
+    "cassandra-driver": "^3.3.0",
+    "express-cassandra": "^2.2.0"
   }
 }

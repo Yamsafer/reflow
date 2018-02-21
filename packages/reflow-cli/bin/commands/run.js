@@ -66,7 +66,7 @@ exports.handler = function (config) {
     dynamicRunner,
     Module,
     createContext,
-  } = require('../../');
+  } = require('reflow-core');
 
   const ROOTPATH = process.cwd();
   var resolve = path.resolve;
