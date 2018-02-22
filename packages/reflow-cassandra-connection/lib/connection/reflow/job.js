@@ -1,33 +1,34 @@
 const transform = require('../../util/transform');
 const globalID = require('../../util/global-id');
 
-const selectCQL = `
-  SELECT
-    job_id,
-    threads,
-    flows,
-    source_branch,
-    target_branch,
-    github,
-    start_at,
-    SUM(combination_successes) as successes,
-    SUM(combination_failures) as failures,
-    SUM(combiantion_total) as total,
-    total_number_of_combinations,
-    COUNT(*) as current_number_of_combinations,
-    MIN(combination_start_at) as first_reported,
-    MAX(combination_end_at) as last_reported
-  FROM jobs_by_project_id WHERE project_id = ?
-  GROUP BY project_id, job_id ORDER BY job_id DESC;`;
-
-module.exports = client => ({
+module.exports = models => ({
   getByProjectID(encodedProjectID, cursorInfo) {
     const projectID = globalID.decode(encodedProjectID).id;
     console.log('projectID::', projectID)
-
-    return client.execute(selectCQL, [projectID])
-      .then(result => {
-        return result.rows.map(row => {
+    return new Promise((resolve, reject) => {
+      models.instance.jobsByProjectId.find({
+        project_id: models.datatypes.Long.fromString(projectID),
+      }, {
+        select: [
+          'job_id',
+          'threads',
+          'flows',
+          'source_branch',
+          'target_branch',
+          'github',
+          'start_at',
+          'SUM(combination_successes) as successes',
+          'SUM(combination_failures) as failures',
+          'SUM(combiantion_total) as total',
+          'total_number_of_combinations',
+          'COUNT(*) as current_number_of_combinations',
+          'MIN(combination_start_at) as first_reported',
+          'MAX(combination_end_at) as last_reported',
+        ],
+      }, (err, jobs) => {
+        if(err) return reject(err);
+        console.log('jobs::', jobs);
+        const result = jobs.map(row => {
           const jobID = globalID.encode('job', row.job_id.toJSON());
           const currComb = row.current_number_of_combinations.toJSON();
           const totalComb = row.total_number_of_combinations;
@@ -55,6 +56,8 @@ module.exports = client => ({
             }
           }
         });
-      });
+        resolve(result);
+      })
+    });
   },
 })

@@ -5,12 +5,12 @@ const flowConnection = require('./reflow/flow');
 const suiteConnection = require('./reflow/suite');
 const globalID = require('../util/global-id');
 
-module.exports = client => ({
-  project: projectConnection(client),
-  job: jobConnection(client),
-  flow: flowConnection(client),
-  combination: combinationConnection(client),
-  suite: suiteConnection(client),
+module.exports = models => ({
+  project: projectConnection(models),
+  job: jobConnection(models),
+  flow: flowConnection(models),
+  combination: combinationConnection(models),
+  suite: suiteConnection(models),
   node(encodedID) {
     const decodedID = globalID.decode(encodedID);
     console.log('decodedID::', decodedID)

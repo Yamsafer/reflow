@@ -1,15 +1,6 @@
 const globalID = require('../../util/global-id');
 
-const selectCQL = `
-  SELECT
-    suite_id,
-    title,
-    level,
-    tests
-  FROM suites_by_combination_id WHERE combination_id = ?
-  GROUP BY combination_id ORDER BY suite_id DESC;`;
-
-const graphQLTestSchema = test => ({
+const testNode = test => ({
   id: globalID.encode('test', test.test_id.toJSON()),
   title: test.title,
   result: test.result,
@@ -20,20 +11,32 @@ const graphQLTestSchema = test => ({
   metadata: test.metadata,
 });
 
-module.exports = client => ({
+module.exports = models => ({
   getByCombinationID(encodedCombinationID, cursorInfo) {
     const combinationID = globalID.decode(encodedCombinationID).id;
-    return client
-      .execute(selectCQL, [combinationID])
-      .then(result => {
-        return result.rows.map(row => ({
+    return new Promise((resolve, reject) => {
+      models.instance.suitesByCombinationId.find({
+        combination_id: models.datatypes.Long.fromString(combinationID),
+      }, {
+        select: [
+          'suite_id',
+          'title',
+          'level',
+          'tests',
+        ],
+      }, (err, suites) => {
+        if(err) return reject(err);
+        console.log('suites::', suites)
+        const result = suites.map(row => ({
           node: {
             id: globalID.encode('suite', row.combination_id.toJSON()),
             title: row.title,
             level: row.level,
-            tests: row.tests.map(graphQLTestSchema),
+            tests: row.tests.map(testNode),
           }
-        }))
-      });
+        }));
+        resolve(result);
+      })
+    });
   },
 })

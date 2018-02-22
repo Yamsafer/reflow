@@ -3,7 +3,6 @@
   "version": "3.0.0-alpha.19",
   "private": true,
   "scripts": {
-    "setup": "node lib/setup.js",
     "start": "cross-env REFLOW_DEVELOPMENT=1 node lib/server.js"
   },
   "dependencies": {

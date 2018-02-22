@@ -1,207 +1,115 @@
-const transform = require('../../util/transform');
 const globalID = require('../../util/global-id');
 
-const insertJobsByProjectIDCQL = `
-  INSERT INTO jobs_by_project_id (
-    project_id,
-    job_id,
-    combination_id,
-    github,
-    jenkins,
-    threads,
-    flows,
-    total_number_of_combinations,
-    source_branch,
-    target_branch,
-    combination_successes,
-    combination_failures,
-    combination_skipped,
-    combiantion_total,
-    start_at,
-    combination_end_at,
-    combination_start_at,
-    tags
-  ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`;
-
-const insertFlowsByJobIDCQL = `
-  INSERT INTO flows_by_job_id (
-    job_id,
-    flow_id,
-    combination_id,
-    flow_title,
-    combination_successes,
-    combination_failures,
-    combination_skipped,
-    combiantion_total,
-    total_number_of_flow_combinations
-  ) VALUES (?,?,?,?,?,?,?,?,?);`;
-
-const insertFlowsByFlowIDCQL = `
-  INSERT INTO flows_by_flow_id (
-    flow_id,
-    combination_id,
-    flow_title,
-    combination_successes,
-    combination_failures,
-    combination_skipped,
-    combiantion_total,
-    total_number_of_flow_combinations
-  ) VALUES (?,?,?,?,?,?,?,?);`;
-
-const insertCombinationByFlowIDCQL = `
-  INSERT INTO combinations_by_flow_id (
-    flow_id,
-    combination_id,
-    combination_successes,
-    combination_failures,
-    combination_skipped,
-    combination_total,
-    start_at,
-    end_at
-  ) VALUES (?,?,?,?,?,?,?,?);`;
-
-const insertSuitesByCombinationIDCQL = `
-  INSERT INTO suites_by_combination_id (
-    combination_id,
-    suite_id,
-    title,
-    level,
-    tests
-  ) VALUES (?,now(),?,?,?);`;
-const selectCQL = `SELECT * FROM combinations_by_flow_id WHERE flow_id = ?`;
-
-const getQuery = (key, input) => {
-  switch(key) {
-    case 'combinationsByFlowID':
-      return {
-        query: insertCombinationByFlowIDCQL,
-        params: [
-          input.flowDetails.id,
-          input.id,
-          input.passes,
-          input.failures,
-          input.pending,
-          input.passes + input.failures + input.pending,
-          input.startTime,
-          input.endTime,
-        ]
-      }
-    case 'jobsByProjectID':
-      return {
-        query: insertJobsByProjectIDCQL,
-        params: transform.undefined([
-          transform.toBigInt("6366977657833263104"),
-          transform.toBigInt(input.jobDetails.id),
-          transform.toBigInt(input.id),
-          input.jobDetails.github,
-          input.jobDetails.jenkins,
-          input.jobDetails.numberOfThreads,
-          input.jobDetails.numberOfFlows,
-          input.jobDetails.numberOfCombinations,
-          input.jobDetails.sourceBranch,
-          input.jobDetails.targetBranch,
-          input.passes,
-          input.failures,
-          input.pending,
-          input.passes + input.failures + input.pending,
-          transform.toDate(input.jobDetails.startTime),
-          transform.toDate(input.endTime),
-          transform.toDate(input.startTime),
-          transform.tags(input.jobDetails.tags),
-        ]),
-      }
-    case 'flowsByJobID':
-      return {
-        query: insertFlowsByJobIDCQL,
-        params: [
-          input.jobDetails.id,
-          input.flowDetails.id,
-          input.id,
-          input.flowDetails.title,
-          input.passes,
-          input.failures,
-          input.pending,
-          input.passes + input.failures + input.pending,
-          input.flowDetails.totalCombinations,
-        ],
-      }
-    case 'suitesByCombinationID':
-      return {
-        query: insertSuitesByCombinationIDCQL,
-        params: [
-          input.id,
-          // input.suite.id,
-          input.suite.title,
-          input.suite.level,
-          input.suite.tests.map(test => ({
-            combination_id: input.id,
-            title: test.title,
-            result: test.result,
-            speed: test.speed,
-            duration: test.duration,
-            code: test.code,
-            err: test.err,
-            metadata: test.metadata,
-          })),
-        ],
-      }
-    case 'flowsByFlowIDCQL':
-      return {
-        query: insertFlowsByFlowIDCQL,
-        params: [
-          input.flowDetails.id,
-          input.id,
-          input.flowDetails.title,
-          input.passes,
-          input.failures,
-          input.pending,
-          input.passes + input.failures + input.pending,
-          input.flowDetails.totalCombinations,
-        ]
-      }
-  };
-};
-
-module.exports = client => ({
+module.exports = models => ({
   insert(input) {
-    console.log('jobsByProjectID input::', getQuery('jobsByProjectID', input).params)
-    const queries = [
-      getQuery('jobsByProjectID', input),
-      // getQuery('flowsByJobID', input),
-      // getQuery('flowsByFlowIDCQL', input),
-      // getQuery('combinationsByFlowID', input),
-      // ...input.suites.map(suite => {
-      //   return getQuery('suitesByCombinationID', {id: input.id, suite})
-      // }),
-    ];
+    const jobsByProjectID = new models.instance.jobsByProjectId({
+      project_id: models.datatypes.Long.fromString("6366977657833263104"),
+      job_id: models.datatypes.Long.fromString(input.jobDetails.id),
+      threads: input.jobDetails.numberOfThreads,
+      flows: input.jobDetails.numberOfFlows,
+      total_number_of_combinations: input.jobDetails.numberOfCombinations,
+      combination_id: models.datatypes.Long.fromString(input.id),
+      github: input.jobDetails.github,
+      jenkins: input.jobDetails.jenkins,
+      source_branch: input.jobDetails.sourceBranch,
+      target_branch: input.jobDetails.targetBranch,
+      combination_successes: input.passes,
+      combination_failures: input.failures,
+      combination_skipped: input.pending,
+      combiantion_total: input.passes + input.failures + input.pending,
+      start_at: input.jobDetails.startTime,
+      combination_end_at: input.endTime,
+      combination_start_at: input.startTime,
+      tags: input.jobDetails.tags,
+    });
+    const combinationsByFlowId =  new models.instance.combinationsByFlowId({
+      "flow_id": models.datatypes.Long.fromString(input.flowDetails.id),
+      "combination_id": models.datatypes.Long.fromString(input.id),
+      "combination_successes": input.passes,
+      "combination_failures": input.failures,
+      "combination_skipped": input.pending,
+      "combination_total": input.passes + input.failures + input.pending,
+      "start_at": input.startTime,
+      "end_at": input.endTime,
+    });
+    const flowsByFlowId = new models.instance.flowsByFlowId({
+      flow_id: models.datatypes.Long.fromString(input.flowDetails.id),
+      flow_title: input.flowDetails.title,
+      combination_id: models.datatypes.Long.fromString(input.id),
+      combination_successes: input.passes,
+      combination_failures: input.failures,
+      combination_skipped: input.pending,
+      combination_total: input.passes + input.failures + input.pending,
+      total_number_of_flow_combinations: input.flowDetails.totalCombinations,
+    });
+    const flowsByJobId = new models.instance.flowsByJobId({
+      job_id: models.datatypes.Long.fromString(input.jobDetails.id),
+      flow_id: models.datatypes.Long.fromString(input.flowDetails.id),
+      flow_title: input.flowDetails.title,
+      combination_id: models.datatypes.Long.fromString(input.id),
+      combination_successes: input.passes,
+      combination_failures: input.failures,
+      combination_skipped: input.pending,
+      combination_total: input.passes + input.failures + input.pending,
+      total_number_of_flow_combinations: input.flowDetails.totalCombinations,
+    });
 
-    const queryOpts = {};
-    // const queryOpts = { timestamp: CassandraTypes.generateTimestamp(timestamp) };
-    return client.batch(queries, queryOpts).then(result => {
-      return {
-        flowID: input.flowDetails.id
-      };
+    return new Promise((resolve, reject) => {
+      models.doBatch([
+        jobsByProjectID.save({return_query: true}),
+        combinationsByFlowId.save({return_query: true}),
+        flowsByFlowId.save({return_query: true}),
+        flowsByJobId.save({return_query: true}),
+        ...input.suites.map(suite => {
+          return new models.instance.suitesByCombinationId({
+            combination_id: models.datatypes.Long.fromString(input.id),
+            suite_id: models.timeuuid(),
+            title: suite.title,
+            level: suite.level,
+            tests: suite.tests.map(test => ({
+              combination_id: models.datatypes.Long.fromString(input.id),
+              title: test.title,
+              result: test.result,
+              speed: test.speed,
+              duration: test.duration,
+              code: test.code,
+              err: test.err,
+              metadata: test.metadata,
+            })),
+          }).save({return_query: true});
+        }),
+      ], err => {
+        if(err) return reject(err);
+        resolve({
+          flowID: globalID.encode('flow', input.flowDetails.id),
+        });
+      });
     });
   },
 
   getByFlowID(encodedFlowID, cursorInfo) {
     const flowID = globalID.decode(encodedFlowID).id;
 
-    return client.execute(selectCQL, [flowID]).then(result => {
-      return result.rows.map(row => {
-        const combinationID = globalID.encode('combination', row.combination_id.toJSON());
-        return {
-          node: {
-            id: combinationID,
-            passes: row.combination_successes,
-            pending: row.combination_skipped,
-            failures: row.combination_failures,
-            startTime: row.start_at,
-            endTime: row.end_at,
-            suites: {combinationID}
-          }
-        }
-      })
+    return new Promise((resolve, reject) => {
+      models.instance.combinationsByFlowId.find({
+        flow_id: models.datatypes.Long.fromString(flowID),
+      }, (err, combinations) => {
+          if(err) return reject(err);
+          resolve(combinations.map(combination => {
+            const combinationID = globalID.encode('combination', combination.combination_id.toJSON());
+            return {
+              node: {
+                id: combinationID,
+                passes: combination.combination_successes,
+                pending: combination.combination_skipped,
+                failures: combination.combination_failures,
+                startTime: combination.start_at,
+                endTime: combination.end_at,
+                suites: {combinationID}
+              }
+            }
+          }));
+      });
     });
   }
 })

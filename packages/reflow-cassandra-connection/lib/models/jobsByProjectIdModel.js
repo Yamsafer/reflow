@@ -1,16 +1,12 @@
 module.exports = {
   table_name: "jobs_by_project_id",
-  fields:{
-    name    : "text",
-    surname : "text",
-    age     : "int",
-    created : "timestamp",
+  fields: {
     project_id: "bigint",
     job_id: "bigint",
+    combination_id: "bigint",
     threads: "int",
     flows: "int",
     total_number_of_combinations: "int",
-    combination_id: "bigint",
     github: "text",
     jenkins: "text",
     source_branch: "text",
@@ -22,7 +18,10 @@ module.exports = {
     start_at: "timestamp",
     combination_end_at: "timestamp",
     combination_start_at: "timestamp",
-    tags: "set<text>",
+    tags: {
+      type: "set",
+      typeDef: "<text>",
+    },
   },
   key : [["project_id"], "job_id", "combination_id"],
   clustering_order: {"job_id": "desc", "combination_id": "desc"},
