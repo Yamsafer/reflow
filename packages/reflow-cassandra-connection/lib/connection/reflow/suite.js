@@ -1,7 +1,7 @@
 const globalID = require('../../util/global-id');
 
 const testNode = test => ({
-  id: globalID.encode('test', test.test_id.toJSON()),
+  // id: globalID.encode('test', test.test_id.toJSON()),
   title: test.title,
   result: test.result,
   speed: test.speed,
@@ -14,8 +14,7 @@ const testNode = test => ({
 module.exports = models => ({
   getByCombinationID(encodedCombinationID, cursorInfo) {
     const combinationID = globalID.decode(encodedCombinationID).id;
-    return new Promise((resolve, reject) => {
-      models.instance.suitesByCombinationId.find({
+    return models.instance.suitesByCombinationId.findAsync({
         combination_id: models.datatypes.Long.fromString(combinationID),
       }, {
         select: [
@@ -24,19 +23,18 @@ module.exports = models => ({
           'level',
           'tests',
         ],
-      }, (err, suites) => {
-        if(err) return reject(err);
-        console.log('suites::', suites)
-        const result = suites.map(row => ({
-          node: {
-            id: globalID.encode('suite', row.combination_id.toJSON()),
-            title: row.title,
-            level: row.level,
-            tests: row.tests.map(testNode),
-          }
-        }));
-        resolve(result);
-      })
+      }).then(suites => {
+        return suites.map(suite => {
+          console.log('suite::', suite);
+          return ({
+            node: {
+              id: globalID.encode('suite', suite.suite_id.toJSON()),
+              title: suite.title,
+              level: suite.level,
+              tests: suite.tests && suite.tests.map(testNode),
+            }
+          });
+        });
     });
   },
 })

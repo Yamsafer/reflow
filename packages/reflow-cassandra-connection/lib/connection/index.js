@@ -17,7 +17,8 @@ module.exports = models => ({
     switch(decodedID.type) {
       case 'flow':
         return this.flow.getFlowNode(decodedID.id);
-      default: return {}
+      default:
+        throw new Error('Sorry. Only `flow` nodes are traversable.')
     }
   },
 })

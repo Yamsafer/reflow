@@ -20,7 +20,7 @@ class SuitesList extends Component {
   }
 
   render() {
-    const { data: {loading, error, combination }} = this.props;
+    const { data: {loading, error, viewer }} = this.props;
     const {
       onlyFailures,
     } = this.state;
@@ -30,21 +30,25 @@ class SuitesList extends Component {
     if (error) {
       return <p>{error.message}</p>;
     }
+
+    // const {
+    //   suites,
+    //   passes,
+    //   pending,
+    //   failures,
+    //   endTime,
+    //   startTime,
+    // } = combination;
     const {
       suites,
-      passes,
-      pending,
-      failures,
-      endTime,
-      startTime,
-    } = combination;
+    } = viewer;
 
     const hidePassesClass = onlyFailures? "hide-passes" : "";
     const overallResult = "UNKOWN"
     return (
       <div className="row">
         <div className="col-xs-4">
-          <FailuresFilter
+          {/*<FailuresFilter
             active={onlyFailures}
             disabled={!failures}
             onToggle={this.onTogglePasses}
@@ -56,12 +60,12 @@ class SuitesList extends Component {
             endTime={endTime}
             startTime={startTime}
             overallResult={overallResult}
-          />
+          />*/}
         </div>
         <div className="col-xs-8">
           <div className={`report ${hidePassesClass}`} id="mocha">
             <div id="mocha">
-              <ul id="report">{ suites.map((suite, i) => <Suite key={i} suite={suite} onlyFailures={onlyFailures}/>) }</ul>
+              <ul id="report">{ suites.edges.map((edge, i) => <Suite key={i} suite={edge.node} onlyFailures={onlyFailures}/>) }</ul>
             </div>
           </div>
         </div>

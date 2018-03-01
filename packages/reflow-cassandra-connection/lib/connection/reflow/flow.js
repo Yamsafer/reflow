@@ -21,8 +21,11 @@ const flowNode = flow => {
 
 module.exports = models => ({
   getFlowNode(flowID) {
-    return new Promise((resolve, reject) => {
-      models.flowsByFlowId.find({flow_id: flowID}, { select: [
+    console.log('models::', models)
+    return models.instance.flowsByFlowId.findAsync({
+        flow_id: models.datatypes.Long.fromString(flowID),
+      }, {
+        select: [
         'flow_id',
         'flow_title',
         'SUM(combination_successes) as successes',
@@ -30,19 +33,17 @@ module.exports = models => ({
         'SUM(combination_failures) as failures',
         'SUM(combiantion_total) as total',
         'total_number_of_flow_combinations',
-        'COUNT(*) as current_number_of_flow_combinations',
-      ]}, function(err, flows) {
-        if(err) return reject(err);
+        'COUNT(flow_id) as current_number_of_flow_combinations',
+        ],
+      }).then(flows => {
         console.log('flows::', flows)
         const result = flows.map(flowNode).find(Boolean);
         resolve(result);
-      })
-    });
+      });
   },
   getByJobID(encodedJobID, cursorInfo) {
     const jobID = globalID.decode(encodedJobID).id;
-    return new Promise((resolve, reject) => {
-      models.instance.flowsByJobId.find({
+    return models.instance.flowsByJobId.findAsync({
         job_id: models.datatypes.Long.fromString(jobID),
       }, {
         select: [
@@ -55,14 +56,11 @@ module.exports = models => ({
           'total_number_of_flow_combinations',
           'COUNT(flow_id) as current_number_of_flow_combinations',
         ]
-      }, (err, flows) => {
-        if(err) return reject(err);
+      }).then(flows => {
         console.log('flows::', flows)
-        const result = flows.map(flow => ({
+        return flows.map(flow => ({
           node: flowNode(flow),
         }));
-        resolve(result);
       });
-    });
   },
 })

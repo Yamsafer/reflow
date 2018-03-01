@@ -4,29 +4,31 @@ import Page from './Page';
 
 const getSuites = gql`
 query getSuites($combinationID: ID!) {
-  combination(id: $combinationID) {
-    passes
-    pending
-    failures
-    suites(first: 100) {
-      title
-      level
-      tests {
-        title
-        result
-        speed
-        duration
-        code
-        metadata {
-          meta
-          message
-        }
-        err {
-          htmlMessage
-          stacktrace
-          message
-          sourceURL
-          line
+  viewer {
+    suites(combinationID: $combinationID) {
+      edges {
+        node {
+          id
+          title
+          level
+          tests {
+            title
+            result
+            speed
+            duration
+            code
+            err {
+              message
+              htmlMessage
+              stacktrace
+              sourceURL
+              line
+            }
+            metadata {
+              meta
+              message
+            }
+          }
         }
       }
     }

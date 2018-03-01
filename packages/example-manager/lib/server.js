@@ -14,7 +14,7 @@ createCassandraConnection(config.cassandra)
       connection: cassandraConnection,
     }));
 
-    app.use(board());
+    // app.use(board());
 
     app.listen(config.port, function() {
       console.log(`Server Running on port ${config.port}`)

@@ -5,8 +5,7 @@ module.exports = models => ({
   getByProjectID(encodedProjectID, cursorInfo) {
     const projectID = globalID.decode(encodedProjectID).id;
     console.log('projectID::', projectID)
-    return new Promise((resolve, reject) => {
-      models.instance.jobsByProjectId.find({
+    return models.instance.jobsByProjectId.findAsync({
         project_id: models.datatypes.Long.fromString(projectID),
       }, {
         select: [
@@ -21,14 +20,13 @@ module.exports = models => ({
           'SUM(combination_failures) as failures',
           'SUM(combiantion_total) as total',
           'total_number_of_combinations',
-          'COUNT(*) as current_number_of_combinations',
+          'COUNT(job_id) as current_number_of_combinations',
           'MIN(combination_start_at) as first_reported',
           'MAX(combination_end_at) as last_reported',
         ],
-      }, (err, jobs) => {
-        if(err) return reject(err);
+      }).then(jobs => {
         console.log('jobs::', jobs);
-        const result = jobs.map(row => {
+        return jobs.map(row => {
           const jobID = globalID.encode('job', row.job_id.toJSON());
           const currComb = row.current_number_of_combinations.toJSON();
           const totalComb = row.total_number_of_combinations;
@@ -56,8 +54,6 @@ module.exports = models => ({
             }
           }
         });
-        resolve(result);
-      })
-    });
+      });
   },
 })

@@ -3,9 +3,9 @@ import './style.css';
 import he from 'he';
 
 const CodeAndMetadata = ({code, metadata}) => {
-  const metaItems = metadata && metadata.map(metaItem => {
+  const metaItems = metadata && metadata.map((metaItem, i) => {
     return (
-      <pre>
+      <pre key={i}>
         {metaItem.message && <code>message: {metaItem.message}</code>}
         {metaItem.meta && <code>meta: {metaItem.meta}</code>}
       </pre>
@@ -106,6 +106,7 @@ const decideComponent = (status) => {
 }
 
 const Suite = ({suite, onlyFailures}) => {
+  if(!suite.title && !suite.tests) return null
 
   const tests = suite.tests
     .filter(test => onlyFailures? test.result === "FAILURE" : true)

@@ -60,7 +60,6 @@ const createReflowContext = function(filepath) {
       };
     },
     fork(suites) {
-
       const activeTags = self.options.tags;
 
       const activeFork = suites

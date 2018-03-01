@@ -1,0 +1,19 @@
+{
+  "name": "example-android-project",
+  "version": "3.0.0-alpha.15",
+  "private": true,
+  "dependencies": {
+    "appium": "^1.7.2",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "reflow-core": "^3.0.0-alpha.19",
+    "reflow-cli": "^3.0.0-alpha.19",
+    "wd": "^1.5.0"
+  },
+  "scripts": {
+    "start": "cross-env REFLOW_DEVELOPMENT=1 reflow run --sourceBranch=DEV-XXXX --targetBranch=example-core"
+  },
+  "devDependencies": {
+    "cross-env": "^5.1.3"
+  }
+}

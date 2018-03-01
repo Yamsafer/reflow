@@ -90,26 +90,23 @@ module.exports = models => ({
   getByFlowID(encodedFlowID, cursorInfo) {
     const flowID = globalID.decode(encodedFlowID).id;
 
-    return new Promise((resolve, reject) => {
-      models.instance.combinationsByFlowId.find({
+    return models.instance.combinationsByFlowId.findAsync({
         flow_id: models.datatypes.Long.fromString(flowID),
-      }, (err, combinations) => {
-          if(err) return reject(err);
-          resolve(combinations.map(combination => {
-            const combinationID = globalID.encode('combination', combination.combination_id.toJSON());
-            return {
-              node: {
-                id: combinationID,
-                passes: combination.combination_successes,
-                pending: combination.combination_skipped,
-                failures: combination.combination_failures,
-                startTime: combination.start_at,
-                endTime: combination.end_at,
-                suites: {combinationID}
-              }
+      }).then(combinations => {
+        return combinations.map(combination => {
+          const combinationID = globalID.encode('combination', combination.combination_id.toJSON());
+          return {
+            node: {
+              id: combinationID,
+              passes: combination.combination_successes,
+              pending: combination.combination_skipped,
+              failures: combination.combination_failures,
+              startTime: combination.start_at,
+              endTime: combination.end_at,
+              suites: {combinationID}
             }
-          }));
+          }
+        });
       });
-    });
   }
 })
