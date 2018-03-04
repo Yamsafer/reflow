@@ -1,4 +1,3 @@
-
 exports.zoom = function (wd) {
   return el => {
     return Promise.all([

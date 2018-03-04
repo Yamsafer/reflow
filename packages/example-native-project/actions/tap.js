@@ -17,45 +17,43 @@ TouchMobileEl.prototype.do = function (value) {
 };
 
 TouchMobileEl.prototype.checkConditions = function () {
-  const self = this;
-
   const options = {
     path: `/session/${this.client.sessionId}/touch/perform`,
     method: "POST",
     data: {
       "actions": [
-        { "action": "press", "options": { "x": this.x, "y": this.y } },
-        { "action": "wait", "options": { "ms": 800 } },
-        { "action": "release", "options": {} }]
+        { action: "press", options: { x: this.x, y: this.y } },
+        { action: "wait", options: { ms: 800 } },
+        { action: "release", options: {} },
+      ],
     }
   };
 
-  self.protocol(options, (result) => {
+  this.protocol(options, result => {
     if (result.status === 0) {
       // sucessful
-      self.seenCount += 1;
+      this.seenCount += 1;
     }
 
-    const elapsed = (new Date()).getTime() - self.startTime;
-    if (self.seenCount >= 1 || elapsed > MAX_TIMEOUT) {
-      if (self.seenCount >= 1) {
+    const elapsed = (new Date()).getTime() - this.startTime;
+    if (this.seenCount >= 1 || elapsed > MAX_TIMEOUT) {
+      if (this.seenCount >= 1) {
         const elapse = (new Date()).getTime();
-        self.time.executeAsyncTime = elapse - self.startTime;
-        self.time.seleniumCallTime = 0;
-        self.do(result.value);
+        this.time.executeAsyncTime = elapse - this.startTime;
+        this.time.seleniumCallTime = 0;
+        this.do(result.value);
       } else {
-        self.fail({
+        this.fail({
           code: settings.FAILURE_REASONS.BUILTIN_ELEMENT_NOT_OPERABLE,
-          message: self.failureMessage
+          message: this.failureMessage
         });
       }
     } else {
-      setTimeout(self.checkConditions, WAIT_INTERVAL);
+      setTimeout(this.checkConditions, WAIT_INTERVAL);
     }
   });
 };
 
-/*eslint max-params:["error", 5] */
 TouchMobileEl.prototype.command = function (x, y, cb) {
   this.cb = cb;
   this.x = x;

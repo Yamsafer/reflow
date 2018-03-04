@@ -1,7 +1,7 @@
 "use strict";
 
-var wd = require('wd'),
-    Q = require('q');
+const wd = require('wd');
+const Q = require('q');
 
 exports.swipe = function (wd) {
   return ({startX, startY, endX, endY, duration}) => {
