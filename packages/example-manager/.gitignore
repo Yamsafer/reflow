@@ -1,4 +1,6 @@
 package-lock.json
 node_modules
-config.json
 cassandra-data/*
+.env
+.env.*
+!.env.example

@@ -8,7 +8,6 @@ services:
       - CASSANDRA_SEEDS=cassandra-node-1
       - CASSANDRA_PASSWORD_SEEDER=yes
       - CASSANDRA_PASSWORD=password123
-    # links:
     ports:
       - "9042:9042"
       - "7199:7199"

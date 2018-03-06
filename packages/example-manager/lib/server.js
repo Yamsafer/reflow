@@ -1,25 +1,37 @@
 const express              = require('express');
 const cors                 = require('cors');
-const config               = require('../config.json');
 const circuit              = require('reflow-circuit');
 const board                = require('reflow-board');
 const createCassandraConnection  = require('reflow-cassandra-connection');
 
-const app = express();
-app.use(cors());
+process.env.PORT="3000";
+process.env.CASSANDRA_KEYSPACE="reflow";
+process.env.CASSANDRA_CONTACT_POINTS="localhost";
+process.env.CASSANDRA_USERNAME="cassandra";
+process.env.CASSANDRA_PASSWORD="password123";
 
-createCassandraConnection(config.cassandra)
-  .then(cassandraConnection => {
+(async function() {
+  try {
+    const app = express();
+    app.use(cors());
+    const cassandraConnection = await createCassandraConnection({
+      keyspace: process.env.CASSANDRA_KEYSPACE,
+      contactPoints: process.env.CASSANDRA_CONTACT_POINTS.split(','),
+      replication: "{ 'class': 'SimpleStrategy', 'replication_factor' : 1 }",
+      username: process.env.CASSANDRA_USERNAME,
+      password: process.env.CASSANDRA_PASSWORD,
+    });
+
     app.use(circuit({
       connection: cassandraConnection,
     }));
 
     // app.use(board());
 
-    app.listen(config.port, function() {
-      console.log(`Server Running on port ${config.port}`)
+    app.listen(process.env.PORT, function() {
+      console.log(`Server Running on port ${process.env.PORT}`)
     });
-  })
-  .catch(err => {
+  } catch(err) {
     throw err;
-  })
+  }
+})()

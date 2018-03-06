@@ -5,8 +5,8 @@
   "dependencies": {
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
-    "reflow-core": "^3.0.0-alpha.19",
-    "reflow-cli": "^3.0.0-alpha.19"
+    "reflow-core": "^3.0.0-alpha.30",
+    "reflow-cli": "^3.0.0-alpha.30"
   },
   "scripts": {
     "start": "cross-env REFLOW_DEVELOPMENT=1 reflow run --sourceBranch=DEV-XXXX --targetBranch=example-core"
