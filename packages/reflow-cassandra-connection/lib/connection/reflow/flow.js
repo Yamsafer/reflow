@@ -36,9 +36,7 @@ module.exports = models => ({
         'COUNT(flow_id) as current_number_of_flow_combinations',
         ],
       }).then(flows => {
-        console.log('flows::', flows)
-        const result = flows.map(flowNode).find(Boolean);
-        resolve(result);
+        return flows.map(flowNode).find(Boolean);
       });
   },
   getByJobID(encodedJobID, cursorInfo) {
