@@ -1,6 +1,6 @@
 {
   "name": "reflow-cli",
-  "version": "3.0.0-alpha.32",
+  "version": "3.0.0-alpha.33",
   "description": "Reflow Cli",
   "author": "Ahmad Bamieh",
   "license": "MIT",
@@ -12,11 +12,11 @@
     "url": "https://github.com/Bamieh/reflow"
   },
   "peerDependencies": {
-    "reflow-core": "^3.0.0-alpha.32"
+    "reflow-core": "^3.0.0-alpha.33"
   },
   "devDependencies": {
     "cross-env": "^4.0.0",
-    "reflow-core": "^3.0.0-alpha.32"
+    "reflow-core": "^3.0.0-alpha.33"
   },
   "dependencies": {
     "find-up": "^2.1.0",
