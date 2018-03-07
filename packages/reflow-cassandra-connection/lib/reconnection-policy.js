@@ -18,5 +18,5 @@ module.exports = function(reconnection) {
     }
   }
 
-  return new ReflowReconnectionPolicy(3000);
+  return new ReflowReconnectionPolicy(12000);
 }

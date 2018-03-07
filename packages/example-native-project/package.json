@@ -6,8 +6,8 @@
     "appium": "^1.7.2",
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
-    "reflow-core": "^3.0.0-alpha.30",
-    "reflow-cli": "^3.0.0-alpha.30",
+    "reflow-core": "^3.0.0-alpha.31",
+    "reflow-cli": "^3.0.0-alpha.31",
     "wd": "^1.5.0"
   },
   "scripts": {
