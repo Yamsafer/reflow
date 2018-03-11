@@ -106,7 +106,7 @@ const decideComponent = (status) => {
 }
 
 const Suite = ({suite, onlyFailures}) => {
-  if(!suite.title && !suite.tests) return null
+  if(!suite.title || !suite.tests || !suite.tests.length) return null
 
   const tests = suite.tests
     .filter(test => onlyFailures? test.result === "FAILURE" : true)
