@@ -13,7 +13,7 @@ exports.ios = {
   platformName: 'iOS',
   platformVersion: '11.2',
   deviceName: 'iPhone (11.2.6)', // iphone 9.3
-  app: 'app/Build/Yamsafer.ipa',
+  app: 'app/Yamsafer.ipa',
   // iosInstallPause: 8000,
   // useCarthageSsl: true,
   usePrebuiltWDA: true,
