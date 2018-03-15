@@ -20,4 +20,4 @@ services:
       - CONNECT_TO_GRID=True
       - SELENIUM_HOST=selenium_hub
       # Enable it for msite testing
-      #- BROWSER_NAME=chrome
+      # - BROWSER_NAME=chrome

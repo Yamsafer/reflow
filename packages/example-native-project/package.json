@@ -4,13 +4,20 @@
   "private": true,
   "dependencies": {
     "appium": "^1.7.2",
+    "appium-doctor": "^1.4.3",
     "chai": "^4.1.2",
-    "mocha": "^4.0.1",
-    "reflow-core": "^3.0.0-alpha.31",
+    "mocha": "^5.0.0",
     "reflow-cli": "^3.0.0-alpha.31",
-    "wd": "^1.5.0"
+    "reflow-core": "^3.0.0-alpha.31",
+    "wd": "1.6.1",
+    "xmldom": "^0.1.27",
+    "xpath": "0.0.27"
   },
   "scripts": {
+    "test": "mocha",
+    "appium": "appium",
+    "doctor:ios": "appium-doctor --ios",
+    "doctor:android": "appium-doctor --android",
     "start": "cross-env REFLOW_DEVELOPMENT=1 reflow run --sourceBranch=DEV-XXXX --targetBranch=example-core"
   },
   "devDependencies": {

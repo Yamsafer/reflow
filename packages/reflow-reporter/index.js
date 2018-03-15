@@ -56,6 +56,7 @@ const ReflowReporter = function(runner, options = {}) {
   function sendRequest(type, data) {
     process.stdout.write(`\nSending request (${type}) to: ${hostname}:${port}${path}`);
     const postData = JSON.stringify(data);
+    const contentLength = Buffer.byteLength(postData);
     const reqOptions = {
       agent: keepAliveAgent,
       method: 'POST',
@@ -65,11 +66,13 @@ const ReflowReporter = function(runner, options = {}) {
       protocol: `${protocol}:`,
       headers: Object.assign({
         'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(postData),
+        'Content-Length': contentLength,
       }, headers),
     };
     const req = tcpModule.request(reqOptions, (res) => {
       console.log(`STATUS: ${res.statusCode}`);
+      console.log(`Content length: ${contentLength}`);
+
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
         console.log(`BODY: ${chunk}`);
