@@ -42,7 +42,7 @@ module.exports = {
               return resolve();
             });
         } catch (e) {
-          logger.err(`${name}] Appium server isn't launched successfully, ${e}`);
+          logger.err(`[${name}] Appium server isn't launched successfully, ${e}`);
           // where appium isnt found
           return reject(e);
         }

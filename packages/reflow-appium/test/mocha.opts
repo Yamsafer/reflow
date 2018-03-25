@@ -1,0 +1,2 @@
+--require babel-register ./test/setup
+test/**/*.test.js

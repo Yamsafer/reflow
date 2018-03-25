@@ -1,12 +1,38 @@
-async function execute (elementId, methodName, args, skipScreenshotAndSource) {
+const delay = require('../util/delay');
+const wd = require('wd');
+
+async function getSourceAndScreenshot (driver) {
+  let source, sourceError, screenshot, screenshotError;
+  try {
+    source = await driver.source();
+  } catch (e) {
+    if (e.status === 6) {
+      throw e;
+    }
+    sourceError = e;
+  }
+
+  try {
+    screenshot = await driver.takeScreenshot();
+  } catch (e) {
+    if (e.status === 6) {
+      throw e;
+    }
+    screenshotError = e;
+  }
+
+  return {source, sourceError, screenshot, screenshotError};
+}
+
+async function _execute (elementId, methodName, args = [], skipScreenshotAndSource = false) {
   let cachedEl;
   let res = {};
 
   if (elementId) {
     // Give the cached element a variable name (el1, el2, el3,...) the first time it's used
-    cachedEl = this.elementCache[elementId];
+    cachedEl = this.cache.element[elementId];
     if (!cachedEl.variableName && cachedEl.variableType === 'string') {
-      cachedEl.variableName = `el${this.elVariableCounter++}`;
+      cachedEl.variableName = `el${this.cache.variableCounter++}`;
     }
     res = await cachedEl.el[methodName].apply(cachedEl.el, args);
   } else {
@@ -28,11 +54,11 @@ async function execute (elementId, methodName, args, skipScreenshotAndSource) {
   }
 
   // Give the source/screenshot time to change before taking the screenshot
-  await Bluebird.delay(500);
+  await delay(500);
 
   let sourceAndScreenshot;
   if (!skipScreenshotAndSource) {
-    sourceAndScreenshot = await this._getSourceAndScreenshot();
+    sourceAndScreenshot = await getSourceAndScreenshot();
   }
 
   return {
@@ -42,6 +68,13 @@ async function execute (elementId, methodName, args, skipScreenshotAndSource) {
   };
 }
 
-module.exports = executeElementCommand (elementId, methodName, args = [], skipScreenshotAndSource = false) {
-  return execute(elementId, methodName, args, skipScreenshotAndSource);
+module.exports = {
+  elementCommand (elementId, methodName, args = [], skipScreenshotAndSource = false) {
+    return _execute.call(this, {elementId, methodName, args, skipScreenshotAndSource});
+  },
+  method (methodName, args = [], skipScreenshotAndSource = false) {
+    return _execute.call(this, {methodName, args, skipScreenshotAndSource});
+  },
 }
+
+

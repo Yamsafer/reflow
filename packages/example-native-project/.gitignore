@@ -6,3 +6,4 @@ cassandra-data/*
 !.env.example
 *.apk
 app/*
+cap.js

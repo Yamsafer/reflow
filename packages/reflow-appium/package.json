@@ -1,0 +1,37 @@
+{
+  "name": "reflow-appium",
+  "version": "3.0.0-alpha.34",
+  "description": "Reflow Appium Runner expressJS Middleware.",
+  "author": "Ahmad Bamieh",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bamieh/reflow"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-spies": "^0.7.1",
+    "codecov": "^3.0.0",
+    "cross-env": "^5.1.4",
+    "glob": "^7.1.2",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.17.2",
+    "nyc": "^10.2.0"
+  },
+  "dependencies": {
+    "adbkit": "^2.11.0",
+    "appium": "^1.7.2",
+    "appium-doctor": "^1.4.3",
+    "express": "^4.16.3",
+    "plist": "^3.0.0"
+  },
+  "scripts": {
+    "start": "cross-env REFLOW_DEVELOPMENT=1 nodemon index.js",
+    "test": "mocha",
+    "test:watch": "npm run test -- --reporter min --watch",
+    "coverage": "nyc npm run test && nyc report --reporter=html && open coverage/index.html",
+    "report-coverage": "nyc npm run test && nyc report --reporter=lcov > coverage.lcov && codecov"
+  }
+}

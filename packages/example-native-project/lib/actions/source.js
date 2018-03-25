@@ -1,7 +1,7 @@
-module.exports = function(driver) {
-  return async function() {
-    const source = await driver.source();
-    console.log('source:::', source)
-    return source;
-  }
+function getSource() {
+  return this.driver.source();
+}
+
+module.exports = {
+  get: getSource,
 }
