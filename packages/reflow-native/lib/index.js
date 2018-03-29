@@ -1,10 +1,11 @@
 const express = require('express');
+const httpProxy = require('http-proxy');
 
 module.exports = function() {
+  const proxy = httpProxy.createProxyServer({});
+
   const router = express.Router();
-  router.get('/', function(req, res) {
-    res.status(200).send('Hello From Automation!');
-  })
+
   router.use('/appium', require('./routes/appium')({
     throwInsteadOfExit: true,
     loglevel: 'debug',
@@ -13,7 +14,12 @@ module.exports = function() {
 
   router.use('/devices', require('./routes/devices')());
 
+  router.all('*', function(req, res, next) {
+    console.log('req::', req);
+    proxy.web(req, res, {
+      target: 'http://localhost:4723'
+    });
+    // next();
+  })
   return router;
 }
-
-

@@ -28,7 +28,8 @@
     "nyc": "^10.2.0"
   },
   "peerDependencies": {
-    "mocha": "^4"
+    "mocha": "^4",
+    "wd": "^1.6.1"
   },
   "dependencies": {
     "decache": "^4.2.0",
@@ -37,7 +38,9 @@
     "intercept-stdout": "^0.1.2",
     "lodash": "^4.17.4",
     "reflow-reporter": "^3.0.0-alpha.34",
-    "threads": "^0.8.1"
+    "threads": "^0.8.1",
+    "xmldom": "^0.1.27",
+    "xpath": "0.0.27"
   },
   "scripts": {
     "test": "cross-env REFLOW_ENV=DEV mocha",

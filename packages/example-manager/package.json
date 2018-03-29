@@ -1,6 +1,6 @@
 {
   "name": "example-manager",
-  "version": "3.0.0-alpha.31",
+  "version": "3.0.0-alpha.34",
   "private": true,
   "scripts": {
     "start": "cross-env REFLOW_DEVELOPMENT=1 node lib/server.js"
@@ -8,9 +8,10 @@
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "reflow-board": "3.0.0-alpha.31",
-    "reflow-circuit": "3.0.0-alpha.31",
-    "reflow-cassandra-connection": "3.0.0-alpha.31"
+    "reflow-board": "3.0.0-alpha.34",
+    "reflow-native": "3.0.0-alpha.34",
+    "reflow-circuit": "3.0.0-alpha.34",
+    "reflow-cassandra-connection": "3.0.0-alpha.34"
   },
   "devDependencies": {
     "cross-env": "^5.1.1"

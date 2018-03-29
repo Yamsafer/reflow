@@ -1,9 +1,11 @@
 require('babel-register')();
 const MochaReflow = require('./mocha-reflow').default;
-const reflowProps = require('./props');
+const reflowProps = require('./client/base/flow-variables'); //Todo: move to client
 const decache = require('decache');
 
 const FlakeId = require('flakeid');
+
+const Client = require('./client');
 
 const path = require('path');
 
@@ -29,6 +31,12 @@ const executeSuites = function(branch) {
   return executeSubTree(branch);
 }
 
+const getClient = function(appiumCon, caps) {
+  const client = new Client(appiumCon);
+  return client.init(caps).then(_ => {
+    return client;
+  });
+}
 
 const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDetails}, done) {
 
@@ -70,12 +78,17 @@ const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDet
 
   suites.forEach(executeSuites);
 
-  mochaReflowInstance.run(failures => {
-    mochaReflowInstance.files.forEach(decache)
-    global.reflow.teardown()
+  getClient().then(client => {
+    global.client = client;
 
-    setTimeout(() => done(failures), 1000)
+    mochaReflowInstance.run(failures => {
+      mochaReflowInstance.files.forEach(decache)
+      global.reflow.teardown()
+
+      setTimeout(() => done(failures), 1000)
+    })
   })
+
 }
 
 

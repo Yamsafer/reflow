@@ -9,6 +9,7 @@ files:
 # mode: analyze
 
 numberOfThreads: 12
+caps: ./caps.js
 # numberOfThreads: 7
 mocha:
   # reporter: 'list'

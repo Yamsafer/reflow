@@ -109,3 +109,6 @@ hook('variable', function() {
 });
 ```
 
+### Todo
+
+- Add `setup` and `teardown` keywords for global before and global after. Currently hooks are used for this.

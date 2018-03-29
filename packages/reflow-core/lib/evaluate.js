@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import cartesian from './cartesian';
+import cartesian from './utils/cartesian';
 const types = ["suite", "subflow", "fork", "hook"];
 const conditionalTypes = ["subflow", "hook", "fork"];
 

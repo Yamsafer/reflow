@@ -5,6 +5,11 @@ module.exports = function(config) {
   const router = express.Router();
   let server;
 
+  router.get('/doctor', async function(req, res) {
+    // "doctor:ios": "appium-doctor --ios",
+    // "doctor:android": "appium-doctor --android",
+  });
+
   router.get('/start', async function(req, res) {
     if(server) {
       res.status(500).send(`Appium server already started.`);
