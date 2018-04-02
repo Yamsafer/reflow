@@ -14,7 +14,7 @@ class NativeClient extends NativeActions {
     console.log('Creating Appium Instance.');
     super();
 
-    this.cap = null;
+    this.capability = null;
     this.sessionID = null;
     this.driver = driver;
     this.cache = new ElementCache();
@@ -23,17 +23,17 @@ class NativeClient extends NativeActions {
     console.log('Done.');
   }
 
-  async init({cap, delayDuration = 500} = {}) {
-    this.cap = cap;
+  async init({capability, delayDuration = 500} = {}) {
+    this.capability = capability;
 
     console.info('Configuring Logger.')
     logging.configure(this.driver);
 
     console.info('Initializing Driver.')
-    console.info(`Cap: ${this.cap.platformName}.`);
-    await this.driver.init(this.cap);
+    console.info(`Cap: ${this.capability.platformName}.`);
+    await this.driver.init(this.capability);
     await delay(delayDuration);
-    if(this.cap.autoAcceptAlerts) {
+    if(this.capability.autoAcceptAlerts) {
       console.log('Auto Accepting Alerts. Polling...')
       await this.alerts.acceptAll();
     }

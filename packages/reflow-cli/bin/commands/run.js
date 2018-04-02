@@ -1,5 +1,5 @@
 const os = require('os');
-
+const parseCaps = require('../parse-caps');
 exports.command = 'run'
 
 exports.describe = 'run reflow cases'
@@ -84,7 +84,9 @@ exports.handler = function (config) {
     require(module)
   })
 
-  const reflow = new Reflow(config);
+  const caps = parseCaps(path.resolve(ROOTPATH, config.caps));
+
+  const reflow = new Reflow(config, caps);
 
   reflow.files = _(config.files)
                   .flatMap(lookupFiles(ROOTPATH, config))

@@ -5,7 +5,7 @@ describe('Suite A', function() {
     console.log('SUITE A BEFORE!')
   })
   it('does assertions', function(done) {
-    setTimeout(done, 500)
+    setTimeout(done, 5000)
   })
   it('imports files', function() {
     expect(randomModule).to.be.a('function');

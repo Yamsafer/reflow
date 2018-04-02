@@ -8,6 +8,8 @@ const executeMatrix = function(matrix, config) {
     mocha: mochaConfig,
     jobDetails,
     flowDetails,
+    connection,
+    capability,
   } = config;
   const startTime = jobDetails.startTime;
   const numberOfThreads = jobDetails.numberOfThreads;
@@ -24,6 +26,8 @@ const executeMatrix = function(matrix, config) {
     mochaConfig,
     jobDetails,
     flowDetails,
+    connection,
+    capability,
   });
 
 
@@ -38,7 +42,7 @@ const executeMatrix = function(matrix, config) {
     })
     .on('error', function(job, error) {
       errored = true;
-      console.log('Job errored:');
+      console.log('Job errored:', error);
       throw error;
     })
     .on('finished', function() {

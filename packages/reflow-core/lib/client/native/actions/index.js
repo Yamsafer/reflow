@@ -4,12 +4,7 @@ class NativeActions {
   }
 }
 
-NativeActions.prototype = {
-  alerts: require('./alerts'),
-  execute: require('./execute'),
-  session: require('./session'),
-  fetch: require('./fetch'),
-  source: require('./source'),
-}
+const actions = ['alerts','execute','session','fetch','source'];
+actions.forEach(action => NativeActions.prototype[action] = require(`./${action}`));
 
 module.exports = NativeActions;

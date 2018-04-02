@@ -73,7 +73,9 @@ const createReflowContext = function(filepath) {
 };
 
 class Reflow {
-  constructor(options) {
+  constructor(options, caps) {
+    this.connection = caps.connection;
+    this.devices = caps.devices;
     this.options = options;
     this.files = [];
     this.suites = {};
@@ -151,12 +153,17 @@ class Reflow {
   }
 
   runFlow({matrix, flowDetails}) {
-    console.log(`Running "${flowDetails.title}" Flow (${flowDetails.totalCombinations} total combinations)`)
-    executeMatrix(matrix, {
-      ...this.options,
-      flowDetails,
-      jobDetails: this.jobDetails,
-    });
+    this.devices.forEach(capability => {
+      console.log(`Running "${flowDetails.title}" Flow on "${capability.deviceName}" (${flowDetails.totalCombinations} total combinations)`)
+
+      executeMatrix(matrix, {
+        ...this.options,
+        flowDetails,
+        capability,
+        jobDetails: this.jobDetails,
+        connection: this.connection,
+      });
+    })
   }
 }
 

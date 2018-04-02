@@ -5,7 +5,7 @@ const decache = require('decache');
 
 const FlakeId = require('flakeid');
 
-const Client = require('./client');
+const getClient = require('./client');
 
 const path = require('path');
 
@@ -31,14 +31,7 @@ const executeSuites = function(branch) {
   return executeSubTree(branch);
 }
 
-const getClient = function(appiumCon, caps) {
-  const client = new Client(appiumCon);
-  return client.init(caps).then(_ => {
-    return client;
-  });
-}
-
-const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDetails}, done) {
+const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDetails, capability, connection}, done) {
 
   const {
     require: mochaRequiredFiles,
@@ -78,7 +71,7 @@ const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDet
 
   suites.forEach(executeSuites);
 
-  getClient().then(client => {
+  getClient(connection, capability).then(client => {
     global.client = client;
 
     mochaReflowInstance.run(failures => {

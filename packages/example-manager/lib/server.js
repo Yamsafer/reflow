@@ -17,20 +17,23 @@ process.env.CASSANDRA_PASSWORD="password123";
     app.disable('x-powered-by');
     app.enable('trust proxy');
     app.use(cors());
-    // const cassandraConnection = await createCassandraConnection({
-    //   keyspace: process.env.CASSANDRA_KEYSPACE,
-    //   contactPoints: process.env.CASSANDRA_CONTACT_POINTS.split(','),
-    //   replication: "{ 'class': 'SimpleStrategy', 'replication_factor' : 1 }",
-    //   username: process.env.CASSANDRA_USERNAME,
-    //   password: process.env.CASSANDRA_PASSWORD,
-    // });
+    const cassandraConnection = await createCassandraConnection({
+      keyspace: process.env.CASSANDRA_KEYSPACE,
+      contactPoints: process.env.CASSANDRA_CONTACT_POINTS.split(','),
+      replication: "{ 'class': 'SimpleStrategy', 'replication_factor' : 1 }",
+      username: process.env.CASSANDRA_USERNAME,
+      password: process.env.CASSANDRA_PASSWORD,
+    });
 
-    // app.use(circuit({
-    //   connection: cassandraConnection,
-    // }));
+    app.use(circuit({
+      connection: cassandraConnection,
+    }));
 
-    app.use(native());
-    // app.use(board());
+    app.use(board());
+
+    app.all('*', function(req, res) {
+      res.status(404).send('404. Invalid Route.');
+    });
 
     app.listen(process.env.PORT, function() {
       console.log(`Server Running on port ${process.env.PORT}`)

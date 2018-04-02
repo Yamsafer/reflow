@@ -1,16 +1,13 @@
 {
-  "name": "example-manager",
+  "name": "example-grid-manager",
   "version": "3.0.0-alpha.34",
   "private": true,
   "scripts": {
     "start": "cross-env REFLOW_DEVELOPMENT=1 DEBUG=selenium-standalone:* node lib/server.js"
   },
   "dependencies": {
-    "cors": "^2.8.4",
     "express": "^4.16.2",
-    "reflow-board": "3.0.0-alpha.34",
-    "reflow-circuit": "3.0.0-alpha.34",
-    "reflow-cassandra-connection": "3.0.0-alpha.34"
+    "reflow-native": "3.0.0-alpha.34",
   },
   "devDependencies": {
     "cross-env": "^5.1.1"

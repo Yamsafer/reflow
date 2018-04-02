@@ -8,6 +8,7 @@ module.exports = function(config) {
   router.get('/doctor', async function(req, res) {
     // "doctor:ios": "appium-doctor --ios",
     // "doctor:android": "appium-doctor --android",
+    res.status(501).send('501.');
   });
 
   router.get('/start', async function(req, res) {
@@ -26,6 +27,11 @@ module.exports = function(config) {
         message: err.message,
       });
     }
+  });
+
+  router.get('/status', async function(req, res) {
+    console.log('server:::', server);
+    res.status(200).send('hi');
   });
 
   router.get('/stop', async function(req, res) {
