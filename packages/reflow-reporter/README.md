@@ -1,3 +1,3 @@
-# Reflow|Reporter
+# Reflow|Grid
 
-Mocha reporter for reflow analytics
+Selenium Grid Express middleware

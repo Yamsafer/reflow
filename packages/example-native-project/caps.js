@@ -1,3 +1,7 @@
+const path = require('path');
+const ROOTPATH = process.cwd();
+const iosAppPath = path.resolve(ROOTPATH, './app/Yamsafer.ipa');
+
 const android5 = {
   browserName: '',
   'appium-version': '1.7',
@@ -9,65 +13,66 @@ const android5 = {
   app: 'app/yma.apk',
 };
 
-const path = require('path');
-const ROOTPATH = process.cwd();
-const iosAppPath = path.resolve(ROOTPATH, './app/Yamsafer.ipa');
+const iphoneBase = {
+  "appium-version": "1.7",
+  "platform": "iOS",
+  "automationName": "XCUITest",
+  "showIOSLog": true,
+  "autoAcceptAlerts": true,
+  "xcodeOrgId": "YUC5LW8F44",
+  "xcodeSigningId": "Yamsafer Inc",
+  "app": iosAppPath,
+}
 
-const iphone11 = {
-  browserName: '',
-  'appium-version': '1.7',
-  platformName: 'iOS',
-  platformVersion: '11.2',
-  deviceName: 'iPhone (11.2.6)', // iphone 9.3
-  app: iosAppPath,
-  // iosInstallPause: 8000,
-  // useCarthageSsl: true,
-  usePrebuiltWDA: true,
-  // xcodeConfigFile: 'app/.xcconfig',
-  showIOSLog: true,
+const iphone6 = Object.assign({}, iphoneBase, {
+  "browserName": "Iphone6 (11.1.1)",
+  "version": "11.1",
+  "deviceName": "Iphone6 (11.1.1)",
+  "udid": "6f0b5ad21cff5f3be9fa1a8b5c25ec1614bf1ffa",
+  "wdaLocalPort": 8101,
+})
 
-  // waitForQuiescence: false,
-  // updatedWDABundleId: 'com.yamsafer.drive',
-  updatedWDABundleId: 'com.yamsafer.DriverAgentRunner',
-  udid: 'e7297f0869902daebdddabfc4b696bd86cf27d45',
-  bundleId: 'com.yamsafer.yamsafer',
-  autoAcceptAlerts: true,
-  xcodeOrgId: "YUC5LW8F44",
-  xcodeSigningId: "Yamsafer Inc",
+const iphone11 = Object.assign({}, iphoneBase, {
+  "browserName": "iPhone (11.2.6)",
+  "version": "11.2",
+  "deviceName": "iPhone (11.2.6)",
+  "udid": "e7297f0869902daebdddabfc4b696bd86cf27d45",
+  "wdaLocalPort": 8100,
+});
 
-  // name: 'Yamsafer ios App',
-  // tags: ['some tag'],
+const localHub = {
+  host: 'localhost',
+  port: 3000,
 };
-const options = {
-  connection: {
-    ci: {
-      host: 'kepler.yamsafer.me',
-      port: 4723,
-    },
-    local: {
-      host: 'localhost',
-      port: 4444,
-      // port: 3000,
-    },
-  },
-  android: {
-    native: {
-      android5,
-    },
-  },
-  ios: {
-    native: {
-      iphone11,
-    },
-    simulator: {
 
-    },
-  },
+const remoteHub = {
+  host: 'automation.yamsafer.com',
+  port: 5555,
 };
 
 module.exports = {
-  connection: options.connection.local,
+  connection: localHub,
   devices: [
-    options.ios.native.iphone11,
+    iphone11,
+    iphone6,
   ],
 }
+
+  // "browserName": "iPhone 11.2.6",
+  // "appium-version": "1.7",
+  // "platform": "iOS",
+  // "automationName": "XCUITest",
+  // "version": "11.2",
+  // "deviceName": "iPhone 11.2.6",
+  // "udid": "e7297f0869902daebdddabfc4b696bd86cf27d45",
+  // "showIOSLog": true,
+  // // "usePrebuiltWDA": true,
+  // // "updatedWDABundleId": "com.yamsafer.DriverAgentRunner",
+  // // "updatedWDABundleId": "com.facebook.wda.integrationApp",
+  // // "bundleId": "com.yamsafer.yamsafer",
+  // "autoAcceptAlerts": true,
+  // // "xcodeOrgId": "P9E7GB692S",
+  // "xcodeOrgId": "YUC5LW8F44",
+  // // "xcodeSigningId": "iPhone Developer",
+  // "xcodeSigningId": "Yamsafer Inc",
+  // // "xcodeSigningId": "iPhone Developer: Yamsafer Inc (P9E7GB692S)",

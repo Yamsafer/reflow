@@ -1,5 +1,5 @@
 {
-  "name": "reflow-native",
+  "name": "reflow-grid",
   "version": "3.0.0-alpha.34",
   "description": "Reflow Appium Runner expressJS Middleware.",
   "author": "Ahmad Bamieh",
@@ -31,7 +31,6 @@
   },
   "scripts": {
     "start": "cross-env REFLOW_DEVELOPMENT=1 nodemon index.js",
-    "kill-dead": "pkill -f selenium-standalone",
     "test": "mocha",
     "test:watch": "npm run test -- --reporter min --watch",
     "coverage": "nyc npm run test && nyc report --reporter=html && open coverage/index.html",

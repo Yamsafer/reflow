@@ -84,8 +84,8 @@ exports.handler = function (config) {
     require(module)
   })
 
-  const caps = parseCaps(path.resolve(ROOTPATH, config.caps));
-
+  const caps = parseCaps(config.caps);
+  console.log('caps:', caps)
   const reflow = new Reflow(config, caps);
 
   reflow.files = _(config.files)

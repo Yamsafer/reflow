@@ -1,25 +1,28 @@
 {
   "capabilities": [
     {
-      "browserName": "iPhone 7 (iPhone9,3)",
+      "browserName": "iPhone (11.2.6)",
       "appium-version": "1.7",
       "platform": "iOS",
+      "automationName": "XCUITest",
       "version": "11.2",
       "deviceName": "iPhone (11.2.6)",
-      "maxInstances": 1
+      "maxInstances": 1,
+      "udid": "e7297f0869902daebdddabfc4b696bd86cf27d45"
     }
   ],
   "configuration": {
     "cleanUpCycle": 2000,
     "timeout": 30000,
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
-    "port": 5555,
+    "url": "http://127.0.0.1:3000/wd/hub",
+    "host": "localhost",
+    "port": 2723,
     "maxSession": 1,
     "role": "node",
-    "hubPort": "4444",
-    "hubHost": "127.0.0.1",
     "register": true,
     "registerCycle": 5000,
-    "hub": "http://localhost:4444"
+    "hubPort": 3000,
+    "hubHost": "127.0.0.1"
   }
 }

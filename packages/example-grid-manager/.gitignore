@@ -1,7 +1,0 @@
-package-lock.json
-node_modules
-cassandra-data/*
-.env
-.env.*
-!.env.example
-grid/*

@@ -22,6 +22,7 @@
     "find-up": "^2.1.0",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
+    "reflow-appium": "^3.0.0-alpha.34",
     "yargs": "^10.0.3"
   }
 }

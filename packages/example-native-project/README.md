@@ -11,16 +11,6 @@ $ docker-compose up
 
 VBoxManage list usbhost
 
-
-
-## iOS
-
-```
-$ brew install carthage libimobiledevice ios-deploy
-```
-
-
-
 https://antonyjepson.wordpress.com/2012/01/26/quickly-attaching-usb-devices-to-virtualbox-guests-using-vboxmanage/
 
 
@@ -36,5 +26,15 @@ VBoxManage usbfilter add 0 -target 78c1e13f-a2d9-49b2-9d20-d8255ce580ed -name "H
 perminant:
 
 VBoxManage usbfilter add 1 --target appium-test-machine --name HTC --vendorid 0x0bb4 --productid 0x0f25
+
+
+
+
+## iOS
+
+```
+$ brew install carthage libimobiledevice ios-deploy
+```
+
 
 

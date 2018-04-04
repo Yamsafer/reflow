@@ -19,6 +19,6 @@ module.exports = function(connection, capability) {
   const driver = wd.promiseChainRemote(connection);
 
   const client = new NativeClient(driver);
-  console.log('client::', client)
+
   return client.init({ capability }).then(_ => client);
 }

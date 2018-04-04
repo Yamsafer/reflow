@@ -153,6 +153,7 @@ class Reflow {
   }
 
   runFlow({matrix, flowDetails}) {
+
     this.devices.forEach(capability => {
       console.log(`Running "${flowDetails.title}" Flow on "${capability.deviceName}" (${flowDetails.totalCombinations} total combinations)`)
 

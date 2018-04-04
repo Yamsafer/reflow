@@ -29,11 +29,6 @@ module.exports = function(config) {
     }
   });
 
-  router.get('/status', async function(req, res) {
-    console.log('server:::', server);
-    res.status(200).send('hi');
-  });
-
   router.get('/stop', async function(req, res) {
     if(!server) {
       res.status(500).send('Appium server is not launched.');

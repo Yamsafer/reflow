@@ -1,11 +1,12 @@
 const express = require('express');
 const selenium = require('../selenium');
 
-module.exports = function(seleniumChild) {
+module.exports = function(opts) {
   const router = express.Router();
+  let seleniumChild;
   router.get('/install', async function(req, res) {
     try {
-      await selenium.install();
+      await selenium.install(opts);
       res.status(200).send('Install Complete!');
     } catch(err) {
       res.status(500).json({
@@ -15,7 +16,7 @@ module.exports = function(seleniumChild) {
     }
   })
 
-  router.get('/restart', async function(req, res) {
+  router.get('/start', async function(req, res) {
     try {
       if(seleniumChild) await seleniumChild.kill();
       seleniumChild = null;

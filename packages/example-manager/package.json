@@ -8,6 +8,7 @@
   "dependencies": {
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "reflow-grid": "3.0.0-alpha.34",
     "reflow-board": "3.0.0-alpha.34",
     "reflow-circuit": "3.0.0-alpha.34",
     "reflow-cassandra-connection": "3.0.0-alpha.34"

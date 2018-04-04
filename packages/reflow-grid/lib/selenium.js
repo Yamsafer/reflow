@@ -27,7 +27,7 @@ const DRIVERS = {
   // },
 };
 
-const installSelenium = function() {
+const installSelenium = function(opts={}) {
   let lastPercentage;
   return installSeleniumAsync({
     // check for more recent versions of selenium here:
@@ -35,7 +35,7 @@ const installSelenium = function() {
     version: SELENIUM_VERSION,
     baseURL: 'https://selenium-release.storage.googleapis.com',
     drivers: DRIVERS,
-    // proxy: 'http://localproxy.com', // see https://github.com/request/request#proxies
+    proxy: opts.proxy, // see https://github.com/request/request#proxies
     requestOpts: { // see https://github.com/request/request#requestoptions-callback
       timeout: 15000
     },
