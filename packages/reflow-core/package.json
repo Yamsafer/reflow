@@ -28,7 +28,7 @@
     "nyc": "^10.2.0"
   },
   "peerDependencies": {
-    "mocha": "^4",
+    "mocha": "^4.0.0-0 || ^5.0.0-0",
     "wd": "^1.6.1"
   },
   "dependencies": {

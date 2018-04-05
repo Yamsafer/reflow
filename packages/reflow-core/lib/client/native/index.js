@@ -3,8 +3,8 @@
 const wd = require("wd");
 
 const logging = require("./logging");
-const delay = require('./util/delay');
-const praseDir = require('../../util/parse-dir');
+// const delay = require('./util/delay');
+const praseDir = require('../../utils/parse-dir');
 const ElementCache = require('./element-cache');
 
 class NativeClient {
@@ -46,7 +46,7 @@ class NativeClient {
     console.info('Initializing Driver.')
     console.info(`Cap: ${this.capability.deviceName}.`);
     await this.driver.init(this.capability);
-    await delay(delayDuration);
+    await this.delay(delayDuration);
     try {
 
       if(this.capability.autoAcceptAlerts) {

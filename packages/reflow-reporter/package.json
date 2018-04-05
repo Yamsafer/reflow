@@ -18,7 +18,7 @@
     "test:watch": "npm run test -- --watch"
   },
   "peerDependencies": {
-    "mocha": "^4"
+    "mocha": "^4.0.0-0 || ^5.0.0-0"
   },
   "dependencies": {
     "lodash.defaults": "^4.2.0"
