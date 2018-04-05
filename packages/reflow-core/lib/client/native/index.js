@@ -28,7 +28,7 @@ class NativeClient {
   async init({capability, customActions, delayDuration = 500} = {}) {
     console.log('customActions:!!', customActions)
     Object.entries(customActions).forEach(([key, value]) => {
-      this[key] = value;
+      this[key] = value(this);
     })
 
     console.log('this:!!', this)
