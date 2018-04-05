@@ -10,6 +10,7 @@ const executeMatrix = function(matrix, config) {
     flowDetails,
     connection,
     capability,
+    customActions,
   } = config;
   const startTime = jobDetails.startTime;
   const numberOfThreads = jobDetails.numberOfThreads;
@@ -28,6 +29,7 @@ const executeMatrix = function(matrix, config) {
     flowDetails,
     connection,
     capability,
+    customActions,
   });
 
 

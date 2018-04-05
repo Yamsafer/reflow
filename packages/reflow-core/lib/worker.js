@@ -2,10 +2,9 @@ require('babel-register')();
 const MochaReflow = require('./mocha-reflow').default;
 const reflowProps = require('./client/base/flow-variables'); //Todo: move to client
 const decache = require('decache');
+const praseDir = require('./utils/parse-dir');
 
 const FlakeId = require('flakeid');
-
-const getClient = require('./client');
 
 const path = require('path');
 
@@ -31,7 +30,7 @@ const executeSuites = function(branch) {
   return executeSubTree(branch);
 }
 
-const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDetails, capability, connection}, done) {
+const executeTree = function({combination, customActions, mochaConfig, flowDetails, DAG, jobDetails, capability, connection}, done) {
 
   const {
     require: mochaRequiredFiles,
@@ -67,18 +66,25 @@ const executeTree = function({combination, mochaConfig, flowDetails, DAG, jobDet
 
   mochaReflowInstance = new MochaReflow(mochaReflowConfig);
 
+
   const suites = [].concat(combination.suites);
 
   suites.forEach(executeSuites);
+  console.log('customActions path', customActions)
 
-  getClient(connection, capability).then(client => {
+  const customActionsObj = praseDir(customActions);
+  console.log('customActionsObj', customActionsObj)
+
+
+  mochaReflowInstance.initClient({connection, capability, customActions: customActionsObj}).then(client => {
     global.client = client;
 
     mochaReflowInstance.run(failures => {
-      mochaReflowInstance.files.forEach(decache)
-      global.reflow.teardown()
-
-      setTimeout(() => done(failures), 1000)
+      mochaReflowInstance.files.forEach(decache);
+      global.reflow.teardown();
+      client.teardown().then(_ => {
+        setTimeout(() => done(failures), 1000)
+      });
     })
   })
 

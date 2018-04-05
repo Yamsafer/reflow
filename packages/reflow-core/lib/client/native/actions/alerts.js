@@ -5,27 +5,29 @@ const delay = require('../util/delay');
 // while(findElements("//*[@class='android.widget.Button'][1]"))
 //   //deny
 
-async function acceptAll() {
-  let alert = await this.driver.elementOrNull("xpath", "//XCUIElementTypeAlert");
-  while(alert) {
-    console.log('Found An Alert!');
-    await this.driver.execute('mobile: alert', { 'action': 'accept' });
-    await delay(300);
-    alert = await this.driver.elementOrNull("xpath", "//XCUIElementTypeAlert");
+
+module.exports = function({driver}) {
+  async function acceptAll() {
+    let alert = await driver.elementOrNull("xpath", "//XCUIElementTypeAlert");
+    while(alert) {
+      console.log('Found An Alert!');
+      await driver.execute('mobile: alert', { 'action': 'accept' });
+      await delay(300);
+      alert = await driver.elementOrNull("xpath", "//XCUIElementTypeAlert");
+    }
+    console.log('No More Alerts.')
+  };
+
+  function accept() {
+    return driver.execute('mobile: alert', {
+      'action': 'accept',
+      // 'buttonLabel': 'My Cool Alert Button',
+    });
   }
-  console.log('No More Alerts.')
-};
-
-function accept() {
-  return this.driver.execute('mobile: alert', {
-    'action': 'accept',
-    // 'buttonLabel': 'My Cool Alert Button',
-  });
-}
-
-module.exports = {
-  accept,
-  acceptAll,
+  return {
+    accept,
+    acceptAll,
+  }
 }
 // module.exports = function(driver) {
 //   if (driver.findElementByXPath("//XCUIElementTypeAlert[1]").isDisplayed()) {

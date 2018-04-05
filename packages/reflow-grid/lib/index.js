@@ -7,7 +7,6 @@ module.exports = function(opts) {
   // await selenium.install(opts);
   // const seleniumChild = await selenium.start();
   router.use('/selenium-hub', require('./routes/selenium-hub')(opts));
-
   router.use(require('./routes/proxy')({
     proxyServer,
   }));

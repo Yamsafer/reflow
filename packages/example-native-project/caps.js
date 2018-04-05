@@ -53,7 +53,7 @@ const remoteHub = {
 module.exports = {
   connection: localHub,
   devices: [
-    iphone11,
+    // iphone11,
     iphone6,
   ],
 }

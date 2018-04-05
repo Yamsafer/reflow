@@ -83,6 +83,9 @@ exports.handler = function (config) {
   config.mocha.require.forEach(module => {
     require(module)
   })
+  // const callerFilename = path.join(ROOTPATH, 'index.js');
+  // const customActions = require('../parse-dir')(config.extendActions, callerFilename);
+  config.customActions = path.join(ROOTPATH, config.extendActions, 'index.js');
 
   const caps = parseCaps(config.caps);
   console.log('caps:', caps)
@@ -92,7 +95,7 @@ exports.handler = function (config) {
                   .flatMap(lookupFiles(ROOTPATH, config))
                   .compact()
                   .value();
-
+  console.log('reflow.files::', reflow.files)
   try {
     reflow.gatherMatrices()
   } catch (err) {

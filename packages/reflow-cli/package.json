@@ -23,6 +23,7 @@
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
     "reflow-appium": "^3.0.0-alpha.35",
+    "require-directory": "^2.1.1",
     "yargs": "^10.0.3"
   }
 }

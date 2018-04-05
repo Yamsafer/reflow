@@ -6,7 +6,7 @@ const BaseClient = require('./base');
 // const BrowserClient = require('./browser');
 const NativeClient = require('./native');
 
-module.exports = function(connection, capability) {
+module.exports = function({connection, capability, customActions}) {
   if(!connection) return Promise.resolve({});
   // console.log('connection::', connection)
   wd.configureHttp({
@@ -20,5 +20,5 @@ module.exports = function(connection, capability) {
 
   const client = new NativeClient(driver);
 
-  return client.init({ capability }).then(_ => client);
+  return client.init({ capability, customActions }).then(_ => client);
 }

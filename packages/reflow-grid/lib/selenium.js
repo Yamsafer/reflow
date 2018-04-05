@@ -74,9 +74,3 @@ module.exports = {
   install: installSelenium,
   start: startSelenium,
 }
-
-
-
-// curl -o /Users/Bamieh/Bamieh/source/reflow/packages/reflow-native/node_modules/selenium-standalone/.selenium/geckodriver/0.20.0-x64-geckodriver https://github.com/mozilla/geckodriver/releases/download/v0.20.0/geckodriver-v0.20.0-macos.tar.gz
-
-

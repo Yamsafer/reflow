@@ -88,6 +88,7 @@ class Reflow {
   }
 
   gatherMatrices() {
+    console.log('Gathering Matrices.')
     this.files.forEach(filepath => {
       Object.assign(global, createReflowContext.call(this, filepath))
       require(filepath);

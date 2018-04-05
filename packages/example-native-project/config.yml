@@ -10,6 +10,7 @@ files:
 
 numberOfThreads: 12
 caps: ./caps.js
+extendActions: ./actions
 # numberOfThreads: 7
 mocha:
   # reporter: 'list'
