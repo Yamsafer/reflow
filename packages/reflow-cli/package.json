@@ -1,6 +1,6 @@
 {
   "name": "reflow-cli",
-  "version": "3.0.0-gamma.0",
+  "version": "3.0.0-gamma.1",
   "description": "Reflow Cli",
   "author": "Ahmad Bamieh",
   "license": "MIT",
@@ -16,13 +16,13 @@
   },
   "devDependencies": {
     "cross-env": "^4.0.0",
-    "reflow-core": "^3.0.0-gamma.0"
+    "reflow-core": "^3.0.0-gamma.1"
   },
   "dependencies": {
     "find-up": "^2.1.0",
     "js-yaml": "^3.10.0",
     "lodash": "^4.17.4",
-    "reflow-appium": "^3.0.0-gamma.0",
+    "reflow-appium": "^3.0.0-gamma.1",
     "require-directory": "^2.1.1",
     "yargs": "^10.0.3"
   }
