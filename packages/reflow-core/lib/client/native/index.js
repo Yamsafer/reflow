@@ -28,11 +28,16 @@ class NativeClient {
   async init({capability, customActions, delayDuration = 500} = {}) {
 
     this.capability = capability;
+    let actions = {};
     console.log('Parsing Custom Actions');
-    const actions = praseDir(customActions, {
-      visit: action => action.bind(this),
+    actions = praseDir(customActions, {
+      visit: action => action({
+        capability: this.capability,
+        driver: this.driver,
+        cache: this.cache,
+        actions,
+      }),
     });
-
     console.log('Setting custom Actions: ', Object.keys(actions));
 
     Object.entries(actions).forEach(([name, action]) => {
