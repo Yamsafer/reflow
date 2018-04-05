@@ -26,19 +26,23 @@ class NativeClient {
   }
 
   async init({capability, customActions, delayDuration = 500} = {}) {
-    console.log('customActions:!!', customActions)
 
-    const customActionsObj = praseDir(customActions, {
-      visit: action => action(this),
-    });
-
-    console.log('customActionsObj:!!', customActionsObj)
-    Object.entries(customActionsObj).forEach(([key, value]) => {
-      this[key] = value;
-    })
-
-    console.log('this:!!', this)
     this.capability = capability;
+    let actions = {};
+    console.log('Parsing Custom Actions');
+    actions = praseDir(customActions, {
+      visit: action => action({
+        capability: this.capability,
+        driver: this.driver,
+        cache: this.cache,
+        actions,
+      }),
+    });
+    console.log('Setting custom Actions: ', Object.keys(actions));
+
+    Object.entries(actions).forEach(([name, action]) => {
+      this[name] = action;
+    })
 
     console.info('Configuring Logger.')
     logging.configure(this.driver);
