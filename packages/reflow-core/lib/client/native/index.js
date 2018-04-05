@@ -4,7 +4,7 @@ const wd = require("wd");
 
 const logging = require("./logging");
 const delay = require('./util/delay');
-
+const praseDir = require('../../util/parse-dir');
 const ElementCache = require('./element-cache');
 
 class NativeClient {
@@ -27,8 +27,14 @@ class NativeClient {
 
   async init({capability, customActions, delayDuration = 500} = {}) {
     console.log('customActions:!!', customActions)
-    Object.entries(customActions).forEach(([key, value]) => {
-      this[key] = value(this);
+
+    const customActionsObj = praseDir(customActions, {
+      visit: action => action(this),
+    });
+
+    console.log('customActionsObj:!!', customActionsObj)
+    Object.entries(customActionsObj).forEach(([key, value]) => {
+      this[key] = value;
     })
 
     console.log('this:!!', this)

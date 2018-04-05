@@ -1,7 +1,4 @@
 const visitedFiles = [];
-const addHandler = function(file) {
-  console.log('Adding handler to: ', file);
-}
 
 const parseDir = function parseDir(callerFilename, opts) {
   opts = opts || {}
@@ -22,7 +19,6 @@ const parseDir = function parseDir(callerFilename, opts) {
       if (~visitedFiles.indexOf(joined)) return visited
       // keep track of visited files in visitedFiles
       visitedFiles.push(joined)
-      addHandler(visited)
     }
     return visited
   }

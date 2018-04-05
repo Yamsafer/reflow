@@ -76,7 +76,7 @@ const executeTree = function({combination, customActions, mochaConfig, flowDetai
   console.log('customActionsObj', customActionsObj)
 
 
-  mochaReflowInstance.initClient({connection, capability, customActions: customActionsObj}).then(client => {
+  mochaReflowInstance.initClient({connection, capability, customActions}).then(client => {
     global.client = client;
 
     mochaReflowInstance.run(failures => {
