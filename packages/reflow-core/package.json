@@ -1,6 +1,6 @@
 {
   "name": "reflow-core",
-  "version": "3.0.0-alpha.36",
+  "version": "3.0.0-alpha.37",
   "description": "Reflow Core",
   "author": "Ahmad Bamieh",
   "license": "MIT",
@@ -37,7 +37,7 @@
     "flakeid": "^0.1.0",
     "intercept-stdout": "^0.1.2",
     "lodash": "^4.17.4",
-    "reflow-reporter": "^3.0.0-alpha.36",
+    "reflow-reporter": "^3.0.0-alpha.37",
     "require-directory": "^2.1.1",
     "threads": "^0.8.1",
     "wd": "1.6.1",
