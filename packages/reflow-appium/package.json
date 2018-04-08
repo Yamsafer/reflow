@@ -9,10 +9,10 @@
     "start": "node lib/index.js"
   },
   "peerDependencies": {
-    "appium": "^1.7.2 || ^1.8.0-beta4",
+    "appium": "^1.7.2 || ^1.8.0-beta4"
   },
   "devDependencies": {
-    "appium": "^1.8.0-beta4",
+    "appium": "^1.8.0-beta4"
   },
   "dependencies": {
     "adbkit": "^2.11.0",
