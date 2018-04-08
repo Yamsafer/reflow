@@ -15,14 +15,13 @@
     "cleanUpCycle": 2000,
     "timeout": 30000,
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
-    "url": "http://127.0.0.1:3000/wd/hub",
-    "host": "localhost",
-    "port": 2723,
+    "url": "http://172.16.20.89:2723/wd/hub",
     "maxSession": 1,
     "role": "node",
     "register": true,
     "registerCycle": 5000,
-    "hubPort": 3000,
-    "hubHost": "127.0.0.1"
+    "hubPort": 5555,
+    "hubHost": "automation.yamsafer.com",
+    "hubProtocol": "https"
   }
 }

@@ -1,12 +1,12 @@
 {
   "name": "example-native-project",
-  "version": "3.0.0-alpha.15",
+  "version": "3.0.0-gamma.3",
   "private": true,
   "dependencies": {
     "chai": "^4.1.2",
     "mocha": "^5.0.0",
-    "reflow-cli": "^3.0.0-alpha.31",
-    "reflow-core": "^3.0.0-alpha.31",
+    "reflow-cli": "3.0.0-gamma.3",
+    "reflow-core": "3.0.0-gamma.3",
     "wd": "1.6.1",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27"

@@ -1,19 +1,18 @@
 {
   "name": "example-manager",
-  "version": "3.0.0-alpha.34",
+  "version": "3.0.0-gamma.3",
   "private": true,
-  "scripts": {
-    "start": "cross-env REFLOW_DEVELOPMENT=1 DEBUG=selenium-standalone:* node lib/server.js"
-  },
   "dependencies": {
-    "cors": "^2.8.4",
-    "express": "^4.16.2",
-    "reflow-grid": "3.0.0-alpha.34",
-    "reflow-board": "3.0.0-alpha.34",
-    "reflow-circuit": "3.0.0-alpha.34",
-    "reflow-cassandra-connection": "3.0.0-alpha.34"
+		"cors": "^2.8.4",
+		"cross-env": "^5.1.1",
+		"express": "^4.16.2",
+		"reflow-board": "3.0.0-gamma.3",
+		"reflow-cassandra-connection": "3.0.0-gamma.3",
+		"reflow-circuit": "3.0.0-gamma.3",
+		"reflow-grid": "3.0.0-gamma.3"
   },
-  "devDependencies": {
-    "cross-env": "^5.1.1"
+  "scripts": {
+    "start": "node lib/server.js"
   }
 }
+

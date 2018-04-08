@@ -12,7 +12,7 @@
     "url": "https://github.com/Bamieh/reflow"
   },
   "peerDependencies": {
-    "reflow-core": "^3.0.0-alpha.38"
+    "reflow-core": "^3.0.0-gamma.3"
   },
   "devDependencies": {
     "cross-env": "^4.0.0",
