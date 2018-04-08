@@ -1,7 +1,7 @@
 const express = require('express');
 const httpProxy = require('http-proxy');
 
-module.exports = function(opts) {
+module.exports = function(opts = {}) {
   const router = express.Router();
   const proxyServer = httpProxy.createProxyServer({});
   // await selenium.install(opts);
