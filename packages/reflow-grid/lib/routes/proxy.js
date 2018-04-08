@@ -1,12 +1,13 @@
 const express = require('express');
 const { URL } = require('url');
 
-module.exports = function({ proxyServer, target }) {
+module.exports = function({ proxyServer, proxyTarget }) {
   const router = express.Router();
   function proxyMiddleware(req, res, next) {
-    console.log('Proxying request: ', req.url);
+    const target = proxyTarget || 'http://localhost:4444';
+    console.log(`[Reflow Grid] Proxying request: ${req.url} -> ${target}`);
     return proxyServer.web(req, res, {
-      target: target || 'http://localhost:4444',
+      target,
     });
   }
 
