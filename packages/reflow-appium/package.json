@@ -8,9 +8,14 @@
   "scripts": {
     "start": "node lib/index.js"
   },
+  "peerDependencies": {
+    "appium": "^1.7.2 || ^1.8.0-beta4",
+  },
+  "devDependencies": {
+    "appium": "^1.8.0-beta4",
+  },
   "dependencies": {
     "adbkit": "^2.11.0",
-    "appium": "^1.7.2",
     "appium-doctor": "^1.4.3",
     "plist": "^3.0.0"
   }
