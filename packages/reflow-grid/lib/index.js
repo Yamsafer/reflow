@@ -9,6 +9,7 @@ module.exports = function(opts) {
   router.use('/selenium-hub', require('./routes/selenium-hub')(opts));
   router.use(require('./routes/proxy')({
     proxyServer,
+    target: opts.proxyTarget,
   }));
 
   return router;

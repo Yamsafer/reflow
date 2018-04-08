@@ -1,12 +1,12 @@
 const express = require('express');
 const { URL } = require('url');
 
-module.exports = function({ proxyServer }) {
+module.exports = function({ proxyServer, target }) {
   const router = express.Router();
   function proxyMiddleware(req, res, next) {
     console.log('Proxying request: ', req.url);
     return proxyServer.web(req, res, {
-      target: 'http://localhost:4444',
+      target: target || 'http://localhost:4444',
     });
   }
 
