@@ -8,7 +8,8 @@
     }
   },
   "packages": [
-    "packages/*"
+    "packages/*",
+    "examples/*",
   ],
   "npmClient": "npm",
   "version": "3.0.0-gamma.6"

@@ -1,17 +1,9 @@
 version: '2'
 
 services:
-  # Selenium hub
-  selenium_hub:
-    image: selenium/hub:3.7.1
-    ports:
-      - 4444:4444
-
   # Appium Docker Android
   appium_android_device:
     image: appium/appium
-    depends_on:
-      - selenium_hub
     privileged: true
     volumes:
       - /dev/bus/usb:/dev/bus/usb

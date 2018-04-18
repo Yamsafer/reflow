@@ -1,28 +1,28 @@
 {
   "capabilities": [
     {
-      "browserName": "Iphone6 (11.1.1)",
-      "version": "11.1",
-      "deviceName": "Iphone6 (11.1.1)",
-      "udid": "6f0b5ad21cff5f3be9fa1a8b5c25ec1614bf1ffa",
+      "browserName": "iPhone (11.2.6)",
       "appium-version": "1.7",
       "platform": "iOS",
       "automationName": "XCUITest",
-      "maxInstances": 1
+      "version": "11.2",
+      "deviceName": "iPhone (11.2.6)",
+      "maxInstances": 1,
+      "udid": "e7297f0869902daebdddabfc4b696bd86cf27d45"
     }
   ],
   "configuration": {
     "cleanUpCycle": 2000,
     "timeout": 30000,
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
-    "url": "http://127.0.0.1:3000/wd/hub",
-    "host": "localhost",
-    "port": 2724,
+    "url": "http://172.16.20.89:4724/wd/hub",
+    "host": "automation.yamsafer.com",
+    "port": 4724,
     "maxSession": 1,
     "role": "node",
     "register": true,
     "registerCycle": 5000,
-    "hubPort": 3000,
-    "hubHost": "127.0.0.1"
+    "hubPort": 4444,
+    "hubHost": "automation.yamsafer.com"
   }
 }

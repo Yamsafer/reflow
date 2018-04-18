@@ -15,15 +15,14 @@
     "cleanUpCycle": 2000,
     "timeout": 30000,
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
-    "url": "http://92accb39.ngrok.io/wd/hub",
-    "host": "92accb39.ngrok.io",
-    "port": 443,
+    "url": "http://172.16.20.89/wd/hub",
+    "host": "0b6f6077.ngrok.io",
+    "port": 80,
     "maxSession": 1,
     "role": "node",
     "register": true,
     "registerCycle": 5000,
-    "hubPort": 5555,
-    "hubHost": "automation.yamsafer.com",
-    "hubProtocol": "https"
+    "hubPort": 4444,
+    "hubHost": "automation.yamsafer.com"
   }
 }
