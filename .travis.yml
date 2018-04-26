@@ -4,6 +4,7 @@ services:
   - redis-server
 node_js:
   - '6'
+  - '10'
 # addons:
 #   code_climate:
 #     repo_token: 21d81180cc25da6e0bde0284a5d60ccf650d1978ab7fa47b428d48c8ca73455d
