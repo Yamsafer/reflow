@@ -11,5 +11,8 @@
     "lerna:install": "lerna add --scope=reflow-core require-directory",
     "lerna:test": "lerna run --scope reflow-core --scope reflow-analytics test",
     "lerna:report-coverage": "lerna run report-coverage"
+  },
+  "dependencies": {
+    "next": "^5.1.0"
   }
 }
