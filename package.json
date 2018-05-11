@@ -13,6 +13,6 @@
     "lerna:report-coverage": "lerna run report-coverage"
   },
   "dependencies": {
-    "next": "^5.1.0"
+    "next": "^6.0.1"
   }
 }
