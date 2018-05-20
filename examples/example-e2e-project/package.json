@@ -1,12 +1,12 @@
 {
   "name": "example-e2e-project",
-  "version": "3.0.0-alpha.15",
+  "version": "3.0.0-gamma.6",
   "private": true,
   "dependencies": {
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
-    "reflow-core": "^3.0.0-alpha.31",
-    "reflow-cli": "^3.0.0-alpha.31"
+    "reflow-core": "3.0.0-gamma.6",
+    "reflow-cli": "3.0.0-gamma.6"
   },
   "scripts": {
     "start": "cross-env REFLOW_DEVELOPMENT=1 reflow run --sourceBranch=DEV-XXXX --targetBranch=example-core"

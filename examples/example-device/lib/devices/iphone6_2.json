@@ -1,0 +1,28 @@
+{
+  "capabilities": [
+    {
+      "browserName": "iPhone (11.1.1)",
+      "appium-version": "1.7",
+      "platform": "iOS",
+      "automationName": "XCUITest",
+      "version": "11.1.1",
+      "deviceName": "iPhone (11.1.1)",
+      "maxInstances": 1,
+      "udid": "6f0b5ad21cff5f3be9fa1a8b5c25ec1614bf1ffa"
+    }
+  ],
+  "configuration": {
+    "cleanUpCycle": 2000,
+    "timeout": 30000,
+    "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
+    "url": "http://172.16.20.89:2725/wd/hub",
+    "host": "da8bdce7.ngrok.io",
+    "port": 80,
+    "maxSession": 1,
+    "role": "node",
+    "register": true,
+    "registerCycle": 5000,
+    "hubPort": 4444,
+    "hubHost": "automation.yamsafer.com"
+  }
+}

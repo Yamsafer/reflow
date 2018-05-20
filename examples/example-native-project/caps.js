@@ -1,6 +1,7 @@
 const path = require('path');
 const ROOTPATH = process.cwd();
-const iosAppPath = path.resolve(ROOTPATH, './app/Yamsafer.ipa');
+// const iosAppPath = path.resolve(ROOTPATH, './app/Yamsafer.ipa');
+const iosAppPath = '/Users/Bamieh/Bamieh/yamsafer-ios/build/Yamsafer.ipa';
 
 const android5 = {
   browserName: '',
@@ -25,11 +26,11 @@ const iphoneBase = {
 }
 
 const iphone6 = Object.assign({}, iphoneBase, {
-  "browserName": "Iphone6 (11.1.1)",
-  "version": "11.1",
-  "deviceName": "Iphone6 (11.1.1)",
+  "browserName": "iPhone (11.1.1)",
+  "version": "11.1.1",
+  "deviceName": "iPhone (11.1.1)",
   "udid": "6f0b5ad21cff5f3be9fa1a8b5c25ec1614bf1ffa",
-  "wdaLocalPort": 8101,
+  "wdaLocalPort": 8100,
 })
 
 const iphone11 = Object.assign({}, iphoneBase, {
@@ -37,7 +38,7 @@ const iphone11 = Object.assign({}, iphoneBase, {
   "version": "11.2",
   "deviceName": "iPhone (11.2.6)",
   "udid": "e7297f0869902daebdddabfc4b696bd86cf27d45",
-  "wdaLocalPort": 8100,
+  "wdaLocalPort": 8101,
 });
 
 const localHub = {
@@ -47,11 +48,11 @@ const localHub = {
 
 const remoteHub = {
   host: 'automation.yamsafer.com',
-  port: 5555,
+  port: 4444,
 };
 
 module.exports = {
-  connection: localHub,
+  connection: remoteHub,
   devices: [
     // iphone11,
     iphone6,

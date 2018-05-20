@@ -1,0 +1,16 @@
+{
+  "name": "example-device",
+  "version": "3.0.0-gamma.6",
+  "private": true,
+  "dependencies": {
+    "appium": "^1.7.2",
+    "reflow-appium": "3.0.0-gamma.6"
+  },
+  "scripts": {
+    "launch:node-1": "node lib/node-1.js",
+    "launch:node-2": "node lib/node-2.js",
+    "launch:node-3": "node lib/node-3.js",
+    "devices": "node lib/list-devices.js"
+  }
+}
+

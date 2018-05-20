@@ -1,4 +1,5 @@
 {
+  "version": "3.0.0-gamma.6",
   "lerna": "2.4.0",
   "commands": {
     "publish": {
@@ -9,8 +10,7 @@
   },
   "packages": [
     "packages/*",
-    "examples/*",
+    "examples/*"
   ],
-  "npmClient": "npm",
-  "version": "3.0.0-gamma.6"
+  "npmClient": "npm"
 }
