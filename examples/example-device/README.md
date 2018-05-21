@@ -6,10 +6,10 @@
 
 ```
 $ npm install
-$ brew uninstall ios-webkit-debug-proxy && brew install ios-webkit-debug-proxy
-$ brew uninstall libimobiledevice && brew install --HEAD libimobiledevice
+$ brew install ios-webkit-debug-proxy
 $ brew install usbmuxd
 $ brew install carthage
+$ brew cask install android-platform-tools
 ```
 
 ### Make sure you can run (without errors):
