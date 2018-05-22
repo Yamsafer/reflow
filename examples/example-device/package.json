@@ -10,6 +10,7 @@
     "launch:node-1": "node lib/node-1.js",
     "launch:node-2": "node lib/node-2.js",
     "launch:node-3": "node lib/node-3.js",
+    "launch:node-4": "node lib/node-4.js",
     "devices": "node lib/list-devices.js"
   }
 }

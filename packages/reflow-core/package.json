@@ -40,7 +40,7 @@
     "reflow-reporter": "^3.0.0-gamma.6",
     "require-directory": "^2.1.1",
     "threads": "^0.8.1",
-    "wd": "1.6.1",
+    "wd": "1.7.0",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27"
   },

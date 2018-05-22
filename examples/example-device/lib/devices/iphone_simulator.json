@@ -7,17 +7,16 @@
       "automationName": "XCUITest",
       "platformVersion": "11.3",
       "version": "11.3",
-      "deviceName": "iPhone (11.3.1)",
-      "maxInstances": 1,
-      "udid": "e7297f0869902daebdddabfc4b696bd86cf27d45"
+      "deviceName": "iPhone Simulator",
+      "maxInstances": 1
     }
   ],
   "configuration": {
     "cleanUpCycle": 2000,
     "timeout": 30000,
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
-    "url": "http://172.16.20.89:2724/wd/hub",
-    "host": "20c914d9.ngrok.io",
+    "url": "http://172.16.20.89:2726/wd/hub",
+    "host": "123e1e9c.ngrok.io",
     "port": 80,
     "maxSession": 1,
     "role": "node",
