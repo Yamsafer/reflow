@@ -10,6 +10,7 @@ $ brew install ios-webkit-debug-proxy
 $ brew install usbmuxd
 $ brew install carthage
 $ brew cask install android-platform-tools
+$ npm install -g ios-deploy
 ```
 
 ### Make sure you can run (without errors):

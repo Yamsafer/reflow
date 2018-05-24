@@ -5,8 +5,8 @@
       "appium-version": "1.7",
       "platform": "iOS",
       "automationName": "XCUITest",
-      "platformVersion": "11.3",
-      "version": "11.3",
+      "platformVersion": "11.4",
+      "version": "11.4",
       "deviceName": "iPhone Simulator",
       "maxInstances": 1
     }
@@ -16,7 +16,7 @@
     "timeout": 30000,
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
     "url": "http://172.16.20.89:2726/wd/hub",
-    "host": "123e1e9c.ngrok.io",
+    "host": "c6297782.ngrok.io",
     "port": 80,
     "maxSession": 1,
     "role": "node",
