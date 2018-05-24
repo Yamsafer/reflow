@@ -27,3 +27,10 @@ platformVersion: '10.0'
 automationName: 'XCUITest'
 realDeviceLogger: <path/to/deviceconsole> (requires you to run make after pulling down deviceconsole repo)
 ```
+
+
+
+## WebDriver Agent
+
+https://github.com/appium/appium-xcuitest-driver/blob/master/docs/real-device-config.md
+
