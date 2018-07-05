@@ -20,7 +20,7 @@ module.exports = function(opts) {
     try {
       if(seleniumChild) await seleniumChild.kill();
       seleniumChild = null;
-      seleniumChild = await selenium.start();
+      seleniumChild = await selenium.start(opts);
       res.status(200).send('Service Started!');
     } catch(err) {
       res.status(500).json({

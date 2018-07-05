@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "outDir": "../_tests",
+    "baseUrl": "..",
+    "paths": {
+      "@src/*": ["src/*"],
+      "@fixture/*": ["test/fixture/*"]
+    }
+  },
+  "include": [
+    "../src/*",
+    "../typings/*",
+    "./typings/*",
+    "**/*.ts"
+  ]
+}

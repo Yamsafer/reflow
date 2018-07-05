@@ -8,6 +8,9 @@
       "platformVersion": "11.4",
       "version": "11.4",
       "deviceName": "iPhone Simulator",
+      "timeout": 30000,
+      "browserTimeout": 30000,
+      "newSessionWaitTimeout": 30000,
       "maxInstances": 1
     }
   ],
@@ -15,8 +18,8 @@
     "cleanUpCycle": 2000,
     "timeout": 30000,
     "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
-    "url": "http://172.16.20.89:2726/wd/hub",
-    "host": "c6297782.ngrok.io",
+    "url": "http://172.16.20.89:2766/wd/hub",
+    "host": "b94238ba.ngrok.io",
     "port": 80,
     "maxSession": 1,
     "role": "node",

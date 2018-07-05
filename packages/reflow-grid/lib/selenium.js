@@ -59,14 +59,15 @@ const installSelenium = function(opts={}) {
   });
 }
 
-const startSelenium = function() {
+const startSelenium = function(opts = {}) {
+  const seleniumArgs = opts.seleniumArgs || [];
   return startSeleniumAsync({
     version: SELENIUM_VERSION,
     drivers: DRIVERS,
     spawnOptions: {
       stdio: 'inherit'
     },
-    seleniumArgs: ["-role", "hub"],
+    seleniumArgs: ["-role", "hub", ...seleniumArgs],
   });
 }
 

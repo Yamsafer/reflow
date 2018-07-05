@@ -8,7 +8,7 @@ const nodeconfig = require.resolve(path.join(__dirname, './devices/iphone_simula
     await appiumInstance.connect({
       throwInsteadOfExit: true,
       loglevel: 'debug',
-      port: '2726',
+      port: '2766',
       host: "localhost",
       nodeconfig,
     });
