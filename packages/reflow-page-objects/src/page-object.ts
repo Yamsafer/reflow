@@ -20,20 +20,22 @@ interface PageObject {
   section(id: string) : PageObject
 }
 
-const Just = (arr: Array<any> | undefined) : Array<any> => arr || [];
+const Just = (arr: Array<any> | undefined) : Array<any> => arr || []
 
-const assignIdAsKey = (acc: object, item: {id: string}) => Object.assign(acc, {[item.id]: item});
+const assignIdAsKey = (acc: object, item: {id: string}) => Object.assign(acc, {[item.id]: item})
 
 export
 class PageObject implements PageObject {
   id: string
   raw: PageObjectDescriptor
   constructor(rawPageObject: PageObjectDescriptor) {
-    this.raw = rawPageObject;
+    this.raw = rawPageObject
     this.id = rawPageObject.id
+
     this.sections = Just(rawPageObject.sections)
       .map(createPageObject)
-      .reduce(assignIdAsKey, {});
+      .reduce(assignIdAsKey, {})
+
     this.elements = Just(rawPageObject.elements).reduce(assignIdAsKey, {})
   }
   section(id: string) {
