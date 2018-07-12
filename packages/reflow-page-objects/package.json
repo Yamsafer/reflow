@@ -1,11 +1,11 @@
 {
   "name": "reflow-page-objects",
-  "version": "3.0.0-gamma.11",
+  "version": "3.0.0-gamma.12",
   "description": "Reflow Page Objects",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "prepare": "npm clean && npm build",
+    "prepare": "npm run clean && npm run build",
     "test": "cross-env TS_NODE_PROJECT=./test/tsconfig.json mocha",
     "test:coverage": "nyc npm run test",
     "test:watch": "cross-env TS_NODE_PROJECT=./test/tsconfig.json mocha --watch --reporter=nyan --growl",
