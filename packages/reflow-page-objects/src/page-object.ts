@@ -24,6 +24,15 @@ const Just = (arr: Array<any> | undefined) : Array<any> => arr || []
 
 const assignIdAsKey = (acc: object, item: {id: string}) => Object.assign(acc, {[item.id]: item})
 
+const pageObjectHandlers = {
+  get: function(target:any, prop:string, receiver: any) {
+    const element = target.element(prop);
+    if (element) return element;
+    return Reflect.get(target, prop, receiver);
+  }
+};
+
+
 export
 class PageObject implements PageObject {
   id: string
@@ -37,6 +46,11 @@ class PageObject implements PageObject {
       .reduce(assignIdAsKey, {})
 
     this.elements = Just(rawPageObject.elements).reduce(assignIdAsKey, {})
+
+    return new Proxy(this, pageObjectHandlers);
+    // Object.keys(this.elements).forEach(elementId => {
+    //   this[elementId] = this.element(elementId);
+    // })
   }
   section(id: string) {
     return this.sections[id]

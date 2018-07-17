@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "strictNullChecks": true,
-    "declaration": true,
+    "declaration": false,
     "noImplicitAny": true,
     "noEmitOnError": true,
     "noUnusedLocals": true,
+    "allowJs": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "ES5",

@@ -28,4 +28,7 @@ describe("Page Object", function () {
 
     expect(titleElement).to.deep.equal(titleElementFixture)
   })
+  it("appends element ids to pageObject instance", function() {
+
+  })
 })
