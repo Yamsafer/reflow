@@ -1,4 +1,5 @@
 import {Element} from './elements'
+import {Command} from './commands'
 import {SelectorType} from './selector-types'
 
 export
@@ -8,29 +9,39 @@ interface PageObjectDescriptor {
   selectorType?: SelectorType
   sections?: PageObjectDescriptor[]
   elements?: Element[]
+  commands?: Command[]
 }
 
 export
 interface PageObject {
   id: string
-  elements: {[id: string]: Element}
   sections: {[id: string]: PageObject}
+  elements: {[id: string]: Element}
+  commands: {[id: string]: Command}
   raw: PageObjectDescriptor
   element(id: string) : Element
   section(id: string) : PageObject
+  command(id: string, ...args: any[]) : Promise<any>
 }
 
 const Just = (arr: Array<any> | undefined) : Array<any> => arr || []
 
 const assignIdAsKey = (acc: object, item: {id: string}) => Object.assign(acc, {[item.id]: item})
 
-const pageObjectHandlers = {
-  get: function(target:any, prop:string, receiver: any) {
-    const element = target.element(prop);
-    return element || Reflect.get(target, prop, receiver);
+// const pageObjectHandlers = {
+//   get: function(target:any, prop:string, receiver: any) {
+//     const element = target.element(prop);
+//     return element || Reflect.get(target, prop, receiver);
+//   }
+// };
+const bindContext = function(context: PageObject) {
+  return function(command: Command) {
+    return Object.assign({}, {
+      ...command,
+      command: (...args: any[]) => Promise.resolve(command.command.apply(context, args))
+    });
   }
-};
-
+}
 
 export
 class PageObject implements PageObject {
@@ -45,11 +56,16 @@ class PageObject implements PageObject {
       .reduce(assignIdAsKey, {})
 
     this.elements = Just(rawPageObject.elements).reduce(assignIdAsKey, {})
+    this.commands = Just(rawPageObject.commands).map(bindContext(this)).reduce(assignIdAsKey, {})
 
-    return new Proxy(this, pageObjectHandlers);
+    // return new Proxy(this, pageObjectHandlers);
     // Object.keys(this.elements).forEach(elementId => {
     //   this[elementId] = this.element(elementId);
     // })
+  }
+  command(id: string, ...args: any[]) {
+    return this.commands[id].command(...args)
+    // return this.commands[id].command
   }
   section(id: string) {
     return this.sections[id]

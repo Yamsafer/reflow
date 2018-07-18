@@ -3,6 +3,17 @@ import {PageObjectDescriptor} from '@src/page-object'
 import {SelectorType} from '@src/selector-types'
 
 export
+const closeGalleryFixture = {
+  id: "closeGallery",
+  command(...args: any[]) {
+    return {
+      this: this,
+      args: args,
+    }
+  }
+}
+
+export
 const titleElementFixture:Element = {
   id: "title",
   selector: "#title"
@@ -31,6 +42,9 @@ const pageObjectFixture:PageObjectDescriptor = {
   id: "hotel page",
   sections: [
     gallerySectionFixture,
+  ],
+  commands: [
+    closeGalleryFixture,
   ],
   elements: [
     titleElementFixture
