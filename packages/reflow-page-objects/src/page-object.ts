@@ -27,8 +27,7 @@ const assignIdAsKey = (acc: object, item: {id: string}) => Object.assign(acc, {[
 const pageObjectHandlers = {
   get: function(target:any, prop:string, receiver: any) {
     const element = target.element(prop);
-    if (element) return element;
-    return Reflect.get(target, prop, receiver);
+    return element || Reflect.get(target, prop, receiver);
   }
 };
 
