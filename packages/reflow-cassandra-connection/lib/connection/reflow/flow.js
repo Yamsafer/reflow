@@ -58,11 +58,14 @@ module.exports = models => ({
 
     return new Promise((resolve, reject) => {
       return models.instance.flowsByJobId.execute_query(
-        customQuery, [jobID],(err, result) => (err)? reject(err) : resolve(result.rows))
-      .then(flows => {
-        console.log('flows::', flows)
-        return flows.map(flowToNode);
-      });
+        customQuery,
+        [jobID],
+        (err, result) => (err)? reject(err) : resolve(result.rows),
+      )
+    })
+    .then(flows => {
+      console.log('flows::', flows)
+      return flows.map(flowToNode);
     });
   },
 })
