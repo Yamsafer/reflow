@@ -56,32 +56,13 @@ module.exports = models => ({
 
     const flowToNode = flow => ({ node: flowNode(flow) });
 
-    return new Promise((resolve, reject) =>
-      models.instance.flowsByJobId.execute_query(customQuery, [jobID],
-        (err, result) => (err)? reject(err) : resolve(result.rows)
-      )).then(flows => {
+    return new Promise((resolve, reject) => {
+      return models.instance.flowsByJobId.execute_query(
+        customQuery, [jobID],(err, result) => (err)? reject(err) : resolve(result.rows))
+      .then(flows => {
         console.log('flows::', flows)
         return flows.map(flowToNode);
       });
-  );
-    return models.instance.flowsByJobId.findAsync({
-        job_id: models.datatypes.Long.fromString(jobID),
-      }, {
-        select: [
-          'flow_id',
-          'flow_title',
-          'SUM(combination_successes) as successes',
-          'SUM(combination_skipped) as skipped',
-          'SUM(combination_failures) as failures',
-          'SUM(combiantion_total) as total',
-          'total_number_of_flow_combinations',
-          'COUNT(flow_id) as current_number_of_flow_combinations',
-        ]
-      }).then(flows => {
-        console.log('flows::', flows)
-        return flows.map(flow => ({
-          node: flowNode(flow),
-        }));
-      });
+    });
   },
 })
