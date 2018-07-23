@@ -1,18 +1,18 @@
 {
   "name": "example-manager",
-  "version": "3.0.0-gamma.6",
+  "version": "3.0.0-gamma.14",
   "private": true,
   "dependencies": {
     "cors": "^2.8.4",
     "cross-env": "^5.1.1",
+    "dotenv": "^6.0.0",
     "express": "^4.16.2",
-    "reflow-board": "3.0.0-gamma.6",
-    "reflow-cassandra-connection": "3.0.0-gamma.6",
-    "reflow-circuit": "3.0.0-gamma.6",
-    "reflow-grid": "3.0.0-gamma.6"
+    "reflow-board": "3.0.0-gamma.14",
+    "reflow-cassandra-connection": "3.0.0-gamma.14",
+    "reflow-circuit": "3.0.0-gamma.14",
+    "reflow-grid": "3.0.0-gamma.14"
   },
   "scripts": {
     "start": "node lib/server.js"
   }
 }
-

@@ -19,9 +19,9 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-// const uri = process.env.REACT_APP_REFLOW_DEVELOPMENT? 'http://localhost:3000/graphql': '/graphql';
 
-const uri = 'https://automation.yamsafer.com:5555/graphql';
+const uri = process.env.REACT_APP_REFLOW_DEVELOPMENT?
+  'http://localhost:3000/graphql': 'https://automation.yamsafer.com:5555/graphql';
 
 const client = new ApolloClient({
   link: createHttpLink({
