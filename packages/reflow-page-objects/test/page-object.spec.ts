@@ -21,7 +21,7 @@ describe("Page Object", function () {
     pageObject = createPageObject(pageObjectFixture)
   })
 
-  describe("sections", function() {
+  describe("Section Method", function() {
     it("returns section by id", function() {
       const gallerySection:PageObject = pageObject.section("gallery");
       const galleryPageObject:PageObject = createPageObject(gallerySectionFixture);
@@ -30,14 +30,14 @@ describe("Page Object", function () {
     })
   })
 
-  describe("elements", function() {
+  describe("Element Method", function() {
     it("returns element by id", function() {
       const titleElement = pageObject.element("title");
       expect(titleElement).to.deep.equal(titleElementFixture)
     })
   })
 
-  describe("commands", function() {
+  describe("Command Method", function() {
     let closeGallery: Command;
     let result: {this: PageObject, args: any[]};
     const args = [1, 2];
