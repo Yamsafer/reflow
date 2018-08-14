@@ -1,7 +1,7 @@
 {
   "author": "Ahmad Bamieh",
   "devDependencies": {
-    "lerna": "3.0.0"
+    "lerna": "3.0.4"
   },
   "scripts": {
     "lerna:publish": "lerna publish",
