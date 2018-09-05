@@ -6,8 +6,29 @@ const logging = require("./logging");
 // const delay = require('./util/delay');
 const praseDir = require('../../utils/parse-dir');
 const ElementCache = require('./element-cache');
+const baseClient = require('../base');
 
-class NativeClient {
+const buildActions = (customActionsPath) => {
+  console.log('Setting actions..');
+  const reflowActions = {};
+  console.log('Parsing Custom Actions..');
+  const customActions = praseDir(customActionsPath, {
+    visit: action => action({
+      driver: this.driver,
+      cache: this.cache,
+      actions,
+    }),
+  });
+  console.log('Setting custom Actions: ', Object.keys(actions));
+  return Object.assign({}, reflowActions, customActions);
+}
+const browserClient = (driver) => ({
+  baseClient(driver),
+  actions(),
+})
+
+
+class Base {
   constructor(driver) {
     console.log('Creating Appium Instance.');
 
@@ -21,7 +42,6 @@ class NativeClient {
     //   cache: this.cache,
     // });
 
-    console.log('Binding Custom Actions.');
     console.log('Done.');
   }
 
@@ -76,4 +96,7 @@ class NativeClient {
   }
 }
 
-module.exports = NativeClient;
+
+const createClient = () => {}
+
+module.exports = createClient

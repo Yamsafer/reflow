@@ -24,9 +24,10 @@ interface PageObject {
   command(id: string, ...args: any[]) : Promise<any>
 }
 
-const Just = (arr: Array<any> | undefined) : Array<any> => arr || []
 
-const assignIdAsKey = (acc: object, item: {id: string}) => Object.assign(acc, {[item.id]: item})
+const Just = (arr: any[] | undefined): any[] => Array.isArray(arr)? arr : [];
+
+const assignIdAsKey = (acc: object, item: {id: string}): object => Object.assign(acc, {[item.id]: item})
 
 // const pageObjectHandlers = {
 //   get: function(target:any, prop:string, receiver: any) {

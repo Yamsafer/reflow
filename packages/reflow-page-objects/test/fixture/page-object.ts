@@ -1,6 +1,6 @@
 import {Element} from '@src/elements'
 import {PageObjectDescriptor} from '@src/page-object'
-import {SelectorType} from '@src/selector-types'
+// import {SelectorType} from '@src/selector-types'
 
 export
 const closeGalleryFixture = {
@@ -20,7 +20,7 @@ const titleElementFixture:Element = {
 }
 
 export
-const gallerySectionFixture:PageObjectDescriptor = {
+const gallerySectionFixture: PageObjectDescriptor = {
   id: "gallery",
   sections: [{
     id: "navigation",
@@ -33,12 +33,11 @@ const gallerySectionFixture:PageObjectDescriptor = {
   elements: [{
     id: "closeButton",
     selector: "#gallery",
-    selectorType: SelectorType.xPath
   }]
 }
 
 export
-const pageObjectFixture:PageObjectDescriptor = {
+const pageObjectFixture: PageObjectDescriptor = {
   id: "hotel page",
   sections: [
     gallerySectionFixture,

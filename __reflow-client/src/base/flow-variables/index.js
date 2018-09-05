@@ -31,9 +31,9 @@ const flowUpdate = function(name, updater, defaultValue) {
   logger.debug(flowObjects[name])
 }
 
-const flowGetAll = function () {
-  return flowObjects;
-}
+const flowGetAll = () => flowObjects;
+
+
 const flowTeardown = function() {
   logger.silly('Clearing flow variables.')
   Object.keys(flowObjects).forEach(key => {

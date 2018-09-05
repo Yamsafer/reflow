@@ -38,6 +38,7 @@
     "intercept-stdout": "^0.1.2",
     "lodash": "^4.17.4",
     "reflow-reporter": "^3.0.0-gamma.18",
+    "reflow-client": "^3.0.0-gamma.18",
     "require-directory": "^2.1.1",
     "threads": "^0.8.1",
     "wd": "1.7.0",

@@ -11,7 +11,8 @@
           "distribution",
           "node_modules",
           ".tmp",
-          ".git"
+          ".git",
+          "packages/reflow-board/build"
       ],
       "path": "."
     }

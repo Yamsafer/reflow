@@ -2,10 +2,10 @@
 
 const wd = require("wd");
 
-const BaseClient = require('./base');
-// const BrowserClient = require('./browser');
-const NativeClient = require('./native');
-
+const chooseClient = (capability) => {
+  if(capability.browserName) return require('./browser');
+  if(/ios|android/i.test(capability.platform)) return require('./native');
+}
 module.exports = function({connection, capability, customActions}) {
   if(!connection) return Promise.resolve({});
   // console.log('connection::', connection)
@@ -18,7 +18,7 @@ module.exports = function({connection, capability, customActions}) {
   });
   const driver = wd.promiseChainRemote(connection);
 
-  const client = new NativeClient(driver);
+  const client = chooseClient(capability)(driver)
 
   return client.init({ capability, customActions }).then(_ => client);
 }
