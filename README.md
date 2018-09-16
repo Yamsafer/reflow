@@ -31,7 +31,7 @@ $ npm run lerna:bootstrap
 
 ### Components
 
-Reflow is made to work at scale. Each individual component of the framework is desgigned to work in a distributed environment.
+Reflow is made to work at scale. Each individual component of the framework is designed to work in a distributed environment and scale individually.
 
 - reflow|core: a wrapper on top of mocha, connects to the client, provides test flows, and manages multi-flows to run across devices or in multi-threads.
 - reflow|cli: the command line interface to run the e2e project.
