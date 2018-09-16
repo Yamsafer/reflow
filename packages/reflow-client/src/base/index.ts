@@ -33,7 +33,7 @@ class Base {
     await this.driver.init();
     this.actions = await createActions(this, this.config.actions);
     this.pageObjects = createPageObjects(pageObjectGlob);
-    this.logger = createWinstonInstance(this.config.logger),
+    this.logger = createWinstonInstance(this.config.logger);
   }
 
   protected teardown() {
