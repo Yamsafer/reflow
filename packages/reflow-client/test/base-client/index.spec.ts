@@ -4,5 +4,4 @@ describe("Base Client", function () {
   before(function() {
 
   })
-  require('./page-objects');
 })

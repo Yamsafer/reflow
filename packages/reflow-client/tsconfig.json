@@ -2,6 +2,7 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "declaration": true,
+    "sourceMap": true,
     "noImplicitAny": true,
     "noEmitOnError": true,
     "noUnusedLocals": true,
@@ -10,16 +11,16 @@
     "moduleResolution": "node",
     "target": "ES5",
     "outDir": "./lib",
-    "typeRoots" : ["node_modules/@types", "typings"],
+    "baseUrl": ".",
+    "rootDir": "./src",
     "lib": [
       "es6",
       "es2015",
       "es2017.object"
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@src/*": ["src/*"]
-    }
+    ]
   },
-  "include": ["typings/*", "src/*"]
+  "include": [
+    "typings/*",
+    "src/**/*"
+  ]
 }

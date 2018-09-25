@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": false,
+    "allowJs": false,
+    "declaration": false,
+    "rootDir": ".",
+    "target": "ES6",
+    "outDir": "./_tests"
+  },
+  "include": [
+    "typings/*",
+    "test/typings/*",
+    "src/**/*",
+    "test/**/*"
+  ]
+}

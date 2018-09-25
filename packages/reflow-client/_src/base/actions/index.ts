@@ -1,4 +1,4 @@
-const parseActions = (actionPath, client) => {
+const parseActions = (actionPath: string, client) => {
   const customActions = praseDir(actionPath, {
     visit: action => action(client),
   });

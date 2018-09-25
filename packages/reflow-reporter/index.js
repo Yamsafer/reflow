@@ -159,19 +159,7 @@ const ReflowReporter = function(runner, options = {}) {
 
 
   let metadataContent = [];
-  global.trackRequest = function(request) {
-    // const postData = {
-    //   operationName: "trackRequest",
-    //   query: "mutation trackRequest($request: RequestEventInput!) {\n  trackRequest(input: $request) {\n    id\n  }\n}\n",
-    //   variables: {
-    //     request: Object.assign({}, request, {
-    //       jobID: jobDetails.id,
-    //     }),
-    //   },
-    // };
 
-    // sendRequest('request track', postData)
-  }
   global.metadata = function(message, meta) {
     metadataContent.push({
       message: JSON.stringify(message),

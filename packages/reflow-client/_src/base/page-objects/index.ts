@@ -1,8 +1,5 @@
 import { createPageObject } from 'reflow-page-objects'
 import * as glob from 'glob'
-import path from 'path';
-
-
 
 const resolveRawPageObjects = (pageObjectPath: string) => {
   try {
@@ -20,12 +17,12 @@ const createPageObjects = (pageObjectGlob: string) => {
     .map(resolveRawPageObjects)
     .filter(Boolean)
     .map(createPageObject)
-    .reduce((acc, pageObject) => ({...acc, {[pageObject.id]: pageObject}, }), {});
+    .reduce((acc, pageObject) => Object.assign(acc, {[pageObject.id]: pageObject}), {});
 }
 
 export
 const pageObjectMixin = {
-  initPageObject,
+  createPageObjects,
   page(pageName: string) {
     return this.pageObjects[pageName];
   }
