@@ -1,3 +1,0 @@
-describe("base client", function() {
-
-})

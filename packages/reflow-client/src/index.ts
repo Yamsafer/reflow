@@ -2,9 +2,9 @@ import * as webdriverio from 'webdriverio';
 
 export
 interface ClientConfig {
-  remoteOptions?: webdriverio.RemoteOptions
+  // remoteOptions?: webdriverio.RemoteOptions
   // connection: any,
-  // capabilities: webdriverio.RemoteOptions,
+  capabilities: webdriverio.RemoteOptions,
   // config: any,
   // customActions: any,
 }
