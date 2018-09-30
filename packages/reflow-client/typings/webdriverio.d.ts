@@ -1,6 +1,6 @@
 declare module "webdriverio" {
   export
-  function remote(params?: RemoteOptions, remoteModifier?: any): any;
+  function remote(params: RemoteOptions, remoteModifier?: any): any;
 
   export
   interface DesiredCapabilities {
@@ -8,7 +8,8 @@ declare module "webdriverio" {
 
   export
   interface RemoteOptions {
-    desiredCapabilities: DesiredCapabilities,
+    // desiredCapabilities: DesiredCapabilities[],
+    capabilities: DesiredCapabilities,
     logLevel?: any,
     logOutput?: any,
     protocol?: any,

@@ -6,7 +6,13 @@
     "declaration": false,
     "rootDir": ".",
     "target": "ES6",
-    "outDir": "./_tests"
+    "outDir": "./_tests",
+    "moduleResolution": "node",
+    "lib": [
+      "ES6",
+      "ES2015",
+      "ES2017.object"
+    ]
   },
   "include": [
     "typings/*",
