@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="#">
-    <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/master/reflow.png" width="230" height="80" />
-  </a>
+  <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/master/reflow.png" width="230" height="80" />
 </p>
 
 <p align="center">
@@ -28,6 +26,14 @@ The Main testing tool `reflow|core` is built on top of [Mocha](https://github.co
 $ npm install
 $ npm run lerna:bootstrap
 ```
+
+### Reflow Architecture
+
+<p align="center">
+  <a href="#reflow-architecture">
+    <img alt="reflow architecture" src="https://github.com/Bamieh/reflow/raw/master/reflow_arch.png" />
+  </a>
+</p>
 
 ### Components
 

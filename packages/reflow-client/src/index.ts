@@ -4,7 +4,7 @@ export
 interface ClientConfig {
   remoteOptions?: webdriverio.RemoteOptions
   // connection: any,
-  // capability: any,
+  // capabilities: webdriverio.RemoteOptions,
   // config: any,
   // customActions: any,
 }
@@ -17,10 +17,12 @@ interface ClientConfig {
 export
 async function createClient(clientConfig: ClientConfig) {
   const {
-    remoteOptions,
+    // remoteOptions,
+    capabilities,
   } = clientConfig;
+  console.log('capabilities::', capabilities)
 
-  const client = webdriverio.remote(remoteOptions);
+  const client = webdriverio.remote(capabilities);
   return client;
   // const {
   //   capability,

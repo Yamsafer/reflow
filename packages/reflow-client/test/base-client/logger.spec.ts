@@ -1,3 +1,0 @@
-describe("Base:: Logger", function () {
-
-});

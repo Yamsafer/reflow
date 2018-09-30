@@ -1,0 +1,10 @@
+{
+  "desiredCapabilities": {
+    "browserName": "chrome",
+    "platform": "LINUX",
+    "platformName": "LINUX",
+    "seleniumProtocol": "WebDriver",
+    "applicationName": "TheShip Debug",
+    "version": "66.0.3359.117"
+  }
+}

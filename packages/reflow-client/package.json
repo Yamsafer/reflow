@@ -8,7 +8,7 @@
     "prepare": "npm run clean && npm run build",
     "test": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=./tsconfig.spec.json mocha",
     "test:coverage": "nyc npm run test",
-    "test:watch": "cross-env TS_NODE_PROJECT=./tsconfig.spec.json mocha --watch --reporter=nyan --growl",
+    "test:watch": "cross-env TS_NODE_FILES=true TS_NODE_PROJECT=./tsconfig.spec.json mocha --watch --reporter=nyan --growl",
     "build": "tsc",
     "clean": "rimraf lib",
     "watch": "tsc -w"
