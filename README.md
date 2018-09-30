@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/master/reflow.png" width="230" height="80" />
+  <img alt="reflow logo" src="https://github.com/Bamieh/reflow/raw/master/reflow.png?v=1" width="230" height="80" />
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@ $ npm run lerna:bootstrap
 
 <p align="center">
   <a href="#reflow-architecture">
-    <img alt="reflow architecture" src="https://github.com/Bamieh/reflow/raw/master/reflow_arch.png" />
+    <img alt="reflow architecture" src="https://github.com/Bamieh/reflow/raw/master/reflow_arch.png?v=1" />
   </a>
 </p>
 
@@ -39,16 +39,27 @@ $ npm run lerna:bootstrap
 
 Reflow is made to work at scale. Each individual component of the framework is designed to work in a distributed environment and scale individually.
 
+Board:
+- reflow|board: a board to display e2e projects, jobs, flows, and test results.
+
+Hub:
+- reflow|grid: connects and manages devices. currently uses selenium hub.
+
+Client Nodes:
+- reflow|appium: a wrapper around appium to discover and connect iOS and android devices to reflow|grid.
+
+Storage:
+- reflow|cassandra-connection: express middleware to persist test results to Cassandra.
+
+Circuit:
+- reflow|circuit: an express middleware providing graphQL api to query and save test results.
+
+E2E Project:
 - reflow|core: a wrapper on top of mocha, connects to the client, provides test flows, and manages multi-flows to run across devices or in multi-threads.
+- reflow|reporter: a custom mocha reporter for running projects.
+- reflow|page-objects: manage page objects in e2e projects.
 - reflow|cli: the command line interface to run the e2e project.
 - reflow|client: provides the client api of the connected device.
-- reflow|grid: connects and manages devices. currently uses selenium hub.
-- reflow|reporter: a custom mocha reported used to report to the reflow|board.
-- reflow|board: a board to display e2e projects, jobs, flows, and test results.
-- reflow|circuit: an express middleware providing graphQL api to query and save test results.
-- reflow|page-objects: manage page objects in e2e projects.
-- reflow|cassandra-connection: express middleware to persist test results to Cassandra.
-- reflow|appium: a wrapper around appium to discover and connect iOS and android devices to reflow|grid.
 
 
 ## License
