@@ -26,7 +26,7 @@ export
 type UpdaterFunction = (currentValue: string) => any
 
 export
-const update = function(name: string, updater: UpdaterFunction, defaultValue: any) {
+const update = function(name: string, updater: UpdaterFunction, defaultValue?: any) {
   const currentValue = typeof flowObjects[name] === "undefined" ? defaultValue : flowObjects[name];
   flowObjects[name] = updater(currentValue);
 }
