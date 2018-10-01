@@ -1,4 +1,6 @@
 import * as webdriverio from 'webdriverio';
+import {parseCommands} from './parse-commands';
+import * as flow from './commands/flow-variables';
 
 export
 interface ClientConfig {
@@ -13,21 +15,6 @@ interface ClientConfig {
 //   if(capability.browserName) return import('./browser');
 //   if(/ios|android/i.test(capability.platform)) return import('./native');
 // }
-
-import * as fs from 'fs'
-import * as path from 'path';
-export
-const parseCommands = function(dir?: string) {
-  const commandsPath = dir || path.join(process.cwd(), 'commands');
-
-  const commands = fs.readdirSync(commandsPath)
-    .map(file => path.join(commandsPath, file))
-    .map(fullPath => require(fullPath))
-
-  return commands;
-}
-
-import * as flow from './commands/flow-variables';
 
 
 export
