@@ -1,7 +1,7 @@
 /// <reference path="typings/globals.d.ts" />
 import * as logger from '../src/commands/logger'
 
-describe.only("Logger", function() {
+describe("Logger", function() {
   it("exposes logger and logger methods", function() {
     expect(logger.logger).to.not.be.an("undefined")
   });
