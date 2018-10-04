@@ -1,54 +1,60 @@
-import {SuiteFunction, Suite} from 'mocha';
+import * as vm from 'vm'
+import {runInSandbox} from '../../sandbox';
+import {Title} from '../../'
+
 import {
   Strategy,
-  aliasName,
-  SuiteMapping,
-  filePath,
+  TitlePathMapping,
+  StrategyConfig,
+  FilePath,
 } from './base'
 
-/*
-Requires the files to locate suites based on suite name
+interface ReflowSandbox extends vm.Context {
+  titles: Title[],
+  subflow(title: Title): void,
+  flow(title: Title): void,
+  describe(title: Title): void,
+}
 
-  ['Describe Name']
-  ['test/file1.spec.ts', 'test/file2.spec.ts']
-  {'Describe Name' : 'test/file1.spec.ts'}
-
- */
+const reflowSandbox:ReflowSandbox = {
+  titles: [],
+  subflow(title: Title): void {
+    reflowSandbox.titles.push(title);
+  },
+  flow(title: Title): void {
+    reflowSandbox.titles.push(title);
+  },
+  describe(title: Title): void {
+    reflowSandbox.titles.push(title);
+  }
+}
 
 export
-interface RequireStrategyConfig {
-  aliasNames: aliasName[],
-  filePaths: filePath[],
+interface RequireStrategyConfig extends StrategyConfig {
+
 }
 
 export
 class RequireStrategy extends Strategy {
-  filePaths: filePath[]
   constructor(config: RequireStrategyConfig) {
     const {
-      aliasNames,
-      filePaths,
+      glob,
     } = config;
-    super(aliasNames)
-    this.filePaths = filePaths;
+    super({ glob })
   }
   async generateMapping() {
-    const mapping: SuiteMapping = {};
-    const originalDescribe = global.describe;
-    this.filePaths.forEach(suitePath => {
-      const stub = (title: string, fn?: (this: Suite) => void): any => {
-        mapping[title] = suitePath;
-      };
+    const mapping: TitlePathMapping = {};
+    const titlesLists = await Promise.all(
+      this.filePaths.map((filePath:FilePath) => runInSandbox(filePath, reflowSandbox))
+    )
 
-      const describeStub: SuiteFunction = Object.assign(stub, {
-        only: stub,
-        skip: stub,
+    titlesLists.forEach((titleList: ReflowSandbox, index: number) => {
+      const titlePath: FilePath =  this.filePaths[index];
+      titleList.titles.forEach((title: Title) => {
+        mapping[title] = titlePath;
       })
+    })
 
-      global.describe = describeStub
-      require(suitePath);
-    });
-    global.describe = originalDescribe;
     this.mapping = mapping;
   }
 }

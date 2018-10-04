@@ -3,7 +3,7 @@ import {readFile} from 'fs'
 import {promisify} from 'util'
 const readFileAsync = promisify(readFile);
 
-interface ReflowSandbox {
+interface ReflowSandbox extends vm.Context {
   names: string[],
   subflow(subflowName: string): void,
 }
@@ -28,4 +28,12 @@ const getAliasNamesFromFile = function(fileContent: string): string[] {
   vm.createContext(sandbox);
   vm.runInContext(fileContent, sandbox);
   return sandbox.names
+}
+
+export
+const runInSandbox = async function(filePath: string, context: vm.Context) {
+  const fileContent:string = await getFileContent(filePath);
+  vm.createContext(context);
+  vm.runInContext(fileContent, context);
+  return context
 }

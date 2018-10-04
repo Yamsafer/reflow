@@ -6,87 +6,49 @@ import * as FlakeId from 'flake-idgen'
 import {createReflowContext} from './context'
 
 
-
-
-subflow("mySubflow", function() {
-  getSuite("suite 1");
-})
-
-flow("myFlow", function() {
-
-  getSuite("suite 1");
-  getSuite("suite 2");
-  fork(
-    getSuite("suite 3"),
-    getSuite("suite 4"),
-  )
-  getSubflow("subflow 1")
-
-})
-
-type FlowName = string
-type SubflowName = string
-const data = {
-  flows: {},
-  subflows: {}
-};
-
-
-
-const context = {
-  flow(flowName: FlowName, flowDetails) {
-    data.flows[flowName] = flowDetails;
-  },
-  subflow(subflowName: SubflowName, subflowDetails) {
-    data.subflows[subflowName] = subflowDetails;
-  },
-
-}
-
-
-export
-function createTestsCartesianProduct(flowsPath: FlowPath[]) {
-  flowsPath.forEach(flowPath => {
-    const flow = require(flowPath);
-  })
-}
-
-
 /*
 1. gather flows
  */
 
+import {
+  Pattern,
+  GlobObject,
+} from './utils/glob'
 export
 type FlowPath = string;
+
+export
+type SubflowPath = string;
+
+export
+type HookPath = string;
+
+export
+type Title = string
 
 
 export
 interface ReflowConfig {
-  flowsPath: FlowPath,
+  suites: Pattern | GlobObject,
+  subflows?: Pattern | GlobObject,
+  hooks?: Pattern | GlobObject,
   locateStrategy?: string,
-  strategyOptions: any,
+  strategyOptions?: any,
+  // flowPaths: FlowPath[],
+  // subflowPaths?: SubflowPath[],
+  // hookPaths?: HookPath[],
 }
 
 
-import {getLocate} from './locate'
-const locateSubflow = (strategyOptions) => {
-  const locate = getLocate('require', {
-    aliasNames
-    filePaths
-  });
-
-}
-
-const getStrategy = (locateStrategy) => {
-
-}
 export
-function runReflow(reflowConfig: ReflowConfig) {
-  const {
-    flowsPath,
-    locateStrategy = 'mapping',
-    strategyOptions,
-  } = reflowConfig;
+async function runReflow(reflowConfig: ReflowConfig) {
+
+  const createMatrix = matrixContext(reflowConfig);
+
+  Object.values(locateFlow.mapping).forEach((flowPath: string) => {
+    createMatrix(flowPath)
+  })
+
   // const strategy = getStrategy(locateStrategy)
 
   // const testDetails = createTestsCartesianProduct();

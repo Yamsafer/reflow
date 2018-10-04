@@ -5,11 +5,6 @@ import analyzeMatrix from './analyze'
 import * as FlakeId from 'flake-idgen'
 import {createReflowContext} from './context'
 
-export
-function runReflow() {
-
-}
-
 class Reflow {
   constructor(options, caps) {
     this.connection = caps.connection;

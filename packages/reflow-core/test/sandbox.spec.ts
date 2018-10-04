@@ -18,7 +18,6 @@ describe("Sandbox", function() {
     it("resets sandbox after every run", function() {
       const aliases = getAliasNamesFromFile(subflowContent)
       expect(aliases).to.deep.equal([subflowName]);
-      expect(aliases).to.deep.equal([subflowName, subflowName]);
     })
   })
 })

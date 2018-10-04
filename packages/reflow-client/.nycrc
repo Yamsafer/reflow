@@ -2,6 +2,7 @@
   "all": true,
   "require": [
     "ts-node/register",
+    "tsconfig-paths/register",
     "source-map-support/register"
   ],
   "extension": [
