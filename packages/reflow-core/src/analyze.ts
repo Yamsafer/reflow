@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as union from 'lodash.union';
 const scalars = ["suite", "hook"];
 const ARROW = ' -> ';
 
@@ -30,7 +30,6 @@ const analyzeCombination = function(combination) {
 }
 
 const analyzeMatrix = function(combinations) {
-  console.log('CALLING ANALUZE MATRIXSADAS')
   const analyticsMap = combinations.map(combination => {
     return combination.map(resolveTypes);
   }).map(combination => {
@@ -40,7 +39,7 @@ const analyzeMatrix = function(combinations) {
     }).filter(Boolean)
   })
 
-  return _.union(...analyticsMap)
+  return union(...analyticsMap)
 };
 
 export default analyzeMatrix

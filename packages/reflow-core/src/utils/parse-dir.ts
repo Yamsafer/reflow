@@ -1,5 +1,7 @@
+import * as requireDir from 'require-directory';
 const visitedFiles = [];
 
+export
 const parseDir = function parseDir(callerFilename, opts) {
   opts = opts || {}
   // disable recursion to support nested directories of subcommands
@@ -24,7 +26,5 @@ const parseDir = function parseDir(callerFilename, opts) {
   }
 
 
-  return require('require-directory')({require, filename: callerFilename}, opts)
+  return requireDir({require, filename: callerFilename}, opts)
 }
-
-module.exports = parseDir

@@ -10,15 +10,14 @@ describe('Reflow|Client', function() {
   })
   it("returns an initialized client", function() {
     expect(client).to.be.an("object");
-    // const log = client.emit('log', 'Before my method')
   });
-  it("appends flow variables", function() {
+  it("exposes flow variables", function() {
     const flowMethods = Object.keys(flowVariables);
     expect(client.flow).to.have.all.keys(flowMethods);
   })
-  // it("appends logger", function() {
-  //   console.log('client::', client)
-  // })
+  it("exposes logger", function() {
+    expect(client.logger).to.not.be.an("undefined");
+  });
   after(function() {
     if(!client) console.log('No Client.');
     console.log('Shutting down');

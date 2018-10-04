@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": false,
+    "allowJs": false,
+    "declaration": false,
+    "rootDir": ".",
+    "target": "es6",
+    "outDir": "./_tests",
+    "moduleResolution": "node",
+    "lib": [
+      "es6",
+      "es2015",
+      "es2017.object"
+    ]
+  },
+  "include": [
+    "typings/*",
+    "test/typings/*",
+    "src/**/*",
+    "test/**/*"
+  ]
+}

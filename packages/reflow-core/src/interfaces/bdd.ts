@@ -1,29 +1,9 @@
-'use strict';
+import * as Mocha from 'mocha';
 
-/**
- * Module dependencies.
- */
+Mocha.interfaces['reflow-bdd'] = reflowBddInterface
 
-import Mocha, {Test, Hook} from 'mocha';
-
-/**
- * BDD-style interface:
- *
- *      describe('Array', function() {
- *        describe('#indexOf()', function() {
- *          it('should return -1 when not present', function() {
- *            // ...
- *          });
- *
- *          it('should return the index when present', function() {
- *            // ...
- *          });
- *        });
- *      });
- *
- * @param {Suite} suite Root suite.
- */
-module.exports = Mocha.interfaces['reflow-bdd'] = function (suite) {
+export default
+function reflowBddInterface(suite) {
   var suites = [suite];
   var hooks = [];
 
@@ -136,7 +116,7 @@ module.exports = Mocha.interfaces['reflow-bdd'] = function (suite) {
       if (suite.isPending()) {
         fn = null;
       }
-      var test = new Test(title, fn);
+      var test = new Mocha.Test(title, fn);
       test.file = file;
       suite.addTest(test);
       return test;

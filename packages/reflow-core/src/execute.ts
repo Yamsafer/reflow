@@ -1,6 +1,6 @@
-import path from 'path'
+import * as path from 'path'
 import Duration from 'duration';
-import threadPool from './thread-pool'
+import {threadPool} from './thread-pool'
 import {analyzeCombination} from './analyze'
 
 const executeMatrix = function(matrix, config) {

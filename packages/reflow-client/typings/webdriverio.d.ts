@@ -14,6 +14,7 @@ declare module "webdriverio" {
     logOutput?: any,
     protocol?: any,
     host?: any,
+    hostname?: any,
     port?: any,
     path?: any,
     agent?: any,

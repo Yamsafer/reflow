@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "declaration": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "noUnusedLocals": true,
+    "allowJs": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "outDir": "./lib",
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "lib": [
+      "es6",
+      "es2015",
+      "es2017.object"
+    ]
+  },
+  "include": [
+    "typings/*",
+    "src/**/*"
+  ]
+}

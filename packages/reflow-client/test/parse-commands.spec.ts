@@ -4,7 +4,7 @@ import {parseCommands} from '../src/parse-commands'
 import * as path from 'path';
 import * as sampleCommand from './fixture/commands/sample'
 
-describe("Parse Commands", function() {
+describe.only("Parse Commands", function() {
   let commands: any[];
   it("returns emtpy array when no custom commands are found", function() {
     const commands = parseCommands();

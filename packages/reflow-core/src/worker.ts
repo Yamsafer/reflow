@@ -1,15 +1,10 @@
-require('babel-register')();
-const MochaReflow = require('./mocha-reflow').default;
-const reflowProps = require('./client/base/flow-variables'); //Todo: move to client
-const decache = require('decache');
-const praseDir = require('./utils/parse-dir');
-
-const FlakeId = require('flakeid');
-
-const path = require('path');
+import {Mocha} from './mocha-reflow';
+import * as FlakeId from 'flake-idgen'
+import decache from 'decache'
+import praseDir from './utils/parse-dir'
 
 let vmRunner;
-let mochaReflowInstance;
+let mochaReflowInstance:Mocha;
 
 const typesToPush = ["suite", "hook"];
 
@@ -43,8 +38,7 @@ const executeTree = function({combination, customActions, mochaConfig, flowDetai
     require(mod);
   })
 
-  global.reflow = reflowProps;
-  const combinationID = new FlakeId({}).gen();
+  const combinationID = new FlakeId().next();
   const mochaReflowConfig = Object.assign({
     ui: 'reflow-bdd',
     reporter: 'reflow-reporter',
@@ -64,7 +58,7 @@ const executeTree = function({combination, customActions, mochaConfig, flowDetai
     },
   }, mochaRestConfigs);
 
-  mochaReflowInstance = new MochaReflow(mochaReflowConfig);
+  mochaReflowInstance = new Mocha(mochaReflowConfig);
 
 
   const suites = [].concat(combination.suites);
@@ -81,8 +75,9 @@ const executeTree = function({combination, customActions, mochaConfig, flowDetai
 
     mochaReflowInstance.run(failures => {
       mochaReflowInstance.files.forEach(decache);
-      global.reflow.teardown();
-      client.teardown().then(_ => {
+      // global.reflow.teardown();
+      // DONT FORGET TEARDOWN
+      client.teardown().then(() => {
         setTimeout(() => done(failures), 1000)
       });
     })
