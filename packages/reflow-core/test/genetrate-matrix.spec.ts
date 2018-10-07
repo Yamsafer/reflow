@@ -44,6 +44,7 @@ describe.only("Generate Matrix", function() {
     })
     it("generates Matrix", async function() {
       const matrix = await generateMetrix(withSubflowsFlowPath)
+      console.log('subflow matrix::', matrix)
       const matrixNames = matrix.map((entry: any) => entry.name);
       expect(matrixNames).to.deep.equal(['Subflow 1', 'Suite 2'])
     })
