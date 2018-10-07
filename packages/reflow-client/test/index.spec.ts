@@ -3,7 +3,7 @@
 import {connectClient} from './connect';
 import * as flowVariables from '../src/commands/flow-variables'
 
-describe('Reflow|Client', function() {
+describe.skip('Reflow|Client', function() {
   let client: any;
   before(async function() {
     client = await connectClient();
