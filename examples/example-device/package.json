@@ -1,6 +1,6 @@
 {
   "name": "example-device",
-  "version": "3.0.0-gamma.6",
+  "version": "3.0.0-gamma.19",
   "private": true,
   "dependencies": {
     "appium": "^1.7.2",
@@ -14,4 +14,3 @@
     "devices": "node lib/list-devices.js"
   }
 }
-
