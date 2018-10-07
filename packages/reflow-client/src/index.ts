@@ -16,6 +16,17 @@ interface ClientConfig {
 }
 
 
+const reflowClient = (customCommands: Command[]) => (client: any) => {
+  client.flow = flow
+  client.logger = getLogger('reflow')
+
+  customCommands.forEach(command => {
+    console.log('command:', command);
+  })
+
+  return client;
+}
+
 export
 function createClient(clientConfig: ClientConfig) {
   const {
@@ -23,14 +34,5 @@ function createClient(clientConfig: ClientConfig) {
     customCommands = [],
   } = clientConfig;
 
-  return webdriverio.remote(remoteOptions, function(client: any) {
-    client.flow = flow
-    client.logger = getLogger('reflow')
-
-    customCommands.forEach(command => {
-      console.log('command:', command);
-    })
-
-    return client;
-  });
+  return webdriverio.remote(remoteOptions, reflowClient(customCommands));
 }

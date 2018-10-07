@@ -1,25 +1,17 @@
 {
-  "all": true,
   "require": [
-    "ts-node/register",
-    "source-map-support/register"
+    "babel-register"
   ],
-  "extension": [
-    ".ts",
-    ".tsx"
+  "include": [
+    "lib"
   ],
   "exclude": [
-    "coverage/**/*",
-    "test/**/*",
-    "lib/index.js",
-    "src/index.ts",
-    "**/*.d.ts"
+    "lib/utils"
   ],
   "reporter": [
     "lcov",
-    "text-summary"
+    "text"
   ],
-  "cache": false,
   "sourceMap": false,
-  "instrument": true
+  "instrument": false
 }
