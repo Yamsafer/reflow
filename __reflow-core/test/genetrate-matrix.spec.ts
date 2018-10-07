@@ -17,7 +17,7 @@ const withSubflowsFlowPath = getFixturePath('flows/withSubflows.js')
 const withForksFlowPath = getFixturePath('flows/withForks.js')
 
 
-describe.only("Generate Matrix", function() {
+describe("Generate Matrix", function() {
 
   describe("Suites", function() {
     let generateMetrix: any;

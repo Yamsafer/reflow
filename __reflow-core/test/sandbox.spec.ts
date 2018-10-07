@@ -1,23 +1,29 @@
 /// <reference path="typings/globals.d.ts" />
-import {getAliasNamesFromFile} from '../src/sandbox'
-const subflowName = "test";
+import {
+  runInSandbox,
+  getFileContent
+} from '../src/sandbox'
 
-const subflowContent = `subflow("${subflowName}", () => {});`
-const multiSubflowContent = subflowContent + subflowContent
+import * as path from 'path';
+const cwd = process.cwd()
 
-describe("Sandbox", function() {
-  describe("getAliasNamesFromFile", function() {
-    it("returns a list of aliases", function() {
-      const aliases = getAliasNamesFromFile(subflowContent)
-      expect(aliases).to.deep.equal([subflowName]);
-    })
-    it("works on mutlple aliases in the same file", function() {
-      const aliases = getAliasNamesFromFile(multiSubflowContent)
-      expect(aliases).to.deep.equal([subflowName, subflowName]);
-    })
-    it("resets sandbox after every run", function() {
-      const aliases = getAliasNamesFromFile(subflowContent)
-      expect(aliases).to.deep.equal([subflowName]);
-    })
+const getFixturePath = path.join.bind(path, cwd, './test/fixture')
+const suiteFilepath = getFixturePath('suites/suite1.js');
+
+describe.only("Sandbox", function() {
+  it("parses a filepath content", async function() {
+    const content = await getFileContent(suiteFilepath)
+    expect(content).to.be.a.string;
+    expect(content).to.equal(`describe("Suite 1")\n`);
+  })
+  it("runs a given filepath in a vm context", async function() {
+    let suiteName: string = '';
+    const customContext = {
+      describe(title: string) {
+        suiteName = title
+      },
+    }
+    await runInSandbox(suiteFilepath, customContext)
+    expect(suiteName).to.equal('Suite 1');
   })
 })

@@ -8,8 +8,7 @@
     "lerna:clean": "lerna clean",
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:updated": "lerna updated",
-    "lerna:install": "lerna add --scope=reflow-core require-directory",
-    "lerna:test": "lerna run --scope reflow-core --scope reflow-analytics test",
+    "lerna:test": "lerna run test",
     "lerna:report-coverage": "lerna run report-coverage"
   }
 }
