@@ -1,6 +1,3 @@
 /// <reference path="typings/globals.d.ts" />
-describe("asd", function() {
-  it("a", function() {
-
-  })
+describe("reflow|Core", function() {
 })

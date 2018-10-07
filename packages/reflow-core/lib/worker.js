@@ -79,7 +79,6 @@ const executeTree = function({combination, customActions, mochaConfig, flowDetai
 
     mochaReflowInstance.run(failures => {
       mochaReflowInstance.files.forEach(decache);
-      global.reflow.teardown();
       client.teardown().then(_ => {
         setTimeout(() => done(failures), 1000)
       });

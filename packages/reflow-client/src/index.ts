@@ -24,6 +24,10 @@ const reflowClient = (customCommands: Command[]) => (client: any) => {
     console.log('command:', command);
   })
 
+  client.teardown = () => {
+    client.logger.debug("Running client teardown.");
+  }
+
   return client;
 }
 
