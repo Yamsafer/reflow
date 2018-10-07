@@ -1,43 +1,20 @@
-import * as webdriverio from 'webdriverio';
-import * as flow from './commands/flow-variables';
-import * as getLogger from 'wdio-logger';
+import {
+  remote,
+  RemoteOptions,
+} from 'webdriverio';
 
-export
-interface Command {
-  name: string,
-  handler: any,
+import {
+  reflowClient,
+  ClientConfig,
+} from './reflow-client'
+
+
+export {
+  ClientConfig,
+  RemoteOptions
 }
 
 export
-interface ClientConfig {
-  remoteOptions: webdriverio.RemoteOptions,
-  commandsPath?: string,
-  customCommands?: Command[]
-}
-
-
-const reflowClient = (customCommands: Command[]) => (client: any) => {
-  client.flow = flow
-  client.logger = getLogger('reflow')
-
-  customCommands.forEach(command => {
-    console.log('command:', command);
-  })
-
-  client.teardown = async function() {
-    client.logger.debug("Running client teardown.");
-    return client.deleteSession();
-  }
-
-  return client;
-}
-
-export
-function createClient(clientConfig: ClientConfig) {
-  const {
-    remoteOptions,
-    customCommands = [],
-  } = clientConfig;
-
-  return webdriverio.remote(remoteOptions, reflowClient(customCommands));
+function createClient(remoteOptions: RemoteOptions, clientConfig: ClientConfig) {
+  return remote(remoteOptions, reflowClient(clientConfig));
 }

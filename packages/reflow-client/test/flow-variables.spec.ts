@@ -1,7 +1,14 @@
 /// <reference path="typings/globals.d.ts" />
-import * as flowVariables from '../src/commands/flow-variables'
+import {
+  Flow,
+  getFlow,
+} from '../src/commands/flow-variables'
 
 describe('Flow Variables', function() {
+  let flowVariables: Flow;
+  before(function() {
+    flowVariables = getFlow();
+  })
   describe("get all function", function() {
     it("returns empty object when nothing is set", function() {
       const flowObjects = flowVariables.getAll()
@@ -37,7 +44,7 @@ describe('Flow Variables', function() {
         key: 1,
         key2: 2,
       }
-      flowVariables.setMuliple(multiple);
+      flowVariables.setMultiple(multiple);
       const flowObjects = flowVariables.getAll()
       expect(flowObjects).to.deep.equal(multiple);
     })

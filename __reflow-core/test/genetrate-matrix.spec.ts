@@ -18,7 +18,6 @@ const withForksFlowPath = getFixturePath('flows/withForks.js')
 
 
 describe("Generate Matrix", function() {
-
   describe("Suites", function() {
     let generateMetrix: any;
     before(async function() {
