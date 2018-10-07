@@ -12,7 +12,7 @@ export
 const getAll = () => flowObjects;
 
 export
-const setMuliple = function(setObj: {[key: string]: any}) {
+const setMultiple = function(setObj: {[key: string]: any}) {
   Object.entries(setObj).forEach(([name, value]) => set(name, value))
 }
 
