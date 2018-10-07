@@ -1,6 +1,6 @@
 {
   "name": "example-device",
-  "version": "3.0.0-gamma.19",
+  "version": "3.0.0-gamma.20",
   "private": true,
   "dependencies": {
     "appium": "^1.7.2",

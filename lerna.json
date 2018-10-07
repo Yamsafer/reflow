@@ -1,5 +1,5 @@
 {
-  "version": "3.0.0-gamma.19",
+  "version": "3.0.0-gamma.20",
   "lerna": "3.4.0",
   "packages": [
     "examples/*",
