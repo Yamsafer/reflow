@@ -1,6 +1,6 @@
 {
 		"name": "example-native-project",
-		"version": "3.0.0-gamma.20",
+		"version": "3.0.0-gamma.21",
 		"private": true,
 		"dependencies": {
 				"chai": "^4.1.2",

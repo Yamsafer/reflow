@@ -1,6 +1,6 @@
 {
   "name": "reflow-page-objects",
-  "version": "3.0.0-gamma.20",
+  "version": "3.0.0-gamma.21",
   "description": "Reflow Page Objects",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
