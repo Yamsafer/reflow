@@ -1,6 +1,5 @@
 require('babel-register')();
 const MochaReflow = require('./mocha-reflow').default;
-const reflowProps = require('./client/base/flow-variables'); //Todo: move to client
 const decache = require('decache');
 const praseDir = require('./utils/parse-dir');
 
@@ -43,7 +42,6 @@ const executeTree = function({combination, customActions, mochaConfig, flowDetai
     require(mod);
   })
 
-  global.reflow = reflowProps;
   const combinationID = new FlakeId({}).gen();
   const mochaReflowConfig = Object.assign({
     ui: 'reflow-bdd',
