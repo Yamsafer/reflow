@@ -18,5 +18,6 @@
     "adbkit": "^2.11.0",
     "appium-doctor": "^1.4.3",
     "plist": "^3.0.0"
-  }
+  },
+  "gitHead": "6c80e3d2bcf5f260f8ff4596e4e06a8e5a8d01cc"
 }

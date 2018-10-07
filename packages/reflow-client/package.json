@@ -41,5 +41,6 @@
     "reflow-page-objects": "^3.0.0-gamma.19",
     "wdio-logger": "^5.0.0-beta.3",
     "webdriverio": "^5.0.0-beta.3"
-  }
+  },
+  "gitHead": "6c80e3d2bcf5f260f8ff4596e4e06a8e5a8d01cc"
 }

@@ -30,5 +30,6 @@
   },
   "devDependencies": {
     "cross-env": "^5.1.1"
-  }
+  },
+  "gitHead": "6c80e3d2bcf5f260f8ff4596e4e06a8e5a8d01cc"
 }

@@ -32,5 +32,6 @@
     "test:watch": "npm run test -- --reporter min --watch",
     "coverage": "nyc npm run test && nyc report --reporter=html && open coverage/index.html",
     "report-coverage": "nyc npm run test && nyc report --reporter=lcov > coverage.lcov && codecov"
-  }
+  },
+  "gitHead": "6c80e3d2bcf5f260f8ff4596e4e06a8e5a8d01cc"
 }
