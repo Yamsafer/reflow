@@ -18,9 +18,12 @@ describe.skip('Reflow|Client', function() {
   it("exposes logger", function() {
     expect(client.logger).to.not.be.an("undefined");
   });
+  it("exposes teardown", function() {
+    expect(client.teardown).to.be.a('function');
+  })
   after(function() {
     if(!client) console.log('No Client.');
     console.log('Shutting down');
-    return client.deleteSession()
+    return client.teardown()
   })
 })

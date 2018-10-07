@@ -24,8 +24,9 @@ const reflowClient = (customCommands: Command[]) => (client: any) => {
     console.log('command:', command);
   })
 
-  client.teardown = () => {
+  client.teardown = async function() {
     client.logger.debug("Running client teardown.");
+    return client.deleteSession();
   }
 
   return client;
