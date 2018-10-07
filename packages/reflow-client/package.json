@@ -1,6 +1,6 @@
 {
   "name": "reflow-client",
-  "version": "3.0.0-gamma.21",
+  "version": "3.0.0-gamma.22",
   "description": "Reflow Client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "glob": "^7.1.3",
-    "reflow-page-objects": "^3.0.0-gamma.21",
+    "reflow-page-objects": "^3.0.0-gamma.22",
     "wdio-logger": "^5.0.0-beta.3",
     "webdriverio": "^5.0.0-beta.3"
   },
