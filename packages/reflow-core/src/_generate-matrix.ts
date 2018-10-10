@@ -18,7 +18,7 @@ type MatrixEntries = MatrixEntry<any>[]
 interface MatrixEntry<ReflowType> {
   type: ReflowType,
   name: string,
-  path: any,
+  resolve: any,
   evaluated?: any,
 }
 // import * as util from 'util';
@@ -50,69 +50,56 @@ const createMatrixGenerator = async function(reflowConfig: ReflowConfig) {
         reflowContext.matrix = subflowDetails().suites;
       },
       getSuite(title: Title): MatrixEntry<ReflowType.Suite> {
-        const suitePath: string = suiteLocator.locate(title);
         return {
           name: title,
           type: ReflowType.Suite,
-          path: suitePath,
-          evaluated: suitePath,
+          resolve: suiteLocator.locate(title),
         };
       },
       getSubflow(title: Title): MatrixEntry<ReflowType.Subflow> {
-        const path = subflowLocator.locate(title);
+        const resolve = subflowLocator.locate(title);
         return {
           name: title,
           type: ReflowType.Subflow,
-          path,
+          resolve,
         };
       },
       getHook(title: Title): MatrixEntry<ReflowType.Hook> {
         return {
           name: title,
           type: ReflowType.Hook,
-          path: hookLocator.locate(title),
+          resolve: hookLocator.locate(title),
         }
       },
-      fork(entries: MatrixEntry<ReflowType>[]): MatrixEntry<ReflowType.Fork> {
-        console.log('got forks::', entries)
-        return {
-          name: `fork(${entries.map(entry => entry.name).join(', ')})`,
-          type: ReflowType.Fork,
-          path: '',
-          evaluated: entries,
-        }
+      fork(entries: MatrixEntry<ReflowType>[]): MatrixEntry<any>[] {
+        return entries
       },
     };
     return reflowContext
   }
 
   async function generateMatrix(filePath: string): Promise<MatrixEntries> {
-
-    let finalResult: any = [];
     const reflowContext = createReflowContext()
     await runInSandbox(filePath, reflowContext)
     const evaluatedMatrix:MatrixEntries = reflowContext.matrix;
 
-    for(let i = 0, l = evaluatedMatrix.length; i < l; i++) {
-      const matrix = evaluatedMatrix[i];
-      switch(matrix.type) {
-        case ReflowType.Suite: {
-          finalResult.push(matrix)
-          break
-        }
-        case ReflowType.Subflow: {
-          const subMatrix = await generateMatrix(matrix.path)
-          finalResult = finalResult.concat(subMatrix)
-          break;
-        }
-        case ReflowType.Fork: {
-          finalResult.push(matrix.evaluated)
-          break;
-        }
+    const results = evaluatedMatrix.map((entry: MatrixEntry<any>) => {
+      if(entry.type === ReflowType.Subflow) {
+        return generateMatrix(entry.resolve)
       }
-    }
+      if(Array.isArray(entry)) {
+        return entry.map(forkEntry => generateMatrix(forkEntry.resolve))
+      }
+      return Promise.resolve([entry])
+    });
 
-    return finalResult
+    const finalResult = await Promise.all([...results])
+    return finalResult.map((result: any) => {
+      if(result.length === 1) return result[0];
+      return result;
+    })
+
+    return finalResult[0]
   }
   return generateMatrix
 }

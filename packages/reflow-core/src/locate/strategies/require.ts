@@ -9,13 +9,8 @@ import {
   FilePath,
 } from './base'
 
-interface Resolver {
-  title: Title,
-  fn?: any,
-}
-
 interface ReflowSandbox extends vm.Context {
-  resolvers: Resolver[],
+  resolvers: Title[],
   flow(title: Title, fn?: any): void,
   subflow(title: Title, fn?: any): void,
   hook(title: Title, fn?: any): void,
@@ -25,17 +20,17 @@ interface ReflowSandbox extends vm.Context {
 const reflowSandbox:ReflowSandbox = {
   resolvers: [],
   subflow(title: Title, fn: any): void {
-    reflowSandbox.resolvers.push({title, fn});
+    reflowSandbox.resolvers.push(title);
   },
   hook(title: Title, fn: any): void {
-    reflowSandbox.resolvers.push({title, fn});
+    reflowSandbox.resolvers.push(title);
   },
   flow(title: Title, fn: any): void {
-    reflowSandbox.resolvers.push({title, fn});
+    reflowSandbox.resolvers.push(title);
   },
   describe(title: Title): void {
-    reflowSandbox.resolvers.push({title});
-  }
+    reflowSandbox.resolvers.push(title);
+  },
 }
 
 export
@@ -59,11 +54,10 @@ class RequireStrategy extends Strategy {
 
     sandboxes
       .map(sandbox => sandbox.resolvers)
-      .forEach((resolvers: Resolver[], index: number) => {
-        const filePath: FilePath =  this.filePaths[index];
-        resolvers.forEach((resolver: Resolver) => {
-          const {title, fn} = resolver
-          mapping[title] = {path: filePath, fn};
+      .forEach((titles: Title[]) => {
+        titles.forEach((title: Title, index: number) => {
+          const filePath: FilePath =  this.filePaths[index];
+          mapping[title] = filePath;
         })
       })
 

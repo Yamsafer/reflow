@@ -9,7 +9,7 @@ const getFileContent = (filepath: string) => readFileAsync(filepath, 'utf8');
 export
 const runInSandbox = async function(filePath: string, context: vm.Context) {
   const fileContent:string = await getFileContent(filePath);
-  vm.createContext(context);
-  vm.runInContext(fileContent, context);
+  // vm.createContext(context);
+  vm.runInNewContext(fileContent, context);
   return context
 }

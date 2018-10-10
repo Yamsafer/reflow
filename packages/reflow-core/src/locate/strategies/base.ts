@@ -16,14 +16,8 @@ interface StrategyConfig {
 }
 
 export
-interface Entity {
-  path: FilePath,
-  fn?: any
-}
-
-export
 interface TitlePathMapping {
-  [Name: string]: Entity
+  [Name: string]: FilePath
 }
 
 export
@@ -52,7 +46,7 @@ class Strategy {
     this.filePaths = await globAsync(pattern, globOptions)
   }
 
-  locate(title: Title): Entity {
+  locate(title: Title): FilePath {
     return this.mapping[title]
   }
 }

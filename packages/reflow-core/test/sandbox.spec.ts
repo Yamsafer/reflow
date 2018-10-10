@@ -10,7 +10,7 @@ const cwd = process.cwd()
 const getFixturePath = path.join.bind(path, cwd, './test/fixture')
 const suiteFilepath = getFixturePath('suites/suite1.js');
 
-describe.only("Sandbox", function() {
+describe("Sandbox", function() {
   it("parses a filepath content", async function() {
     const content = await getFileContent(suiteFilepath)
     expect(content).to.be.a.string;
