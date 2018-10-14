@@ -59,6 +59,7 @@ const createMatrixGenerator = async function(reflowConfig: ReflowConfig) {
         };
       },
       getSubflow(title: Title): MatrixEntry<ReflowType.Subflow> {
+        console.log('getSubflow::', title)
         const path = subflowLocator.locate(title);
         return {
           name: title,
@@ -87,8 +88,8 @@ const createMatrixGenerator = async function(reflowConfig: ReflowConfig) {
   }
 
   async function generateMatrix(filePath: string): Promise<MatrixEntries> {
-
     let finalResult: any = [];
+
     const reflowContext = createReflowContext()
     await runInSandbox(filePath, reflowContext)
     const evaluatedMatrix:MatrixEntries = reflowContext.matrix;
@@ -97,21 +98,24 @@ const createMatrixGenerator = async function(reflowConfig: ReflowConfig) {
       const matrix = evaluatedMatrix[i];
       switch(matrix.type) {
         case ReflowType.Suite: {
+          console.log('pushing suite')
           finalResult.push(matrix)
           break
         }
         case ReflowType.Subflow: {
+          console.log('pushing subflow')
           const subMatrix = await generateMatrix(matrix.path)
           finalResult = finalResult.concat(subMatrix)
           break;
         }
         case ReflowType.Fork: {
+          console.log('pushing fork', matrix.evaluated)
           finalResult.push(matrix.evaluated)
           break;
         }
       }
     }
-
+    console.log('sending finalResult for ::', filePath)
     return finalResult
   }
   return generateMatrix

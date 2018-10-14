@@ -18,6 +18,11 @@ const withSubflow2FlowPath = getFixturePath('flows/withSubflow2.js')
 const withForksFlowPath = getFixturePath('flows/withForks.js')
 
 
+const getMatrixNames = (matrix: any) => matrix.map((entry: any) => {
+  if(Array.isArray(entry)) return getMatrixNames(entry);
+  return entry.name
+});
+
 describe.only("Generate Matrix", function() {
   describe("Suites", function() {
     let generateMetrix: any;
@@ -29,11 +34,11 @@ describe.only("Generate Matrix", function() {
     })
     it("generates Matrix", async function() {
       const matrix = await generateMetrix(suitesOnlyFlowPath)
-      const matrixNames = matrix.map((entry: any) => entry.name);
+      const matrixNames = getMatrixNames(matrix)
       expect(matrixNames).to.deep.equal(['Suite 1', 'Suite 2'])
     })
   })
-  describe.only("Subflows", function() {
+  describe("Subflows", function() {
     let generateMetrix: any;
     before(async function() {
       const matrixConfig:ReflowConfig = {
@@ -44,16 +49,16 @@ describe.only("Generate Matrix", function() {
     })
     it("generates Matrix", async function() {
       const matrix = await generateMetrix(withSubflow1FlowPath);
-      const matrixNames = matrix.map((entry: any) => entry.name);
+      const matrixNames = getMatrixNames(matrix);
       expect(matrixNames).to.deep.equal(['Suite 1', 'Suite 2'])
     })
     it("generates Matrix with subflows that are forked", async function() {
       const matrix = await generateMetrix(withSubflow2FlowPath);
-      const matrixNames = matrix.map((entry: any) => entry.name);
+      const matrixNames = getMatrixNames(matrix);
       expect(matrixNames).to.deep.equal(['Suite 4', 'Suite 1', ['Suite 2', 'Suite 3']])
     })
   })
-  describe("Forks", function() {
+  describe.only("Forks", function() {
     let generateMetrix: any;
     before(async function() {
       const matrixConfig:ReflowConfig = {
@@ -64,9 +69,9 @@ describe.only("Generate Matrix", function() {
     })
     it("generates Matrix", async function() {
       const matrix = await generateMetrix(withForksFlowPath)
+      const matrixNames = getMatrixNames(matrix);
       console.log('matrix::', matrix)
-      // const matrixNames = matrix.map((entry: any) => entry.name);
-      // expect(matrixNames).to.deep.equal(['Subflow 1', 'Suite 2'])
+      expect(matrixNames).to.deep.equal([['Suite 1', 'Suite 2'], 'Suite 3'])
     })
   })
 })

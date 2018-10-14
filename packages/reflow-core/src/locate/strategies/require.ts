@@ -17,39 +17,43 @@ interface ReflowSandbox extends vm.Context {
   describe(title: Title, fn?: any): void,
 }
 
-const reflowSandbox:ReflowSandbox = {
-  resolvers: [],
-  subflow(title: Title, fn: any): void {
-    reflowSandbox.resolvers.push(title);
-  },
-  hook(title: Title, fn: any): void {
-    reflowSandbox.resolvers.push(title);
-  },
-  flow(title: Title, fn: any): void {
-    reflowSandbox.resolvers.push(title);
-  },
-  describe(title: Title): void {
-    reflowSandbox.resolvers.push(title);
-  },
+const createSandbox = (resolvers: [] = []): ReflowSandbox => {
+  const reflowSandbox:ReflowSandbox = {
+    resolvers,
+    subflow(title: Title, fn: any): void {
+      reflowSandbox.resolvers.push(title);
+    },
+    hook(title: Title, fn: any): void {
+      reflowSandbox.resolvers.push(title);
+    },
+    flow(title: Title, fn: any): void {
+      reflowSandbox.resolvers.push(title);
+    },
+    describe(title: Title): void {
+      reflowSandbox.resolvers.push(title);
+    },
+  }
+  return reflowSandbox
 }
 
 export
 interface RequireStrategyConfig extends StrategyConfig {
-
 }
 
 export
 class RequireStrategy extends Strategy {
+  sandbox : ReflowSandbox
   constructor(config: RequireStrategyConfig) {
     const {
       glob,
     } = config;
     super({ glob })
+    this.sandbox = createSandbox([])
   }
   async generateMapping() {
     const mapping: TitlePathMapping = {};
     const sandboxes = await Promise.all(
-      this.filePaths.map((filePath:FilePath) => runInSandbox(filePath, reflowSandbox))
+      this.filePaths.map((filePath:FilePath) => runInSandbox(filePath, this.sandbox))
     ) as ReflowSandbox[]
 
     sandboxes
