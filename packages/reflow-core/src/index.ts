@@ -14,6 +14,7 @@ import {
   Pattern,
   GlobObject,
 } from './utils/glob'
+
 export
 type FlowPath = string;
 
@@ -34,6 +35,7 @@ interface ReflowConfig {
   hooks?: Pattern | GlobObject,
   locateStrategy?: string,
   strategyOptions?: any,
+
   // flowPaths: FlowPath[],
   // subflowPaths?: SubflowPath[],
   // hookPaths?: HookPath[],

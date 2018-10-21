@@ -21,7 +21,6 @@ interface MatrixEntry<ReflowType> {
   path: any,
   evaluated?: any,
 }
-// import * as util from 'util';
 
 export
 const createMatrixGenerator = async function(reflowConfig: ReflowConfig) {
@@ -110,7 +109,20 @@ const createMatrixGenerator = async function(reflowConfig: ReflowConfig) {
         }
         case ReflowType.Fork: {
           console.log('pushing fork', matrix.evaluated)
-          finalResult.push(matrix.evaluated)
+          let result: any[] = [];
+          for(let j = 0, k = matrix.evaluated.length; j < k; j++) {
+            const entry = matrix.evaluated[j];
+            console.log('entry::', entry)
+            if(entry.type === ReflowType.Subflow) {
+              const subMatrix = await generateMatrix(entry.path)
+              console.log('fork subMatrix::', subMatrix)
+              result.push(subMatrix)
+            } else {
+              result.push(result)
+            }
+          }
+
+          finalResult.push(result)
           break;
         }
       }
