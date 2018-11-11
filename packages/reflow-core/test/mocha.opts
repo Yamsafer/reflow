@@ -1,6 +1,2 @@
---require ts-node/register
---require tsconfig-paths/register ./test/setup.ts
---require source-map-support/register
---watch-extensions ts
---timeout 30000
-test/**/*.spec.ts
+--require babel-register ./test/setup
+test/**/*.test.js

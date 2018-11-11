@@ -5,11 +5,6 @@ import analyzeMatrix from './analyze'
 import * as FlakeId from 'flake-idgen'
 import {createReflowContext} from './context'
 
-
-/*
-1. gather flows
- */
-
 import {
   Pattern,
   GlobObject,
@@ -27,7 +22,6 @@ type HookPath = string;
 export
 type Title = string
 
-
 export
 interface ReflowConfig {
   suites: Pattern | GlobObject,
@@ -40,7 +34,6 @@ interface ReflowConfig {
   // subflowPaths?: SubflowPath[],
   // hookPaths?: HookPath[],
 }
-
 
 export
 async function runReflow(reflowConfig: ReflowConfig) {

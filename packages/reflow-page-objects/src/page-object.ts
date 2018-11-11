@@ -35,6 +35,7 @@ const assignIdAsKey = (acc: object, item: {id: string}): object => Object.assign
 //     return element || Reflect.get(target, prop, receiver);
 //   }
 // };
+
 const bindContext = function(context: PageObject) {
   return function(command: Command) {
     return Object.assign({}, {

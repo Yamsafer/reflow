@@ -8,7 +8,6 @@ import {
   ClientConfig,
 } from './reflow-client'
 
-
 export {
   ClientConfig,
   RemoteOptions
