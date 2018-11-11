@@ -22,7 +22,7 @@
     "react-table": "^6.7.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env REACT_APP_REFLOW_DEVELOPMENT=1 react-scripts start",
     "build": "react-scripts build",
     "prepublish": "npm run build",
     "test": "react-scripts test --env=jsdom",
