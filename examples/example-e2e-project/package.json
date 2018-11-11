@@ -1,6 +1,6 @@
 {
   "name": "example-e2e-project",
-  "version": "3.0.0-gamma.27",
+  "version": "3.0.0-gamma.28",
   "private": true,
   "dependencies": {
     "chai": "^4.1.2",
