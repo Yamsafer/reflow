@@ -7,18 +7,16 @@ import './style.css'
 
 class ProjectsPage extends PureComponent {
   render() {
-    const { data, match } = this.props;
-    const projectName = match.params.projectName;
-    const projects = [{link: "/project/yamsafer-backend/", name: "Yamsafer Backend"}]
+    const projectID = this.props.match.params.projectID
     return (
       <div className="row">
         <div className="col-xs-4">
           <h1 className="title">Projects</h1>
-          <ProjectsList />
+          <ProjectsList onProjectSelected={this.onProjectSelected} />
         </div>
         <div className="col-xs-8">
           <h1 className="title">Jobs List</h1>
-          <JobsList projectName={projectName} data={data}/>
+          <JobsList projectID={projectID} />
         </div>
       </div>
     );

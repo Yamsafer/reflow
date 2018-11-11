@@ -44,8 +44,8 @@ class App extends Component {
             <div className="App container-fluid">
               <Switch>
                 <Route exact path="/" component={ProjectsPage}/>
-                <Route exact path="/project/:projectName" component={ProjectsPage}/>
-                <Route exact path="/project/:projectName/job/:jobID" component={FlowsPage}/>
+                <Route exact path="/project/:projectID" component={ProjectsPage}/>
+                <Route exact path="/project/:projectID/job/:jobID" component={FlowsPage}/>
                 <Route path="/flow/:flowID" component={CombinationsList}/>
                 <Route path="/combination/:combinationID" component={CombinationReport}/>
                 <Route component={ NotFound }/>
