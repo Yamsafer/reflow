@@ -3,7 +3,7 @@ const globalID = require('../../util/global-id');
 module.exports = models => ({
   insert(input) {
     const jobsByProjectID = new models.instance.jobsByProjectId({
-      project_id: models.datatypes.Long.fromString("6366977657833263104"),
+      project_id: models.datatypes.Long.fromString(input.jobDetails.projectID || "6366977657833263104"),
       job_id: models.datatypes.Long.fromString(input.jobDetails.id),
       threads: input.jobDetails.numberOfThreads,
       flows: input.jobDetails.numberOfFlows,

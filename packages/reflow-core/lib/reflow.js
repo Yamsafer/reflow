@@ -122,6 +122,7 @@ class Reflow {
 
     this.jobDetails = {
       id: this.jobID,
+      projectID: this.options.projectID,
       numberOfThreads: Math.min(this.options.numberOfThreads, totalCombinations),
       numberOfCombinations: totalCombinations,
       numberOfFlows: flowsList.length,
