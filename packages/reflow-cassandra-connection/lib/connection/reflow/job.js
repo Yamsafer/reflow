@@ -4,7 +4,6 @@ const globalID = require('../../util/global-id');
 module.exports = models => ({
   getByProjectID(encodedProjectID, cursorInfo) {
     const projectID = globalID.decode(encodedProjectID).id;
-    console.log('projectID::', projectID)
     return models.instance.jobsByProjectId.findAsync({
         project_id: models.datatypes.Long.fromString(projectID),
       }, {
@@ -25,7 +24,6 @@ module.exports = models => ({
           'MAX(combination_end_at) as last_reported',
         ],
       }).then(jobs => {
-        console.log('jobs::', jobs);
         return jobs.map(row => {
           const jobID = globalID.encode('job', row.job_id.toJSON());
           const currComb = row.current_number_of_combinations.toJSON();

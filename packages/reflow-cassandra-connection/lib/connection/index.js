@@ -13,7 +13,6 @@ module.exports = models => ({
   suite: suiteConnection(models),
   node(encodedID) {
     const decodedID = globalID.decode(encodedID);
-    console.log('decodedID::', decodedID)
     switch(decodedID.type) {
       case 'flow':
         return this.flow.getFlowNode(decodedID.id);

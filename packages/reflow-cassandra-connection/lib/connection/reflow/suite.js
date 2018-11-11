@@ -24,17 +24,14 @@ module.exports = models => ({
           'tests',
         ],
       }).then(suites => {
-        return suites.map(suite => {
-          console.log('suite::', suite);
-          return ({
-            node: {
-              id: globalID.encode('suite', suite.suite_id.toJSON()),
-              title: suite.title,
-              level: suite.level,
-              tests: suite.tests && suite.tests.map(testNode),
-            }
-          });
-        });
+        return suites.map(suite => ({
+          node: {
+            id: globalID.encode('suite', suite.suite_id.toJSON()),
+            title: suite.title,
+            level: suite.level,
+            tests: suite.tests && suite.tests.map(testNode),
+          }
+        }));
     });
   },
 })

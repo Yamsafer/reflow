@@ -21,7 +21,6 @@ const flowNode = flow => {
 
 module.exports = models => ({
   getFlowNode(flowID) {
-    console.log('models::', models)
     return models.instance.flowsByFlowId.findAsync({
         flow_id: models.datatypes.Long.fromString(flowID),
       }, {
@@ -64,7 +63,6 @@ module.exports = models => ({
       )
     })
     .then(flows => {
-      console.log('flows::', flows)
       return flows.map(flowToNode);
     });
   },
