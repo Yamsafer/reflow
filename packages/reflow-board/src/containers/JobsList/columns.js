@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 export default [{
   Header: "Job ID",
   accessor: "node.id",
-  Cell: e =><Link to={`job/${e.value}`}>{`Job #${e.value.substr(-6)}`}</Link>
+  Cell: e =><Link to={`/job/${e.value}`}>{`Job #${e.value.substr(-6)}`}</Link>
 }, {
   Header: "Result",
   accessor: "node.result",
