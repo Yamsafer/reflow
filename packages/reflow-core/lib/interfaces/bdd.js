@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-const Mocha, {Test, Hook} = require('mocha');
-
+const Mocha = require('mocha');
+const {Test, Hook} = Mocha
 /**
  * BDD-style interface:
  *
