@@ -59,14 +59,8 @@ exports.handler = function (config) {
   const _ = require('lodash');
   const path = require('path');
   const fs = require('fs');
-  const {
-    default: Reflow,
-    lookupFiles,
-    loadModules,
-    dynamicRunner,
-    Module,
-    createContext,
-  } = require('reflow-core');
+  const Reflow = require('reflow-core');
+
 
   const ROOTPATH = process.cwd();
   var resolve = path.resolve;
@@ -92,7 +86,7 @@ exports.handler = function (config) {
   const reflow = new Reflow(config, caps);
 
   reflow.files = _(config.files)
-                  .flatMap(lookupFiles(ROOTPATH, config))
+                  .flatMap(Reflow.lookupFiles(ROOTPATH, config))
                   .compact()
                   .value();
 
