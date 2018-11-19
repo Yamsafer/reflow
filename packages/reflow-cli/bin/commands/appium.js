@@ -1,7 +1,5 @@
 const parseCaps = require('../parse-caps');
-const Appium = require('reflow-appium');
 exports.command = 'appium'
-
 exports.describe = 'manage appium'
 
 exports.builder = {
@@ -18,6 +16,7 @@ exports.builder = {
 }
 
 exports.handler = function (config) {
+  const Appium = require('reflow-appium');
   const appiumInstance = new Appium();
   return appiumInstance.connect(config);
 }
