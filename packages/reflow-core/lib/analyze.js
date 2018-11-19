@@ -43,8 +43,5 @@ const analyzeMatrix = function(combinations) {
   return _.union(...analyticsMap)
 };
 
-export default analyzeMatrix
-
-export {
-  analyzeCombination,
-}
+module.exports = analyzeMatrix
+module.exports.analyzeCombination = analyzeCombination

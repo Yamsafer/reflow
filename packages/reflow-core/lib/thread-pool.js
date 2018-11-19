@@ -8,10 +8,10 @@ const threadPool = function(config={}) {
   } = config;
 
   const pool = new Pool(threadsToSpawn);
-   
+
   pool.run(workerPath);
-  
+
   return pool;
 }
 
-export default threadPool
+module.exports = threadPool

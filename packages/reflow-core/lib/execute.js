@@ -63,4 +63,4 @@ const executeMatrix = function(matrix, config) {
   return pool
 }
 
-export default executeMatrix
+module.exports = executeMatrix

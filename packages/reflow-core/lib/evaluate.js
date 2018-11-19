@@ -60,8 +60,7 @@ const evaluateFlow = function(suites, activeTags) {
   return _.uniqWith(conditionedCart, _.isEqual);
 }
 
-
-export {
+module.exports = {
   evaluateFlow,
   evaluateSubflow,
 }

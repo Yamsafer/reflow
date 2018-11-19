@@ -14,4 +14,4 @@ const globFiles = (rootPath, {extensions, recursive}) => glob => {
   }
 };
 
-export default globFiles;
+module.exports = globFiles;

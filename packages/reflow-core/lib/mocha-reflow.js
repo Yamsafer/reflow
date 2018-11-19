@@ -8,4 +8,4 @@ Mocha.prototype.initClient = async function(remoteConfig, clientConfig) {
   return this.client
 }
 
-export default Mocha
+module.exports = Mocha

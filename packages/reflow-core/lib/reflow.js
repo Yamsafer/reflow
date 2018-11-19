@@ -171,9 +171,6 @@ class Reflow {
 }
 
 
-export {
-  threadPool,
-  lookupFiles,
-}
-
-export default Reflow
+module.exports = Reflow
+module.exports.threadPool = threadPool
+module.exports.lookupFiles = lookupFiles

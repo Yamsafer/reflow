@@ -7,7 +7,7 @@
 const PROMISE_TIMEOUT = {};
 const transmission = require('winston-transmission')
 
-export function resolveBefore(promise, ms, msg) {
+function resolveBefore(promise, ms, msg) {
   return Promise.race([
     promise,
     new Promise(resolve => setTimeout(() => resolve(PROMISE_TIMEOUT), ms)),
@@ -16,3 +16,5 @@ export function resolveBefore(promise, ms, msg) {
     return res;
   });
 }
+
+module.exports.resolveBefore = resolveBefore
