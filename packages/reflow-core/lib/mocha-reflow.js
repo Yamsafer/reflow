@@ -1,5 +1,5 @@
 const Mocha = require('mocha');
-import './interfaces/bdd';
+require('./interfaces/bdd');
 
 const {createClient} = require('reflow-client');
 
