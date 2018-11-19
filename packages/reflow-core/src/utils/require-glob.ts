@@ -1,5 +1,5 @@
 import * as glob from 'glob'
-import * as getLogger from 'wdio-logger';
+import getLogger from '@wdio/logger';
 const logger = getLogger('reflow');
 
 const resolveModule = (modulePath: string) => {

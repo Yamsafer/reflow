@@ -1,5 +1,6 @@
 import {getFlow} from './commands/flow-variables';
-import * as getLogger from 'wdio-logger';
+import getLogger from '@wdio/logger'
+
 
 export
 interface Command {

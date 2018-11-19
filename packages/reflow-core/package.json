@@ -29,8 +29,7 @@
     "nyc": "^10.2.0"
   },
   "peerDependencies": {
-    "mocha": "^4.0.0-0 || ^5.0.0-0",
-    "wd": "^1.6.1"
+    "mocha": "^4.0.0-0 || ^5.0.0-0"
   },
   "dependencies": {
     "decache": "^4.2.0",
@@ -42,7 +41,6 @@
     "reflow-reporter": "^3.0.0-gamma.31",
     "require-directory": "^2.1.1",
     "threads": "^0.8.1",
-    "wd": "1.7.0",
     "xmldom": "^0.1.27",
     "xpath": "0.0.27"
   },
