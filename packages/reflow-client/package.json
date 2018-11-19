@@ -1,6 +1,6 @@
 {
   "name": "reflow-client",
-  "version": "3.0.0-gamma.36",
+  "version": "3.0.0-gamma.37",
   "description": "Reflow Client",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
