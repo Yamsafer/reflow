@@ -88,14 +88,14 @@ exports.handler = function (config) {
   config.customActions = path.join(ROOTPATH, config.extendActions, 'index.js');
 
   const caps = parseCaps(config.caps);
-  console.log('caps:', caps)
+
   const reflow = new Reflow(config, caps);
 
   reflow.files = _(config.files)
                   .flatMap(lookupFiles(ROOTPATH, config))
                   .compact()
                   .value();
-  console.log('reflow.files::', reflow.files)
+
   try {
     reflow.gatherMatrices()
   } catch (err) {

@@ -4,7 +4,7 @@
     {
       "file_exclude_patterns":
       [
-          "package-lock.json"
+          // "package-lock.json"
       ],
       "folder_exclude_patterns":
       [

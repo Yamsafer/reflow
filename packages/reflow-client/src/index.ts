@@ -15,5 +15,6 @@ export {
 
 export
 function createClient(remoteOptions: RemoteOptions, clientConfig: ClientConfig) {
-  return remote(remoteOptions, reflowClient(clientConfig));
+  const client = reflowClient(clientConfig);
+  return remote(remoteOptions, client);
 }
