@@ -1,5 +1,5 @@
-import {utils} from 'mocha';
-import path from 'path';
+const {utils} = require('mocha');
+const path = require('path');
 
 const globFiles = (rootPath, {extensions, recursive}) => glob => {
   const globFullpath  = path.join(rootPath, glob)

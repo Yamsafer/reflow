@@ -1,5 +1,5 @@
-import path from 'path';
-import {Pool} from 'threads'
+const path = require('path');
+const {Pool} = require('threads')
 
 const threadPool = function(config={}) {
   const {

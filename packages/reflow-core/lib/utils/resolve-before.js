@@ -5,7 +5,7 @@
  * @returns {Promise}
  */
 const PROMISE_TIMEOUT = {};
-import transmission from 'winston-transmission'
+const transmission = require('winston-transmission')
 
 export function resolveBefore(promise, ms, msg) {
   return Promise.race([

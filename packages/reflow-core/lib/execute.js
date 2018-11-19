@@ -1,7 +1,7 @@
-import path from 'path'
-import Duration from 'duration';
-import threadPool from './thread-pool'
-import {analyzeCombination} from './analyze'
+const path = require('path')
+const Duration = require('duration');
+const threadPool = require('./thread-pool')
+const {analyzeCombination} = require('./analyze')
 
 const executeMatrix = function(matrix, config) {
   const {

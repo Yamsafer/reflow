@@ -1,4 +1,3 @@
-require('babel-register')();
 const MochaReflow = require('./mocha-reflow').default;
 const decache = require('decache');
 const praseDir = require('./utils/parse-dir');

@@ -1,11 +1,11 @@
-import _ from 'lodash'
+const _ = require('lodash')
 
-import threadPool from './thread-pool';
-import lookupFiles from './utils/lookup-files';
-import executeMatrix from './execute'
-import { evaluateFlow, evaluateSubflow } from './evaluate';
-import analyzeMatrix from './analyze'
-import FlakeId from 'flakeid'
+const threadPool = require('./thread-pool');
+const lookupFiles = require('./utils/lookup-files');
+const executeMatrix = require('./execute')
+const { evaluateFlow, evaluateSubflow } = require('./evaluate');
+const analyzeMatrix = require('./analyze')
+const FlakeId = require('flakeid')
 
 
 const createReflowContext = function(filepath) {

@@ -1,7 +1,6 @@
 test
 example
 .idea
-build
 tools
 database.sqlite
 node_modules
@@ -9,7 +8,6 @@ npm-debug.log
 yarn-error.log
 coverage
 .nyc_output
-lib
 *.sublime-*
 .travis.yml
 .nycrc
