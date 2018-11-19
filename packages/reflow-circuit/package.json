@@ -1,6 +1,6 @@
 {
   "name": "reflow-circuit",
-  "version": "3.0.0-gamma.35",
+  "version": "3.0.0-gamma.36",
   "description": "Reflow Circuit",
   "author": "Ahmad Bamieh",
   "main": "index.js",
