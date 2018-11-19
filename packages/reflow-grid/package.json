@@ -1,6 +1,6 @@
 {
   "name": "reflow-grid",
-  "version": "3.0.0-gamma.29",
+  "version": "3.0.0-gamma.30",
   "description": "Reflow Appium Runner expressJS Middleware.",
   "author": "Ahmad Bamieh",
   "main": "index.js",

@@ -1,6 +1,6 @@
 {
   "name": "reflow-core",
-  "version": "3.0.0-gamma.29",
+  "version": "3.0.0-gamma.30",
   "description": "Reflow Core",
   "author": "Ahmad Bamieh",
   "main": "index.js",
@@ -38,8 +38,8 @@
     "flakeid": "^0.1.0",
     "intercept-stdout": "^0.1.2",
     "lodash": "^4.17.4",
-    "reflow-client": "^3.0.0-gamma.29",
-    "reflow-reporter": "^3.0.0-gamma.29",
+    "reflow-client": "^3.0.0-gamma.30",
+    "reflow-reporter": "^3.0.0-gamma.30",
     "require-directory": "^2.1.1",
     "threads": "^0.8.1",
     "wd": "1.7.0",
