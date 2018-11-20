@@ -1,4 +1,4 @@
-const MochaReflow = require('./mocha-reflow').default;
+const MochaReflow = require('./mocha-reflow');
 const decache = require('decache');
 const praseDir = require('./utils/parse-dir');
 
