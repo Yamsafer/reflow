@@ -2,7 +2,7 @@
 
 import {connectClient} from './connect';
 
-describe.only('Reflow|Client', function() {
+describe('Reflow|Client', function() {
   let client: any;
   before(async function() {
     client = await connectClient();

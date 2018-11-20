@@ -10,7 +10,7 @@ import {
 
 export {
   ClientConfig,
-  RemoteOptions
+  RemoteOptions,
 }
 
 export

@@ -1,8 +1,9 @@
 import {
-  createClient,
   ClientConfig,
   RemoteOptions,
-} from '../src/index';
+  createClient,
+} from '../src';
+
 
 const remoteOptions: RemoteOptions = {
   hostname: "automation.yamsafer.com",
@@ -12,11 +13,12 @@ const remoteOptions: RemoteOptions = {
   capabilities: {
     browserName: "chrome",
     seleniumProtocol: "WebDriver",
-    applicationName: "TheShip Debug 1",
+    applicationName: "TheShip Debug 2",
   },
 }
 
-const config:ClientConfig = {}
+export
+const clientConfig:ClientConfig = {}
 
 export
-const connectClient = () => createClient(remoteOptions, config);
+const connectClient = () => createClient(remoteOptions, clientConfig);
