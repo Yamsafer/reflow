@@ -1,6 +1,6 @@
 {
   "name": "reflow-board",
-  "version": "3.0.0-gamma.42",
+  "version": "3.0.0-gamma.43",
   "main": "index.js",
   "dependencies": {
     "apollo-cache-inmemory": "^1.1.3",
