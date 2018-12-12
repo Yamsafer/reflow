@@ -61,7 +61,6 @@ E2E Project:
 - reflow|cli: the command line interface to run the e2e project.
 - reflow|client: provides the client api of the connected device.
 
-
 ## License
 
 [MIT](LICENSE)
