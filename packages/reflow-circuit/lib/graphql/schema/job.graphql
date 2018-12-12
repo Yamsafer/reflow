@@ -33,6 +33,7 @@ type Job implements Node {
 
 input JobInput {
   id: FlakeID!
+  projectID: ID
   startTime: Float!
   sourceBranch: String
   github: String
@@ -44,4 +45,3 @@ input JobInput {
   tags: [String]
   trigger: String
 }
-

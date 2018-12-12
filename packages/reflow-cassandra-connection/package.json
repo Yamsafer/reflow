@@ -1,6 +1,6 @@
 {
   "name": "reflow-cassandra-connection",
-  "version": "3.0.0-gamma.40",
+  "version": "3.0.0-gamma.41",
   "main": "index.js",
   "dependencies": {
     "bluebird": "^3.5.1",
