@@ -12,11 +12,11 @@
     "url": "https://github.com/Bamieh/reflow"
   },
   "optionalDependencies": {
-    "reflow-appium": "3"
+    "reflow-appium": "3.0.0-gamma.32"
   },
   "peerDependencies": {
-    "reflow-appium": "3",
-    "reflow-core": "3"
+    "reflow-appium": "^3",
+    "reflow-core": "^3"
   },
   "devDependencies": {
     "cross-env": "^4.0.0",
