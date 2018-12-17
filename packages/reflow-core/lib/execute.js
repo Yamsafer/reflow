@@ -3,6 +3,10 @@ const Duration = require('duration');
 const threadPool = require('./thread-pool')
 const {analyzeCombination} = require('./analyze')
 
+let failures = 0;
+let errored = false;
+let done = false;
+
 const executeMatrix = function(matrix, config) {
   const {
     mocha: mochaConfig,
@@ -32,11 +36,7 @@ const executeMatrix = function(matrix, config) {
     customActions,
   });
 
-
   matrix.forEach(sendToPool);
-  let failures = 0;
-  let errored = false;
-  let done = false;
 
   pool
     .on('done', function(job, jobFailures) {
@@ -58,8 +58,10 @@ const executeMatrix = function(matrix, config) {
 
   process.on('exit', function() {
     if(!done) console.log('Exited before done')
+
     process.exit(+!!(errored || failures));
   })
+
   return pool
 }
 
