@@ -18,11 +18,12 @@ const createReflowContext = function(filepath) {
       console.log(`Registering "${name}" Subflow.`);
       self.subflows[name] = configCb
     },
-    flow(name, fn) {
+    flow(name, fn, options = {}) {
       self.flows[name] = {
         name,
         path: filepath,
         fn,
+        options,
       };
     },
     hook(name) {
@@ -98,7 +99,7 @@ class Reflow {
     const flowsList = Object.values(this.flows);
     console.log(`${flowsList.length} total flows.`)
     let totalCombinations = 0;
-    const matrices = flowsList.map(({name, fn}) => {
+    const matrices = flowsList.map(({name, fn, options: flowOptions}) => {
       const suites = fn();
       if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
       const matrix = evaluateFlow(suites, this.options.tags);
@@ -116,6 +117,7 @@ class Reflow {
           id: this.flake.gen(),
           title: name,
           totalCombinations: currentCombinations,
+          deviceTag: flowOptions.deviceTag,
         },
       }
     });
@@ -155,17 +157,15 @@ class Reflow {
   }
 
   runFlow({matrix, flowDetails}) {
-
     this.devices.forEach(capability => {
-      const tagsRegex = /@([A-Za-z0-9_]+)/gm;
-      const matches = tagsRegex.exec(flowDetails.title);
-      const flowTag = matches && matches[1];
+      const flowTag = flowDetails.deviceTag;
+      const capabilityTags = capability.remoteOptions.capabilities.tags;
+      const { deviceName } = capability.remoteOptions.capabilities;
+      const browserName = capability.remoteOptions.capabilities.applicationName;
 
-      if (!flowTag || !deviceTags || deviceTags.includes(flowTag)) {
-        const { deviceName } = capability.remoteOptions.capabilities;
-        const browserName = capability.remoteOptions.capabilities.applicationName;
+      if (!flowTag || (capabilityTags && capabilityTags.includes(flowTag))) {
         console.log(`Running "${flowDetails.title}" Flow on "${deviceName || browserName}" (${flowDetails.totalCombinations} total combinations)`);
-        
+
         executeMatrix(matrix, {
           ...this.options,
           flowDetails,
@@ -173,7 +173,11 @@ class Reflow {
           jobDetails: this.jobDetails,
           connection: this.connection,
         });
-      });
+      } else if (flowTag && !capabilityTags) {
+        console.warn(`Skipping run of flow "${flowDetails.title} on device "${deviceName || browserName}"`);
+        console.warn(`Device "${deviceName || browserName}" didn't include any tags while flow requires tag "${flowTag}" to exist`);
+      }
+    });
   }
 }
 
