@@ -157,16 +157,23 @@ class Reflow {
   runFlow({matrix, flowDetails}) {
 
     this.devices.forEach(capability => {
-      console.log(`Running "${flowDetails.title}" Flow on "${capability.deviceName}" (${flowDetails.totalCombinations} total combinations)`)
+      const tagsRegex = /@([A-Za-z0-9_]+)/gm;
+      const matches = tagsRegex.exec(flowDetails.title);
+      const flowTag = matches && matches[1];
 
-      executeMatrix(matrix, {
-        ...this.options,
-        flowDetails,
-        capability,
-        jobDetails: this.jobDetails,
-        connection: this.connection,
+      if (!flowTag || !deviceTags || deviceTags.includes(flowTag)) {
+        const { deviceName } = capability.remoteOptions.capabilities;
+        const browserName = capability.remoteOptions.capabilities.applicationName;
+        console.log(`Running "${flowDetails.title}" Flow on "${deviceName || browserName}" (${flowDetails.totalCombinations} total combinations)`);
+        
+        executeMatrix(matrix, {
+          ...this.options,
+          flowDetails,
+          capability,
+          jobDetails: this.jobDetails,
+          connection: this.connection,
+        });
       });
-    })
   }
 }
 
