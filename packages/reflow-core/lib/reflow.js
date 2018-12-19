@@ -6,7 +6,7 @@ const executeMatrix = require('./execute')
 const { evaluateFlow, evaluateSubflow } = require('./evaluate');
 const analyzeMatrix = require('./analyze')
 const FlakeId = require('flakeid')
-
+const { join } = require('path')
 
 const createReflowContext = function(filepath) {
   const self = this;
@@ -99,6 +99,7 @@ class Reflow {
     const flowsList = Object.values(this.flows);
     console.log(`${flowsList.length} total flows.`)
     let totalCombinations = 0;
+
     const matrices = flowsList.map(({name, fn, options: flowOptions}) => {
       const suites = fn();
       if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
@@ -136,8 +137,14 @@ class Reflow {
     }
     console.log(`Job Details: ${JSON.stringify(this.jobDetails, 2, 2)}`);
 
-    matrices.forEach(matrix => this.runFlow(matrix))
+    const pool = threadPool({
+      workerPath: join(__dirname, './worker.js'),
+      threadsToSpawn: this.jobDetails.numberOfThreads,
+    });
+
+    matrices.forEach(matrix => this.runFlow(matrix, pool))
   }
+
   analyzeFlows() {
     const analyzedMatrices = Object.values(this.flows).map(this.analyze.bind(this));
     analyzedMatrices.forEach(({name, analysis}) => {
@@ -156,7 +163,7 @@ class Reflow {
     };
   }
 
-  runFlow({matrix, flowDetails}) {
+  runFlow({ matrix, flowDetails }, pool) {
     this.devices.forEach(capability => {
       const flowTag = flowDetails.deviceTag;
       const capabilityTags = capability.remoteOptions.capabilities.tags;
@@ -166,7 +173,7 @@ class Reflow {
       if (!flowTag || (capabilityTags && capabilityTags.includes(flowTag))) {
         console.log(`Running "${flowDetails.title}" Flow on "${deviceName || browserName}" (${flowDetails.totalCombinations} total combinations)`);
 
-        executeMatrix(matrix, {
+        executeMatrix(matrix, pool, {
           ...this.options,
           flowDetails,
           capability,

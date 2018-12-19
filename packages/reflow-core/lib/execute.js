@@ -1,13 +1,11 @@
-const path = require('path')
 const Duration = require('duration');
-const threadPool = require('./thread-pool')
 const {analyzeCombination} = require('./analyze')
 
 let failures = 0;
 let errored = false;
 let done = false;
 
-const executeMatrix = function(matrix, config) {
+const executeMatrix = function(matrix, pool, config) {
   const {
     mocha: mochaConfig,
     jobDetails,
@@ -16,14 +14,9 @@ const executeMatrix = function(matrix, config) {
     capability,
     customActions,
   } = config;
-  const startTime = jobDetails.startTime;
-  const numberOfThreads = jobDetails.numberOfThreads;
-  const numberOfFlows = jobDetails.numberOfFlows;
 
-  const pool = threadPool({
-    workerPath: path.join(__dirname, './worker.js'),
-    threadsToSpawn: numberOfThreads,
-  });
+  const startTime = jobDetails.startTime;
+  const numberOfFlows = jobDetails.numberOfFlows;
 
   const sendToPool = combination => pool.send({
     DAG: analyzeCombination(combination),
