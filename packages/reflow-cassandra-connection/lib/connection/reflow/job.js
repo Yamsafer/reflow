@@ -23,6 +23,7 @@ module.exports = models => ({
           'MIN(combination_start_at) as first_reported',
           'MAX(combination_end_at) as last_reported',
         ],
+        $groupby: [ 'job_id' ],
       }).then(jobs => {
         return jobs.map(row => {
           const jobID = globalID.encode('job', row.job_id.toJSON());
