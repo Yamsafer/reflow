@@ -170,6 +170,16 @@ class Reflow {
       const { deviceName } = capability.remoteOptions.capabilities;
       const browserName = capability.remoteOptions.capabilities.applicationName;
 
+      if(!capability.remoteOptions.capabilities.hasOwnProperty('alwaysMatch')) {
+        let alwaysMatch;
+        if(capability.remoteOptions.capabilities.hasOwnProperty('app')) {
+          alwaysMatch = {app: capability.remoteOptions.capabilities.app};
+        } else {
+          alwaysMatch = {browserName: capability.remoteOptions.capabilities.browserName};
+        }
+        capability.remoteOptions.capabilities.alwaysMatch = alwaysMatch;
+      }
+
       if (!flowTag || (capabilityTags && capabilityTags.includes(flowTag))) {
         console.log(`Running "${flowDetails.title}" Flow on "${deviceName || browserName}" (${flowDetails.totalCombinations} total combinations)`);
 
