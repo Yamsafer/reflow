@@ -29,7 +29,6 @@ const executeSuites = function(branch) {
 }
 
 const executeTree = function({combination, customActions, mochaConfig, flowDetails, DAG, jobDetails, capability, connection}, done) {
-
   const {
     require: mochaRequiredFiles,
     reporterOptions,

@@ -1,6 +1,6 @@
 {
   "name": "reflow-client",
-  "version": "3.0.0-gamma.49",
+  "version": "3.0.0-gamma.50",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -218,19 +218,19 @@
       }
     },
     "@wdio/config": {
-      "version": "5.0.0-beta.6",
-      "resolved": "https://registry.npmjs.org/@wdio/config/-/config-5.0.0-beta.6.tgz",
-      "integrity": "sha512-d9PkIR8vnLF0CuOBar0kiaIjuNTFdMPxVsfbRd0nvdHHjFX77DWcb7P2ZmBZ3+ycPQn2okFGMg3tNkWp+etUYw==",
+      "version": "5.4.14",
+      "resolved": "https://registry.npmjs.org/@wdio/config/-/config-5.4.14.tgz",
+      "integrity": "sha512-5Jlw/wIuYiQQWLXHrx+b2/g9CCTV9dCUApoUwjFTAf427dngcb5ae8W/x5C9TD4O7EN9Hh214m18JBhPcUDwZw==",
       "requires": {
-        "@wdio/logger": "^5.0.0-beta.6",
+        "@wdio/logger": "^5.4.6",
         "deepmerge": "^2.0.1",
         "glob": "^7.1.2"
       }
     },
     "@wdio/logger": {
-      "version": "5.0.0-beta.6",
-      "resolved": "https://registry.npmjs.org/@wdio/logger/-/logger-5.0.0-beta.6.tgz",
-      "integrity": "sha512-nXtfCV/SHrDqb37ZdxekhWO7VgCsuFL3QmZA/AidrMUlumotMT0PjA2QIu/zL1fSUbdjgnvuo935pCuZMEFp1g==",
+      "version": "5.4.6",
+      "resolved": "https://registry.npmjs.org/@wdio/logger/-/logger-5.4.6.tgz",
+      "integrity": "sha512-SRuGKw0R7pMEO+BFawg4Gjn5GQoKaVsm1DE0Fg3k1a3m9UOFKS6XdrSAjJdBNjuZkP9mFrY7qZLtySE6KnVlng==",
       "requires": {
         "chalk": "^2.3.0",
         "loglevel": "^1.6.0",
@@ -238,10 +238,18 @@
         "strip-ansi": "^4.0.0"
       }
     },
+    "@wdio/repl": {
+      "version": "5.4.14",
+      "resolved": "https://registry.npmjs.org/@wdio/repl/-/repl-5.4.14.tgz",
+      "integrity": "sha512-3onzcQxHJ93AwV1l0ffTwXj5gwY8M/V1YPncK+Mwnj22ylkBra9307j0k7vkGiwYforNtbUAhTo/N0dAp3hz1Q==",
+      "requires": {
+        "@wdio/config": "^5.4.14"
+      }
+    },
     "ajv": {
-      "version": "6.5.5",
-      "resolved": "https://registry.npmjs.org/ajv/-/ajv-6.5.5.tgz",
-      "integrity": "sha512-7q7gtRQDJSyuEHjuVgHoUa2VuemFiCMrfQc9Tc08XTAc4Zj/5U1buQJ0HU6i7fKjXU09SVgSmxa4sLvuvS8Iyg==",
+      "version": "6.9.1",
+      "resolved": "https://registry.npmjs.org/ajv/-/ajv-6.9.1.tgz",
+      "integrity": "sha512-XDN92U311aINL77ieWHmqCcNlwjoP5cHXDxIxbf2MaPYuCXOHS7gHH8jktxeK5omgd52XbSTX6a4Piwd1pQmzA==",
       "requires": {
         "fast-deep-equal": "^2.0.1",
         "fast-json-stable-stringify": "^2.0.0",
@@ -873,6 +881,11 @@
       "resolved": "https://registry.npmjs.org/lodash.get/-/lodash.get-4.4.2.tgz",
       "integrity": "sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=",
       "dev": true
+    },
+    "lodash.merge": {
+      "version": "4.6.1",
+      "resolved": "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.1.tgz",
+      "integrity": "sha512-AOYza4+Hf5z1/0Hztxpm2/xiPZgi/cjMqdnKTUWTBSKchJlxXXuUSxCCl8rJlf4g6yww/j6mA8nC8Hw/EZWxKQ=="
     },
     "lodash.zip": {
       "version": "4.2.0",
@@ -3383,9 +3396,9 @@
       "integrity": "sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns="
     },
     "psl": {
-      "version": "1.1.29",
-      "resolved": "https://registry.npmjs.org/psl/-/psl-1.1.29.tgz",
-      "integrity": "sha512-AeUmQ0oLN02flVHXWh9sSJF7mcdFq0ppid/JkErufc3hGIV/AMa8Fo9VgDo/cT2jFdOWoFvHp90qqBH54W+gjQ=="
+      "version": "1.1.31",
+      "resolved": "https://registry.npmjs.org/psl/-/psl-1.1.31.tgz",
+      "integrity": "sha512-/6pt4+C+T+wZUieKR620OpzN/LlnNKuWjy1iFLQ/UG35JqHlR/89MP1d96dUfkf6Dne3TuLQzOYEYshJ+Hx8mw=="
     },
     "punycode": {
       "version": "2.1.1",
@@ -3463,6 +3476,11 @@
       "integrity": "sha512-RS9R6R35NYgQn++fkDWaOmqGoj4Ek9gGs+DPxNUZKuwE183xjJroKvyo1IzVFeXvUrvmALy6FWD5xrdJT25gMg==",
       "dev": true
     },
+    "serialize-error": {
+      "version": "3.0.0",
+      "resolved": "https://registry.npmjs.org/serialize-error/-/serialize-error-3.0.0.tgz",
+      "integrity": "sha512-+y3nkkG/go1Vdw+2f/+XUXM1DXX1XcxTl99FfiD/OEPUNw4uo0i6FKABfTAN5ZcgGtjTRZcEbxcE/jtXbEY19A=="
+    },
     "shebang-command": {
       "version": "1.2.0",
       "resolved": "https://registry.npmjs.org/shebang-command/-/shebang-command-1.2.0.tgz",
@@ -3532,9 +3550,9 @@
       "dev": true
     },
     "sshpk": {
-      "version": "1.15.2",
-      "resolved": "https://registry.npmjs.org/sshpk/-/sshpk-1.15.2.tgz",
-      "integrity": "sha512-Ra/OXQtuh0/enyl4ETZAfTaeksa6BXks5ZcjpSUNrjBr0DvrJKX+1fsKDPpT9TBXgHAFsa4510aNVgI8g/+SzA==",
+      "version": "1.16.1",
+      "resolved": "https://registry.npmjs.org/sshpk/-/sshpk-1.16.1.tgz",
+      "integrity": "sha512-HXXqVUq7+pcKeLqqZj6mHFUMvXtOJt1uoUx09pFW6011inTMxqI8BA8PM95myrIyyKwdnzjdFjLiE6KBPVtJIg==",
       "requires": {
         "asn1": "~0.2.3",
         "assert-plus": "^1.0.0",
@@ -3732,28 +3750,32 @@
       }
     },
     "webdriver": {
-      "version": "5.0.0-beta.6",
-      "resolved": "https://registry.npmjs.org/webdriver/-/webdriver-5.0.0-beta.6.tgz",
-      "integrity": "sha512-ypSGpoAhkg3CM9IEEkAlriGFaI7JrbJBwgi5LR+BOW/l52uuyYDsO84Qaeg6SZ/iTgkPqRpfRfXhhZJo5jUJjg==",
+      "version": "5.4.15",
+      "resolved": "https://registry.npmjs.org/webdriver/-/webdriver-5.4.15.tgz",
+      "integrity": "sha512-1+cEBxDTmGSBGfYZ6rIk8AnyVUtQu4TrsLhnv2QkmieBlDj3eiqqjasRDZ4Mu35oAH1aqAq7S1wx6/eydwC44Q==",
       "requires": {
-        "@wdio/config": "^5.0.0-beta.6",
-        "@wdio/logger": "^5.0.0-beta.6",
+        "@wdio/config": "^5.4.14",
+        "@wdio/logger": "^5.4.6",
         "deepmerge": "^2.0.1",
+        "lodash.merge": "^4.6.1",
         "request": "^2.83.0"
       }
     },
     "webdriverio": {
-      "version": "5.0.0-beta.6",
-      "resolved": "https://registry.npmjs.org/webdriverio/-/webdriverio-5.0.0-beta.6.tgz",
-      "integrity": "sha512-owWmPr7mtzCz8Xur0guqrr2r8nItuuULK7/2+4HuhEbV0+kdAIf6yKoIeA7b3tqbFIgUWu8t0cBSHfBfg+tB0A==",
+      "version": "5.4.17",
+      "resolved": "https://registry.npmjs.org/webdriverio/-/webdriverio-5.4.17.tgz",
+      "integrity": "sha512-rkp1qIz/Lcs8z+GlY0YL2v8D81yurqkScz0lAWmd6bl6RfqLGrMy3VI2xtibL60devbSxZiTYbI5WtuvKj4YUg==",
       "requires": {
-        "@wdio/config": "^5.0.0-beta.6",
-        "@wdio/logger": "^5.0.0-beta.6",
+        "@wdio/config": "^5.4.14",
+        "@wdio/logger": "^5.4.6",
+        "@wdio/repl": "^5.4.14",
         "css-value": "^0.0.1",
         "grapheme-splitter": "^1.0.2",
+        "lodash.merge": "^4.6.1",
         "lodash.zip": "^4.2.0",
         "rgb2hex": "^0.1.0",
-        "webdriver": "^5.0.0-beta.6"
+        "serialize-error": "^3.0.0",
+        "webdriver": "^5.4.15"
       }
     },
     "which": {

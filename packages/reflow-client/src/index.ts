@@ -1,7 +1,10 @@
 import {
   remote,
-  RemoteOptions,
 } from 'webdriverio';
+
+import {
+  Options,
+} from 'webdriver';
 
 import {
   reflowClient,
@@ -10,11 +13,10 @@ import {
 
 export {
   ClientConfig,
-  RemoteOptions,
 }
 
 export
-function createClient(remoteOptions: RemoteOptions, clientConfig: ClientConfig) {
+function createClient(remoteOptions :Options, clientConfig: ClientConfig) {
   const client = reflowClient(clientConfig);
   return remote(remoteOptions, client);
 }

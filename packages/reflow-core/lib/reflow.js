@@ -32,7 +32,7 @@ const createReflowContext = function(filepath) {
     },
     getHook(name, tags) {
       const suitePath = self.hooks[name];
-      if(!suitePath) throw new Error(`Unable to find hook [ ${name} ].`);
+      if (!suitePath) throw new Error(`Unable to find hook [ ${name} ].`);
       return {
         name,
         tags,
@@ -42,17 +42,17 @@ const createReflowContext = function(filepath) {
     },
     getSubflow(name, tags) {
       const subflowDetail = self.subflows[name];
-      if(!subflowDetail) throw new Error(`Unable to get subflow [ ${name} ].`);
+      if (!subflowDetail) throw new Error(`Unable to get subflow [ ${name} ].`);
       const activeTags = self.options.tags;
 
-      if(_.isMatch(tags, activeTags)) {
-        return evaluateSubflow(name , subflowDetail)
+      if (_.isMatch(tags, activeTags)) {
+        return evaluateSubflow(name, subflowDetail)
       }
       return null;
     },
     getSuite(name, tags) {
       const suitePath = self.suites[name];
-      if(!suitePath) throw new Error(`Unable to find suite [ ${name} ].`);
+      if (!suitePath) throw new Error(`Unable to find suite [ ${name} ].`);
       return {
         name,
         tags,
@@ -68,7 +68,7 @@ const createReflowContext = function(filepath) {
         .filter(suite => _.isMatch(suite.tags, activeTags))
         .filter(Boolean)
 
-      return activeFork.length? activeFork : null
+      return activeFork.length ? activeFork : null
     },
   }
 };
@@ -100,9 +100,9 @@ class Reflow {
     console.log(`${flowsList.length} total flows.`)
     let totalCombinations = 0;
 
-    const matrices = flowsList.map(({name, fn, options: flowOptions}) => {
+    const matrices = flowsList.map(({ name, fn, options: flowOptions }) => {
       const suites = fn();
-      if(!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
+      if (!_.isArray(suites)) throw new Error(`no suites provided in flow "${name}".`);
       const matrix = evaluateFlow(suites, this.options.tags);
       const currentCombinations = matrix.length
       totalCombinations += currentCombinations;
@@ -147,13 +147,13 @@ class Reflow {
 
   analyzeFlows() {
     const analyzedMatrices = Object.values(this.flows).map(this.analyze.bind(this));
-    analyzedMatrices.forEach(({name, analysis}) => {
-      console.log(`${name}: (${analysis.length} combinations)`,)
+    analyzedMatrices.forEach(({ name, analysis }) => {
+      console.log(`${name}: (${analysis.length} combinations)`, )
       console.log(analysis.join('\n'));
     })
   }
 
-  analyze({name, fn}) {
+  analyze({ name, fn }) {
     const suites = fn();
     const matrix = evaluateFlow(suites, this.options.tags);
 
