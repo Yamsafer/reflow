@@ -166,9 +166,10 @@ class Reflow {
   runFlow({ matrix, flowDetails }, pool) {
     this.devices.forEach(capability => {
       const flowTag = flowDetails.deviceTag;
-      const capabilityTags = capability.remoteOptions.capabilities.tags;
-      const { deviceName } = capability.remoteOptions.capabilities;
-      const browserName = capability.remoteOptions.capabilities.applicationName;
+      const caps = capability.remoteOptions.capabilities;
+      const capabilityTags = caps.tags;
+      const deviceName = caps.deviceName || caps.alwaysMatch['appium:deviceName'];
+      const browserName = caps.applicationName;
 
       if (!flowTag || (capabilityTags && capabilityTags.includes(flowTag))) {
         console.log(`Running "${flowDetails.title}" Flow on "${deviceName || browserName}" (${flowDetails.totalCombinations} total combinations)`);
