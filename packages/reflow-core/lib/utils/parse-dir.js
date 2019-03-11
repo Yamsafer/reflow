@@ -10,7 +10,6 @@ const parseDir = function parseDir(callerFilename, opts) {
   const parentVisit = typeof opts.visit === 'function' ? opts.visit : o => o
   // call addHandler via visitor function
   opts.visit = function visit (obj, joined, filename) {
-    console.log('ok i am here')
     const visited = parentVisit(obj, joined, filename)
     // allow consumer to skip modules with their own visitor
     if (visited) {
