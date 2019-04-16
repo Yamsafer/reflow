@@ -118,6 +118,8 @@ class Reflow {
           id: this.flake.gen(),
           title: name,
           totalCombinations: currentCombinations,
+        },
+        metadata: {
           deviceTag: flowOptions.deviceTag,
         },
       }
@@ -163,9 +165,9 @@ class Reflow {
     };
   }
 
-  runFlow({ matrix, flowDetails }, pool) {
+  runFlow({ matrix, flowDetails, metadata }, pool) {
     this.devices.forEach(capability => {
-      const flowTag = flowDetails.deviceTag;
+      const flowTag = metadata.deviceTag;
       const caps = capability.remoteOptions.capabilities;
       const capabilityTags = caps.tags;
       const deviceName = caps.deviceName || caps.alwaysMatch['appium:deviceName'];
